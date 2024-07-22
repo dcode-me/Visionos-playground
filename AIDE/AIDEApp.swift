@@ -11,7 +11,7 @@ import SwiftUI
 struct AIDEApp: App {
   var body: some Scene {
     WindowGroup {
-//      ContentView()
+      ContentView()
 //      BarChartView()
       DashboardView()
 //      CalendarSheet(selectedMonth: .jun, selectedYear: .year2024)
