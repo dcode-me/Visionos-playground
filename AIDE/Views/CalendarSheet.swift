@@ -8,26 +8,29 @@
 import SwiftUI
 
 struct CalendarSheet: View {
-  @State var showSheet = false
-  @State var selectedMonth: Month
-  @State var selectedYear: Year
+//  @Binding var showCalendar: Bool
+//  var selectedMonth: Month
+//  var selectedYear: Year
     var body: some View {
-      NavigationView {
-        CalendarView()
-          .navigationTitle("Select Month")
-          .toolbar {
-            ToolbarItemGroup(placement: .topBarLeading) {
-              Button(action: {
-                print("Button with SF Symbol tapped")
-              }) {
-                Label("Close", systemImage: "xmark")
-              }
-            }
-          }
-      }.navigationViewStyle(StackNavigationViewStyle()).frame(width:480, height: 600)
+//      NavigationView {
+////        CalendarView()
+//          .navigationTitle("Select Month")
+//          .toolbar {
+//            ToolbarItemGroup(placement: .topBarLeading) {
+//              Button(action: {
+//                showCalendar=false
+//                print("Button with SF Symbol tapped")
+//              }) {
+//                Label("Close", systemImage: "xmark")
+//              }
+//            }
+//          }
+//      }.navigationViewStyle(StackNavigationViewStyle())
+      Text("Hello")
     }
 }
 
 #Preview {
-  CalendarSheet(selectedMonth: .jun, selectedYear: .year2024)
+//  CalendarSheet(showCalendar: Binding.constant(false), selectedMonth: .jan, selectedYear: .year2024)
+  CalendarSheet()
 }

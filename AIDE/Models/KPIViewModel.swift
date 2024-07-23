@@ -18,7 +18,7 @@ class KPIViewModel: ObservableObject {
 
     init(monthYear: String) {
         self.selectedMonthYear = monthYear
-        DashboardData.loadData() // Assuming this populates KPIData.allData
+        DashboardData.loadData() 
         loadData()
     }
 

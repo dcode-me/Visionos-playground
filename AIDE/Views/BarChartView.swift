@@ -9,28 +9,21 @@
 import SwiftUI
 import Charts
 
-// Define a structure for the data to be displayed in the chart
-struct ChartData: Identifiable {
-  
-  let id = UUID()
-  var category: String
-  var value: Double
-  var barColor: colorcode
-  
-}
-
-// Define a SwiftUI view for the bar chart
 struct BarChartView: View {
-  // Sample data for the bar chart
-  let data: [ChartData] = [
-    ChartData(category: "JAN", value: 1000, barColor: .Red),
-    ChartData(category: "FEB", value: 1500, barColor: .Red),
-    ChartData(category: "MAR", value: 800, barColor: .Red),
-    ChartData(category: "APR", value: 1200, barColor: .Red),
-    ChartData(category: "MAY", value: 1200, barColor: .Red),
-    ChartData(category: "JUN", value: 1200, barColor: .blue),
-    ChartData(category: "JUN", value: 1200, barColor: .gray)
-  ]
+  
+    var barData: [GraphValues]
+  
+//  var resultGraph:[GraphValues] = [
+//    
+//    GraphValues(monthIndex: 6, month: Month.jan, formattedNumber: 20.0, type: .dataValue),
+//    GraphValues(monthIndex: 5, month: Month.feb, formattedNumber: 30.0, type: .dataValue),
+//    GraphValues(monthIndex: 4, month: Month.mar, formattedNumber: 30.0, type: .dataValue),
+//    GraphValues(monthIndex: 3, month: Month.apr, formattedNumber: 30.0, type: .dataValue),
+//    GraphValues(monthIndex: 2, month: Month.may, formattedNumber: 30.0, type: .dataValue),
+//    GraphValues(monthIndex: 1, month: Month.jun, formattedNumber: 30.0, type: .currentMonth),
+//    GraphValues(monthIndex: 0, month: Month.jun, formattedNumber: 5.0, type: .deltaNegative)
+//  ]
+  
   
   private var barGradient: LinearGradient {
     LinearGradient(
@@ -69,30 +62,25 @@ struct BarChartView: View {
     )
   }
   
-  var revenueGradient: LinearGradient {
-    LinearGradient(gradient: Gradient(colors: [.yellow, .purple]), startPoint: .trailing, endPoint: .leading)
-  }
-  
   var body: some View {
-    // Use the Chart view to create a bar chart
-    Chart(data) { datum in
-      
+//    let data1 = resultGraph.sorted { $0.monthIndex > $1.monthIndex }
+    Chart(barData) { datum in
       BarMark(
-        x: .value("Category", datum.category),
-        y: .value("Value", datum.value), width: .fixed(32)
+        x: .value("Month", datum.month.rawValue),
+        y: .value("Value", datum.formattedNumber), width: .fixed(32)
       ).cornerRadius(6)
-        .foregroundStyle(by: .value("barColor", datum.barColor.rawValue))
+        .foregroundStyle(by: .value("type", datum.type.rawValue))
         .annotation(position: .overlay, alignment: .bottom){
-          if datum.barColor.rawValue == "BLUE" {
-            Text(datum.category).font(.system(size: 10, weight: .light)).foregroundColor(.black)
+          if datum.type.rawValue == "Current" {
+            Text(datum.month.rawValue).font(.system(size: 10, weight: .light)).foregroundColor(.black)
           }
-          else if datum.barColor.rawValue != "BLACK"{
-            Text(datum.category).font(.system(size: 10, weight: .light))
+          else if datum.type.rawValue == "DataValue"{
+            Text(datum.month.rawValue).font(.system(size: 10, weight: .light))
           }
           
         }
     }
-    .chartForegroundStyleScale([colorcode.Red:barGradient,colorcode.blue:whiteGradient,colorcode.gray:positiveGradient])
+    .chartForegroundStyleScale([DataCategory.dataValue.rawValue:barGradient,DataCategory.deltaPositive.rawValue: positiveGradient,DataCategory.deltaNegative.rawValue: negativeGradient,DataCategory.currentMonth.rawValue:whiteGradient])
     .chartLegend(.hidden)
     .frame(width: 202, height: 56 ) // Set the height of the chart
     .chartYAxis(.hidden)
@@ -101,5 +89,6 @@ struct BarChartView: View {
 }
 
 #Preview {
-  BarChartView()
+    BarChartView(barData: [])
+//  BarChartView()
 }

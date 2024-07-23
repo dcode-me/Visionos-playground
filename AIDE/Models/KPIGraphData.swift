@@ -8,12 +8,15 @@
 import Foundation
 
 struct KPIGraphData {
-    let currentMonthData: KPIData
-    let pastSixMonthsData: [GraphValues]
+  let currentMonthData: KPIData
+  let pastSixMonthsData: [GraphValues]
 }
 
-struct GraphValues {
-    let month: Month
-    let formattedNumber: Double
-    let type: DataCategory
+struct GraphValues: Identifiable{
+  var id =  UUID()
+  
+  let monthIndex: Int
+  let month: Month
+  let formattedNumber: Double
+  let type: DataCategory
 }
