@@ -12,6 +12,10 @@
 		9F1D1DE22C43ADD200859838 /* Year.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1D1DE12C43ADD200859838 /* Year.swift */; };
 		9F1D1DE42C43B1D700859838 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1D1DE32C43B1D700859838 /* CalendarView.swift */; };
 		9F1DF94A2C4EC9AE00B66AEB /* NavigationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DF9492C4EC9AE00B66AEB /* NavigationTestView.swift */; };
+		9F1DF94C2C4F56B600B66AEB /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DF94B2C4F56B600B66AEB /* BarView.swift */; };
+		9F1DF94E2C4F78A800B66AEB /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DF94D2C4F78A800B66AEB /* CalendarViewModel.swift */; };
+		9F1DF9502C4F78C100B66AEB /* CustomCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DF94F2C4F78C100B66AEB /* CustomCalendarView.swift */; };
+		9F1DF9522C4F790100B66AEB /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DF9512C4F790100B66AEB /* TestView.swift */; };
 		9F2E21722C48CA91002C40BC /* DataCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2E21712C48CA91002C40BC /* DataCategory.swift */; };
 		9F2E21782C48FF43002C40BC /* KPIGraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2E21772C48FF43002C40BC /* KPIGraphData.swift */; };
 		9F2E217A2C490EFF002C40BC /* KPIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2E21792C490EFF002C40BC /* KPIViewModel.swift */; };
@@ -46,6 +50,10 @@
 		9F1D1DE12C43ADD200859838 /* Year.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Year.swift; sourceTree = "<group>"; };
 		9F1D1DE32C43B1D700859838 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9F1DF9492C4EC9AE00B66AEB /* NavigationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTestView.swift; sourceTree = "<group>"; };
+		9F1DF94B2C4F56B600B66AEB /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
+		9F1DF94D2C4F78A800B66AEB /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarViewModel.swift; path = AIDE/Models/CalendarViewModel.swift; sourceTree = SOURCE_ROOT; };
+		9F1DF94F2C4F78C100B66AEB /* CustomCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarView.swift; sourceTree = "<group>"; };
+		9F1DF9512C4F790100B66AEB /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		9F2E21712C48CA91002C40BC /* DataCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCategory.swift; sourceTree = "<group>"; };
 		9F2E21772C48FF43002C40BC /* KPIGraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIGraphData.swift; sourceTree = "<group>"; };
 		9F2E21792C490EFF002C40BC /* KPIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIViewModel.swift; sourceTree = "<group>"; };
@@ -175,10 +183,14 @@
 				9F71592D2C45746100507182 /* BarCharts.swift */,
 				9F7159382C46527400507182 /* KPIView.swift */,
 				9F71593A2C46551500507182 /* BarChartView.swift */,
+				9F1DF94B2C4F56B600B66AEB /* BarView.swift */,
 				9F34DE3B2C47AA5B0034A0A3 /* RevenueKPI.swift */,
 				9F2E217D2C495D37002C40BC /* UserSatisfactionScoreView.swift */,
 				9F2E217F2C496C9B002C40BC /* TopQuestions.swift */,
 				9F1DF9492C4EC9AE00B66AEB /* NavigationTestView.swift */,
+				9F1DF94D2C4F78A800B66AEB /* CalendarViewModel.swift */,
+				9F1DF94F2C4F78C100B66AEB /* CustomCalendarView.swift */,
+				9F1DF9512C4F790100B66AEB /* TestView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -262,6 +274,7 @@
 				9F71593B2C46551500507182 /* BarChartView.swift in Sources */,
 				9F2E21722C48CA91002C40BC /* DataCategory.swift in Sources */,
 				9F2E21802C496C9B002C40BC /* TopQuestions.swift in Sources */,
+				9F1DF9522C4F790100B66AEB /* TestView.swift in Sources */,
 				9F71592A2C44D73A00507182 /* Colors.swift in Sources */,
 				9F1D1DE42C43B1D700859838 /* CalendarView.swift in Sources */,
 				9F2E21782C48FF43002C40BC /* KPIGraphData.swift in Sources */,
@@ -274,6 +287,7 @@
 				9FE5193F2C4386AF006E5934 /* DashboardView.swift in Sources */,
 				9F1D1DE02C43AD7400859838 /* Month.swift in Sources */,
 				9F9677C52C44C3CC009FBC27 /* Textviews.swift in Sources */,
+				9F1DF94C2C4F56B600B66AEB /* BarView.swift in Sources */,
 				9F34DE3E2C47B6720034A0A3 /* Color.swift in Sources */,
 				9F37B3C62C4784710092F524 /* colorcodes.swift in Sources */,
 				9F7159262C44CA6000507182 /* ImageAsset.swift in Sources */,
@@ -281,11 +295,13 @@
 				9F7159322C462D0F00507182 /* KPIName.swift in Sources */,
 				9F1D1DE22C43ADD200859838 /* Year.swift in Sources */,
 				9F1DF94A2C4EC9AE00B66AEB /* NavigationTestView.swift in Sources */,
+				9F1DF94E2C4F78A800B66AEB /* CalendarViewModel.swift in Sources */,
 				9F647C0E2C32F3BF00AC4440 /* AIDEApp.swift in Sources */,
 				9F2E217E2C495D37002C40BC /* UserSatisfactionScoreView.swift in Sources */,
 				9F2E217A2C490EFF002C40BC /* KPIViewModel.swift in Sources */,
 				9F71592C2C44E7BE00507182 /* KPIViews.swift in Sources */,
 				9F7159392C46527400507182 /* KPIView.swift in Sources */,
+				9F1DF9502C4F78C100B66AEB /* CustomCalendarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

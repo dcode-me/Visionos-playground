@@ -13,6 +13,7 @@ import SwiftUI
 enum Unit: String, CaseIterable, Identifiable {
   case thousands = "K"
   case million = "MM"
+  case hundreds = ""
   
   var id: String { self.rawValue }
 }

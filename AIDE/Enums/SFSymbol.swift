@@ -13,6 +13,7 @@ enum SFSymbol: String {
     case bell = "bell.fill"
     case logo = "applelogo"
     case trendUpArrow = "arrow.up.circle"
+    case trendDownArrow = "arrow.down.circle"
 
     func image(withColor color: Colors = .primary, size: CGFloat = 24) -> some View {
         Image(systemName: self.rawValue)

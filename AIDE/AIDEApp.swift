@@ -11,9 +11,10 @@ import SwiftUI
 struct AIDEApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView()
+//      ContentView()
 //      BarChartView()
-      DashboardView()
+        DashboardView()
+//      TestView()
 //      CalendarSheet(selectedMonth: .jun, selectedYear: .year2024)
         .frame(
           minWidth: 1600, maxWidth: 2560,

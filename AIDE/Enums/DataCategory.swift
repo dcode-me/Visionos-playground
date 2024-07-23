@@ -8,6 +8,8 @@
 import Foundation
 
 enum DataCategory: String {
-    case dataValue = "DataValue"
-    case delta = "Delta"
+  case dataValue = "DataValue"
+  case currentMonth = "Current"
+  case deltaPositive = "Delta Positive"
+  case deltaNegative = "Delta Negative"
 }
