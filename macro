@@ -1,0 +1,23 @@
+Sub CreateTables()
+    Dim wsSource As Worksheet
+    Dim wsTarget As Worksheet
+    Dim i As Integer, j As Integer
+    Dim sourceRow As Integer
+    Dim targetRow As Integer
+    Dim targetCol As Integer
+    
+    Set wsSource = ThisWorkbook.Sheets("Sheet1") ' Change to your source sheet name
+    Set wsTarget = ThisWorkbook.Sheets("Sheet2") ' Change to your target sheet name
+    
+    targetRow = 1
+    targetCol = 1
+    
+    For i = 0 To 19 ' 20 tables
+        For j = 1 To 30 ' 30 rows per table
+            wsTarget.Cells(targetRow + j - 1, targetCol).Formula = "=INDEX(Sheet1!$A:$C, " & (i * 30 + j) & ", 1)"
+            wsTarget.Cells(targetRow + j - 1, targetCol + 1).Formula = "=INDEX(Sheet1!$A:$C, " & (i * 30 + j) & ", 2)"
+            wsTarget.Cells(targetRow + j - 1, targetCol + 2).Formula = "=INDEX(Sheet1!$A:$C, " & (i * 30 + j) & ", 3)"
+        Next j
+        targetCol = targetCol + 3 ' Move to the next table position without empty column
+    Next i
+End Sub
