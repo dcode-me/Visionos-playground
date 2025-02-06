@@ -12,12 +12,12 @@ Sub CreateTables()
     targetRow = 1
     targetCol = 1
     
-    For i = 0 To 19 ' 20 tables
+    For i = 0 To 16 ' 17 tables (500 rows / 30 rows per table)
         For j = 1 To 30 ' 30 rows per table
             wsTarget.Cells(targetRow + j - 1, targetCol).Formula = "=INDEX(Sheet1!$A:$C, " & (i * 30 + j) & ", 1)"
             wsTarget.Cells(targetRow + j - 1, targetCol + 1).Formula = "=INDEX(Sheet1!$A:$C, " & (i * 30 + j) & ", 2)"
             wsTarget.Cells(targetRow + j - 1, targetCol + 2).Formula = "=INDEX(Sheet1!$A:$C, " & (i * 30 + j) & ", 3)"
         Next j
-        targetCol = targetCol + 3 ' Move to the next table position without empty column
+        targetCol = targetCol + 4 ' Move to the next table position
     Next i
 End Sub
