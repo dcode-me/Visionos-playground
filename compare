@@ -1,0 +1,33 @@
+Sub CompareTables()
+    Dim ws As Worksheet
+    Dim rng1 As Range, rng2 As Range
+    Dim r As Integer, c As Integer
+    Dim diff As Boolean
+    
+    ' Set worksheet
+    Set ws = ActiveSheet
+    
+    ' Define ranges
+    Set rng1 = ws.Range("A1:C500") ' First table
+    Set rng2 = ws.Range("E1:G500") ' Second table
+    
+    diff = False
+    
+    ' Loop through all rows and columns
+    For r = 1 To rng1.Rows.Count
+        For c = 1 To rng1.Columns.Count
+            If rng1.Cells(r, c).Value <> rng2.Cells(r, c).Value Then
+                rng1.Cells(r, c).Interior.Color = RGB(255, 0, 0) ' Highlight first table
+                rng2.Cells(r, c).Interior.Color = RGB(255, 0, 0) ' Highlight second table
+                diff = True
+            End If
+        Next c
+    Next r
+    
+    ' Message box result
+    If diff Then
+        MsgBox "Differences found and highlighted!", vbExclamation
+    Else
+        MsgBox "Both tables are identical!", vbInformation
+    End If
+End Sub
