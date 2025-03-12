@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncro</title>
+    <!-- <link rel="stylesheet" href="syncro.css"> -->
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+        }
+
+        .sticky-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sticky-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            padding: 0 60px;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .filter-section {
+            width: 100%;
+            position: fixed;
+            top: 50px;
+            /* Adjust this value based on the height of the sticky header */
+            padding: 20px;
+            background-color: #f9f9f9;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .syncro-card,
+        .syncro-card * {
+            box-sizing: border-box;
+        }
+
+        .syncro-card button {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            letter-spacing: inherit;
+        }
+
+        .syncro-card {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            font-family: "Montserrat", sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: #000;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #e8ebef;
+            border-radius: 5px;
+        }
+
+        .syncro-card-body {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 15px;
+        }
+
+        .syncro-card-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #000;
+            font-weight: 500;
+            text-align: left;
+            /* Updated to align text to the left */
+        }
+
+        .syncro-progress-stepped {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            -webkit-box-align: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+            height: 40px;
+            margin-left: -2px;
+            margin-bottom: 15px;
+        }
+
+        .syncro-progress-stepped-item {
+            position: relative;
+            /* Ensure this is set */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 2px;
+            font-size: 0;
+            font-weight: 600;
+            color: transparent;
+            background-color: #f3f8fc;
+            transition: color 0.2s ease, transform 0.2s ease;
+            min-width: 30px;
+        }
+
+        .syncro-progress-stepped-item .tooltip {
+            visibility: hidden;
+            max-width: none;
+            /* Allow tooltip to expand */
+            white-space: nowrap;
+            /* Prevent text from wrapping */
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            /* Position the tooltip above the segment */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .syncro-progress-stepped-item:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .syncro-progress-stepped-item:first-child {
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .syncro-progress-stepped-item:last-child {
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .syncro-progress-stepped-item.active {
+            font-size: 10px;
+            color: #fff;
+            border-radius: 5px;
+            -webkit-transform: scaleY(1.25);
+            transform: scaleY(1.25);
+        }
+
+        .syncro-row {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: left;
+            margin-top: -5px;
+            margin-right: -10px;
+            margin-left: -10px;
+        }
+
+        .syncro-col-auto {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+            position: relative;
+            width: auto;
+            max-width: 100%;
+            margin-top: 5px;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        .syncro-btn {
+            padding: 0;
+            color: inherit;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            -webkit-appearance: none;
+            cursor: pointer;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .syncro-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            line-height: 1;
+            background-color: transparent;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .syncro-category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #586c8a;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .width-input {
+            padding: 10px;
+            font-size: 16px;
+            width: 150px;
+        }
+
+        .apply-button,
+        .reset-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .apply-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+
+        .reset-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .reset-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sticky Header -->
+    <header class="sticky-header">
+        <h1>User Screen Resolution Analysis</h1>
+        <div class="button-container">
+            <button onclick="scrollToSection('total')">Total</button>
+            <button onclick="scrollToSection('2024')">2024</button>
+            <button onclick="scrollToSection('2023')">2023</button>
+            <button onclick="scrollToSection('2022')">2022</button>
+        </div>
+    </header>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <input type="number" class="width-input" id="start-width" placeholder="Start Width" min="0" max="5200">
+        <input type="number" class="width-input" id="end-width" placeholder="End Width" min="0" max="5200">
+        <button class="apply-button">Apply</button>
+        <button class="reset-button">Reset</button>
+    </div>
+
+    <!-- Data Sections -->
+    <div class="parent" id="total-section" style="padding: 15px 50px; width:8300px; margin: auto;">
+        <h1 style="text-align: left; padding-top: 100px;">Total Sessions</h1>
+        <div data-stepped-bar="total"></div>
+    </div>
+
+    <div class="parent" id="2024-section" style="padding: 15px 50px; width:8300px; margin: auto;">
+        <h1 style="text-align: left">2024</h1>
+        <div data-stepped-bar="2024"></div>
+    </div>
+
+    <div class="parent" id="2023-section" style="padding: 15px 50px; width:8300px; margin: auto;">
+        <h1 style="text-align: left">2023</h1>
+        <div data-stepped-bar="2023"></div>
+    </div>
+
+    <div class="parent" id="2022-section" style="padding: 15px 50px; width:8300px; margin: auto;">
+        <h1 style="text-align: left">2022</h1>
+        <div data-stepped-bar="2022"></div>
+    </div>
+
+    <!-- <script src="syncro.js"></script> -->
+    <script>
+        (function () {
+            var DIV = "div";
+            var BUTTON = "button";
+            var SPAN = "span";
+            var P = "p";
+            var A = "a";
+            var INPUT = "input";
+
+            var defaults = {
+                title: "Screen Widths",
+                sessionsData: [],
+            };
+
+            var originalSessionsData = {
+                total: [],
+                2022: [],
+                2023: [],
+                2024: []
+            };
+
+            var filteredSessionsData = {
+                total: [],
+                2022: [],
+                2023: [],
+                2024: []
+            };
+
+            // Define an array of 123 fixed colors
+            var fixedColors = [
+                "#d3cb3f", "#cd7cba", "#084ca8", "#c0da67", "#c12ac3", "#a6a0b8", "#692eff", "#d9bcc5", "#239e43", "#582db0",
+                "#1b8346", "#a6e5ab", "#b25815", "#7a41c4", "#ae6dac", "#2cce15", "#f20fed", "#21ffbb", "#690149", "#6a4f5d",
+                "#9a0122", "#3d81c1", "#633261", "#90a003", "#2ace39", "#89a589", "#ed990b", "#fe6de0", "#3971b8", "#e6bdbb",
+                "#88f174", "#1dc4f2", "#7a75f5", "#b57400", "#c5f829", "#9f322b", "#442109", "#53bcec", "#80a58a", "#81c79c",
+                "#67fc16", "#dc2071", "#48f8a5", "#7214e5", "#ba22b4", "#e6a2cb", "#df0596", "#1dafa2", "#a9c5c2", "#736691",
+                "#9a87d3", "#8ddb7c", "#58f29a", "#895c5e", "#9e11b8", "#815734", "#3dcee4", "#4064a7", "#d46038", "#90b997",
+                "#526efb", "#19ad7f", "#e3bbd2", "#750d50", "#998c28", "#2f8740", "#e55623", "#856c18", "#9c12c1", "#0e91a6",
+                "#1b80c0", "#879c84", "#55611b", "#83f01a", "#3fd003", "#a54117", "#05dea3", "#18a645", "#60c886", "#508746",
+                "#cb05c1", "#7fcac7", "#59b1c1", "#9603f2", "#6cd4c0", "#bcabaf", "#8abd32", "#dc6cee", "#b37b39", "#a6ded0",
+                "#c2132e", "#6b2dcd", "#c90a8d", "#bd51c5", "#fe76d8", "#53e737", "#43dac7", "#be2024", "#8147ee", "#16c1c4",
+                "#957a5f", "#119993", "#6d6ba1", "#8cedbb", "#ab2e8d", "#cee58b", "#a2b22a", "#b997b4", "#43733c", "#52c340",
+                "#1fd50b", "#68ec35", "#967897", "#ed7c3d", "#568b32", "#6cb215", "#40cfe6", "#50fd9c", "#2785e4", "#24ae98",
+                "#5ccbf6", "#8440b3", "#00509d"
+            ];
+
+            var jsonData = [
+                {
+                    "Screen Width": 320,
+                    "2022 Sessions": 3503.0,
+                    "2023 Sessions": 4403.0,
+                    "2024 Sessions": 4046.0,
+                    "Total Sessions": 11952.0
+                },
+                {
+                    "Screen Width": 360,
+                    "2022 Sessions": 7193.0,
+                    "2023 Sessions": 10468.0,
+                    "2024 Sessions": 9831.0,
+                    "Total Sessions": 27492.0
+                },
+                {
+                    "Screen Width": 375,
+                    "2022 Sessions": 12000.0,
+                    "2023 Sessions": 13443.0,
+                    "2024 Sessions": 17636.0,
+                    "Total Sessions": 43079.0
+                },
+                {
+                    "Screen Width": 384,
+                    "2022 Sessions": 2057.0,
+                    "2023 Sessions": 4456.0,
+                    "2024 Sessions": 5907.0,
+                    "Total Sessions": 12420.0
+                },
+                {
+                    "Screen Width": 390,
+                    "2022 Sessions": 13388.0,
+                    "2023 Sessions": 28134.0,
+                    "2024 Sessions": 33780.0,
+                    "Total Sessions": 75302.0
+                },
+                {
+                    "Screen Width": 400,
+                    "2022 Sessions": 5625.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 5625.0
+                },
+                {
+                    "Screen Width": 412,
+                    "2022 Sessions": 7495.0,
+                    "2023 Sessions": 9884.0,
+                    "2024 Sessions": 8960.0,
+                    "Total Sessions": 26339.0
+                },
+                {
+                    "Screen Width": 414,
+                    "2022 Sessions": 12853.0,
+                    "2023 Sessions": 15146.0,
+                    "2024 Sessions": 10810.0,
+                    "Total Sessions": 38809.0
+                },
+                {
+                    "Screen Width": 428,
+                    "2022 Sessions": 8977.0,
+                    "2023 Sessions": 15774.0,
+                    "2024 Sessions": 11638.0,
+                    "Total Sessions": 36389.0
+                },
+                {
+                    "Screen Width": 768,
+                    "2022 Sessions": 16595.0,
+                    "2023 Sessions": 19295.0,
+                    "2024 Sessions": 9920.0,
+                    "Total Sessions": 45810.0
+                },
+                {
+                    "Screen Width": 800,
+                    "2022 Sessions": 15014.0,
+                    "2023 Sessions": 40156.0,
+                    "2024 Sessions": 44144.0,
+                    "Total Sessions": 99314.0
+                },
+                {
+                    "Screen Width": 810,
+                    "2022 Sessions": 7222.0,
+                    "2023 Sessions": 14315.0,
+                    "2024 Sessions": 10180.0,
+                    "Total Sessions": 31717.0
+                },
+                {
+                    "Screen Width": 820,
+                    "2022 Sessions": 4339.0,
+                    "2023 Sessions": 13166.0,
+                    "2024 Sessions": 10466.0,
+                    "Total Sessions": 27971.0
+                },
+                {
+                    "Screen Width": 834,
+                    "2022 Sessions": 9519.0,
+                    "2023 Sessions": 15028.0,
+                    "2024 Sessions": 8660.0,
+                    "Total Sessions": 33207.0
+                },
+                {
+                    "Screen Width": 1024,
+                    "2022 Sessions": 189553.0,
+                    "2023 Sessions": 217373.0,
+                    "2024 Sessions": 174255.0,
+                    "Total Sessions": 581181.0
+                },
+                {
+                    "Screen Width": 1067,
+                    "2022 Sessions": 2733.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 2733.0
+                },
+                {
+                    "Screen Width": 1080,
+                    "2022 Sessions": 6826.0,
+                    "2023 Sessions": 11851.0,
+                    "2024 Sessions": 12963.0,
+                    "Total Sessions": 31640.0
+                },
+                {
+                    "Screen Width": 1093,
+                    "2022 Sessions": 3265.0,
+                    "2023 Sessions": 3399.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 6664.0
+                },
+                {
+                    "Screen Width": 1098,
+                    "2022 Sessions": 9746.0,
+                    "2023 Sessions": 13689.0,
+                    "2024 Sessions": 11567.0,
+                    "Total Sessions": 35002.0
+                },
+                {
+                    "Screen Width": 1120,
+                    "2022 Sessions": 4467.0,
+                    "2023 Sessions": 6523.0,
+                    "2024 Sessions": 5644.0,
+                    "Total Sessions": 16634.0
+                },
+                {
+                    "Screen Width": 1128,
+                    "2022 Sessions": 2124.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 2124.0
+                },
+                {
+                    "Screen Width": 1152,
+                    "2022 Sessions": 16558.0,
+                    "2023 Sessions": 14824.0,
+                    "2024 Sessions": 20731.0,
+                    "Total Sessions": 52113.0
+                },
+                {
+                    "Screen Width": 1200,
+                    "2022 Sessions": 4424.0,
+                    "2023 Sessions": 4799.0,
+                    "2024 Sessions": 4852.0,
+                    "Total Sessions": 14075.0
+                },
+                {
+                    "Screen Width": 1220,
+                    "2022 Sessions": 2246.0,
+                    "2023 Sessions": 3718.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 5964.0
+                },
+                {
+                    "Screen Width": 1229,
+                    "2022 Sessions": 4142.0,
+                    "2023 Sessions": 7778.0,
+                    "2024 Sessions": 7046.0,
+                    "Total Sessions": 18966.0
+                },
+                {
+                    "Screen Width": 1278,
+                    "2022 Sessions": 6265.0,
+                    "2023 Sessions": 11011.0,
+                    "2024 Sessions": 15375.0,
+                    "Total Sessions": 32651.0
+                },
+                {
+                    "Screen Width": 1280,
+                    "2022 Sessions": 1461057.0,
+                    "2023 Sessions": 2304792.0,
+                    "2024 Sessions": 2589481.0,
+                    "Total Sessions": 6355330.0
+                },
+                {
+                    "Screen Width": 1281,
+                    "2022 Sessions": 4066.0,
+                    "2023 Sessions": 6971.0,
+                    "2024 Sessions": 7305.0,
+                    "Total Sessions": 18342.0
+                },
+                {
+                    "Screen Width": 1290,
+                    "2022 Sessions": 3677.0,
+                    "2023 Sessions": 5125.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 8802.0
+                },
+                {
+                    "Screen Width": 1291,
+                    "2022 Sessions": 2462.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 2462.0
+                },
+                {
+                    "Screen Width": 1334,
+                    "2022 Sessions": 2949.0,
+                    "2023 Sessions": 4394.0,
+                    "2024 Sessions": 4602.0,
+                    "Total Sessions": 11945.0
+                },
+                {
+                    "Screen Width": 1344,
+                    "2022 Sessions": 41778.0,
+                    "2023 Sessions": 49600.0,
+                    "2024 Sessions": 47972.0,
+                    "Total Sessions": 139350.0
+                },
+                {
+                    "Screen Width": 1348,
+                    "2022 Sessions": 2248.0,
+                    "2023 Sessions": 3773.0,
+                    "2024 Sessions": 4943.0,
+                    "Total Sessions": 10964.0
+                },
+                {
+                    "Screen Width": 1360,
+                    "2022 Sessions": 43849.0,
+                    "2023 Sessions": 45224.0,
+                    "2024 Sessions": 55187.0,
+                    "Total Sessions": 144260.0
+                },
+                {
+                    "Screen Width": 1364,
+                    "2022 Sessions": 4545.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 4545.0
+                },
+                {
+                    "Screen Width": 1366,
+                    "2022 Sessions": 745795.0,
+                    "2023 Sessions": 981451.0,
+                    "2024 Sessions": 878475.0,
+                    "Total Sessions": 2605721.0
+                },
+                {
+                    "Screen Width": 1368,
+                    "2022 Sessions": 57278.0,
+                    "2023 Sessions": 75316.0,
+                    "2024 Sessions": 63527.0,
+                    "Total Sessions": 196121.0
+                },
+                {
+                    "Screen Width": 1372,
+                    "2022 Sessions": 4041.0,
+                    "2023 Sessions": 6175.0,
+                    "2024 Sessions": 7107.0,
+                    "Total Sessions": 17323.0
+                },
+                {
+                    "Screen Width": 1376,
+                    "2022 Sessions": 2704.0,
+                    "2023 Sessions": 3632.0,
+                    "2024 Sessions": 4028.0,
+                    "Total Sessions": 10364.0
+                },
+                {
+                    "Screen Width": 1382,
+                    "2022 Sessions": 1838.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 1838.0
+                },
+                {
+                    "Screen Width": 1397,
+                    "2022 Sessions": 3178.0,
+                    "2023 Sessions": 6819.0,
+                    "2024 Sessions": 9531.0,
+                    "Total Sessions": 19528.0
+                },
+                {
+                    "Screen Width": 1400,
+                    "2022 Sessions": 2229.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 4184.0,
+                    "Total Sessions": 6413.0
+                },
+                {
+                    "Screen Width": 1408,
+                    "2022 Sessions": 2468.0,
+                    "2023 Sessions": 4100.0,
+                    "2024 Sessions": 5780.0,
+                    "Total Sessions": 12348.0
+                },
+                {
+                    "Screen Width": 1412,
+                    "2022 Sessions": 2762.0,
+                    "2023 Sessions": 3594.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 6356.0
+                },
+                {
+                    "Screen Width": 1418,
+                    "2022 Sessions": 3785.0,
+                    "2023 Sessions": 5056.0,
+                    "2024 Sessions": 6131.0,
+                    "Total Sessions": 14972.0
+                },
+                {
+                    "Screen Width": 1423,
+                    "2022 Sessions": 8190.0,
+                    "2023 Sessions": 7224.0,
+                    "2024 Sessions": 8218.0,
+                    "Total Sessions": 23632.0
+                },
+                {
+                    "Screen Width": 1440,
+                    "2022 Sessions": 516046.0,
+                    "2023 Sessions": 752418.0,
+                    "2024 Sessions": 731938.0,
+                    "Total Sessions": 2000402.0
+                },
+                {
+                    "Screen Width": 1463,
+                    "2022 Sessions": 7998.0,
+                    "2023 Sessions": 14288.0,
+                    "2024 Sessions": 14645.0,
+                    "Total Sessions": 36931.0
+                },
+                {
+                    "Screen Width": 1470,
+                    "2022 Sessions": 3579.0,
+                    "2023 Sessions": 38330.0,
+                    "2024 Sessions": 72430.0,
+                    "Total Sessions": 114339.0
+                },
+                {
+                    "Screen Width": 1475,
+                    "2022 Sessions": 2340.0,
+                    "2023 Sessions": 4058.0,
+                    "2024 Sessions": 4307.0,
+                    "Total Sessions": 10705.0
+                },
+                {
+                    "Screen Width": 1477,
+                    "2022 Sessions": 3509.0,
+                    "2023 Sessions": 8305.0,
+                    "2024 Sessions": 10249.0,
+                    "Total Sessions": 22063.0
+                },
+                {
+                    "Screen Width": 1489,
+                    "2022 Sessions": 3295.0,
+                    "2023 Sessions": 4445.0,
+                    "2024 Sessions": 4091.0,
+                    "Total Sessions": 11831.0
+                },
+                {
+                    "Screen Width": 1500,
+                    "2022 Sessions": 15762.0,
+                    "2023 Sessions": 21650.0,
+                    "2024 Sessions": 29565.0,
+                    "Total Sessions": 66977.0
+                },
+                {
+                    "Screen Width": 1504,
+                    "2022 Sessions": 51905.0,
+                    "2023 Sessions": 92932.0,
+                    "2024 Sessions": 114706.0,
+                    "Total Sessions": 259543.0
+                },
+                {
+                    "Screen Width": 1512,
+                    "2022 Sessions": 11752.0,
+                    "2023 Sessions": 40313.0,
+                    "2024 Sessions": 70955.0,
+                    "Total Sessions": 123020.0
+                },
+                {
+                    "Screen Width": 1536,
+                    "2022 Sessions": 2209732.0,
+                    "2023 Sessions": 3942588.0,
+                    "2024 Sessions": 4680644.0,
+                    "Total Sessions": 10832964.0
+                },
+                {
+                    "Screen Width": 1537,
+                    "2022 Sessions": 7836.0,
+                    "2023 Sessions": 13234.0,
+                    "2024 Sessions": 12876.0,
+                    "Total Sessions": 33946.0
+                },
+                {
+                    "Screen Width": 1549,
+                    "2022 Sessions": 2753.0,
+                    "2023 Sessions": 4177.0,
+                    "2024 Sessions": 6092.0,
+                    "Total Sessions": 13022.0
+                },
+                {
+                    "Screen Width": 1561,
+                    "2022 Sessions": 2893.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 2893.0
+                },
+                {
+                    "Screen Width": 1564,
+                    "2022 Sessions": 1905.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 1905.0
+                },
+                {
+                    "Screen Width": 1574,
+                    "2022 Sessions": 1969.0,
+                    "2023 Sessions": 4156.0,
+                    "2024 Sessions": 5583.0,
+                    "Total Sessions": 11708.0
+                },
+                {
+                    "Screen Width": 1600,
+                    "2022 Sessions": 530352.0,
+                    "2023 Sessions": 773850.0,
+                    "2024 Sessions": 745415.0,
+                    "Total Sessions": 2049617.0
+                },
+                {
+                    "Screen Width": 1603,
+                    "2022 Sessions": 4103.0,
+                    "2023 Sessions": 7719.0,
+                    "2024 Sessions": 6476.0,
+                    "Total Sessions": 18298.0
+                },
+                {
+                    "Screen Width": 1614,
+                    "2022 Sessions": 2355.0,
+                    "2023 Sessions": 5202.0,
+                    "2024 Sessions": 6178.0,
+                    "Total Sessions": 13735.0
+                },
+                {
+                    "Screen Width": 1620,
+                    "2022 Sessions": 6450.0,
+                    "2023 Sessions": 9180.0,
+                    "2024 Sessions": 6905.0,
+                    "Total Sessions": 22535.0
+                },
+                {
+                    "Screen Width": 1628,
+                    "2022 Sessions": 3788.0,
+                    "2023 Sessions": 6277.0,
+                    "2024 Sessions": 5975.0,
+                    "Total Sessions": 16040.0
+                },
+                {
+                    "Screen Width": 1639,
+                    "2022 Sessions": 3230.0,
+                    "2023 Sessions": 4720.0,
+                    "2024 Sessions": 7139.0,
+                    "Total Sessions": 15089.0
+                },
+                {
+                    "Screen Width": 1642,
+                    "2022 Sessions": 2424.0,
+                    "2023 Sessions": 5948.0,
+                    "2024 Sessions": 7773.0,
+                    "Total Sessions": 16145.0
+                },
+                {
+                    "Screen Width": 1664,
+                    "2022 Sessions": 15466.0,
+                    "2023 Sessions": 26984.0,
+                    "2024 Sessions": 50954.0,
+                    "Total Sessions": 93404.0
+                },
+                {
+                    "Screen Width": 1670,
+                    "2022 Sessions": 6622.0,
+                    "2023 Sessions": 8371.0,
+                    "2024 Sessions": 9604.0,
+                    "Total Sessions": 24597.0
+                },
+                {
+                    "Screen Width": 1676,
+                    "2022 Sessions": 7654.0,
+                    "2023 Sessions": 9788.0,
+                    "2024 Sessions": 9158.0,
+                    "Total Sessions": 26600.0
+                },
+                {
+                    "Screen Width": 1677,
+                    "2022 Sessions": 1797.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 1797.0
+                },
+                {
+                    "Screen Width": 1680,
+                    "2022 Sessions": 540621.0,
+                    "2023 Sessions": 797805.0,
+                    "2024 Sessions": 766322.0,
+                    "Total Sessions": 2104748.0
+                },
+                {
+                    "Screen Width": 1685,
+                    "2022 Sessions": 7868.0,
+                    "2023 Sessions": 13145.0,
+                    "2024 Sessions": 20903.0,
+                    "Total Sessions": 41916.0
+                },
+                {
+                    "Screen Width": 1696,
+                    "2022 Sessions": 3347.0,
+                    "2023 Sessions": 4750.0,
+                    "2024 Sessions": 6630.0,
+                    "Total Sessions": 14727.0
+                },
+                {
+                    "Screen Width": 1700,
+                    "2022 Sessions": 3286.0,
+                    "2023 Sessions": 5492.0,
+                    "2024 Sessions": 5596.0,
+                    "Total Sessions": 14374.0
+                },
+                {
+                    "Screen Width": 1707,
+                    "2022 Sessions": 45024.0,
+                    "2023 Sessions": 89363.0,
+                    "2024 Sessions": 132981.0,
+                    "Total Sessions": 267368.0
+                },
+                {
+                    "Screen Width": 1708,
+                    "2022 Sessions": 2561.0,
+                    "2023 Sessions": 5183.0,
+                    "2024 Sessions": 5696.0,
+                    "Total Sessions": 13440.0
+                },
+                {
+                    "Screen Width": 1715,
+                    "2022 Sessions": 7905.0,
+                    "2023 Sessions": 16269.0,
+                    "2024 Sessions": 18221.0,
+                    "Total Sessions": 42395.0
+                },
+                {
+                    "Screen Width": 1728,
+                    "2022 Sessions": 10450.0,
+                    "2023 Sessions": 35933.0,
+                    "2024 Sessions": 54237.0,
+                    "Total Sessions": 100620.0
+                },
+                {
+                    "Screen Width": 1730,
+                    "2022 Sessions": 3089.0,
+                    "2023 Sessions": 5331.0,
+                    "2024 Sessions": 7436.0,
+                    "Total Sessions": 15856.0
+                },
+                {
+                    "Screen Width": 1739,
+                    "2022 Sessions": 9381.0,
+                    "2023 Sessions": 12833.0,
+                    "2024 Sessions": 11677.0,
+                    "Total Sessions": 33891.0
+                },
+                {
+                    "Screen Width": 1745,
+                    "2022 Sessions": 3146.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 3146.0
+                },
+                {
+                    "Screen Width": 1746,
+                    "2022 Sessions": 14090.0,
+                    "2023 Sessions": 24975.0,
+                    "2024 Sessions": 42888.0,
+                    "Total Sessions": 81953.0
+                },
+                {
+                    "Screen Width": 1760,
+                    "2022 Sessions": 5998.0,
+                    "2023 Sessions": 11542.0,
+                    "2024 Sessions": 10657.0,
+                    "Total Sessions": 28197.0
+                },
+                {
+                    "Screen Width": 1762,
+                    "2022 Sessions": 3808.0,
+                    "2023 Sessions": 8999.0,
+                    "2024 Sessions": 9744.0,
+                    "Total Sessions": 22551.0
+                },
+                {
+                    "Screen Width": 1778,
+                    "2022 Sessions": 2930.0,
+                    "2023 Sessions": 4910.0,
+                    "2024 Sessions": 5016.0,
+                    "Total Sessions": 12856.0
+                },
+                {
+                    "Screen Width": 1792,
+                    "2022 Sessions": 42528.0,
+                    "2023 Sessions": 22406.0,
+                    "2024 Sessions": 23540.0,
+                    "Total Sessions": 88474.0
+                },
+                {
+                    "Screen Width": 1795,
+                    "2022 Sessions": 2450.0,
+                    "2023 Sessions": 4911.0,
+                    "2024 Sessions": 5691.0,
+                    "Total Sessions": 13052.0
+                },
+                {
+                    "Screen Width": 1812,
+                    "2022 Sessions": 4059.0,
+                    "2023 Sessions": 5880.0,
+                    "2024 Sessions": 4233.0,
+                    "Total Sessions": 14172.0
+                },
+                {
+                    "Screen Width": 1824,
+                    "2022 Sessions": 2009.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 4206.0,
+                    "Total Sessions": 6215.0
+                },
+                {
+                    "Screen Width": 1829,
+                    "2022 Sessions": 10301.0,
+                    "2023 Sessions": 9743.0,
+                    "2024 Sessions": 15190.0,
+                    "Total Sessions": 35234.0
+                },
+                {
+                    "Screen Width": 1830,
+                    "2022 Sessions": 2101.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 5436.0,
+                    "Total Sessions": 7537.0
+                },
+                {
+                    "Screen Width": 1847,
+                    "2022 Sessions": 3557.0,
+                    "2023 Sessions": 7328.0,
+                    "2024 Sessions": 9590.0,
+                    "Total Sessions": 20475.0
+                },
+                {
+                    "Screen Width": 1865,
+                    "2022 Sessions": 4090.0,
+                    "2023 Sessions": 7173.0,
+                    "2024 Sessions": 8638.0,
+                    "Total Sessions": 19901.0
+                },
+                {
+                    "Screen Width": 1883,
+                    "2022 Sessions": 2791.0,
+                    "2023 Sessions": 5548.0,
+                    "2024 Sessions": 5759.0,
+                    "Total Sessions": 14098.0
+                },
+                {
+                    "Screen Width": 1920,
+                    "2022 Sessions": 10671721.0,
+                    "2023 Sessions": 20115340.0,
+                    "2024 Sessions": 24412183.0,
+                    "Total Sessions": 55199244.0
+                },
+                {
+                    "Screen Width": 1980,
+                    "2022 Sessions": 19586.0,
+                    "2023 Sessions": 44487.0,
+                    "2024 Sessions": 46940.0,
+                    "Total Sessions": 111013.0
+                },
+                {
+                    "Screen Width": 2021,
+                    "2022 Sessions": 3251.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 3251.0
+                },
+                {
+                    "Screen Width": 2048,
+                    "2022 Sessions": 101556.0,
+                    "2023 Sessions": 222419.0,
+                    "2024 Sessions": 299140.0,
+                    "Total Sessions": 623115.0
+                },
+                {
+                    "Screen Width": 2049,
+                    "2022 Sessions": 2138.0,
+                    "2023 Sessions": 4795.0,
+                    "2024 Sessions": 6228.0,
+                    "Total Sessions": 13161.0
+                },
+                {
+                    "Screen Width": 2133,
+                    "2022 Sessions": 2169.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 0.0,
+                    "Total Sessions": 2169.0
+                },
+                {
+                    "Screen Width": 2144,
+                    "2022 Sessions": 9276.0,
+                    "2023 Sessions": 14110.0,
+                    "2024 Sessions": 16122.0,
+                    "Total Sessions": 39508.0
+                },
+                {
+                    "Screen Width": 2195,
+                    "2022 Sessions": 10846.0,
+                    "2023 Sessions": 22377.0,
+                    "2024 Sessions": 35156.0,
+                    "Total Sessions": 68379.0
+                },
+                {
+                    "Screen Width": 2240,
+                    "2022 Sessions": 6962.0,
+                    "2023 Sessions": 18497.0,
+                    "2024 Sessions": 22640.0,
+                    "Total Sessions": 48099.0
+                },
+                {
+                    "Screen Width": 2294,
+                    "2022 Sessions": 4899.0,
+                    "2023 Sessions": 7886.0,
+                    "2024 Sessions": 9088.0,
+                    "Total Sessions": 21873.0
+                },
+                {
+                    "Screen Width": 2400,
+                    "2022 Sessions": 6996.0,
+                    "2023 Sessions": 10276.0,
+                    "2024 Sessions": 8279.0,
+                    "Total Sessions": 25551.0
+                },
+                {
+                    "Screen Width": 2560,
+                    "2022 Sessions": 347174.0,
+                    "2023 Sessions": 760395.0,
+                    "2024 Sessions": 1085465.0,
+                    "Total Sessions": 2193034.0
+                },
+                {
+                    "Screen Width": 2561,
+                    "2022 Sessions": 2072.0,
+                    "2023 Sessions": 7017.0,
+                    "2024 Sessions": 8101.0,
+                    "Total Sessions": 17190.0
+                },
+                {
+                    "Screen Width": 2752,
+                    "2022 Sessions": 5415.0,
+                    "2023 Sessions": 11756.0,
+                    "2024 Sessions": 20920.0,
+                    "Total Sessions": 38091.0
+                },
+                {
+                    "Screen Width": 3440,
+                    "2022 Sessions": 41529.0,
+                    "2023 Sessions": 91932.0,
+                    "2024 Sessions": 192485.0,
+                    "Total Sessions": 325946.0
+                },
+                {
+                    "Screen Width": 3840,
+                    "2022 Sessions": 9525.0,
+                    "2023 Sessions": 23331.0,
+                    "2024 Sessions": 29572.0,
+                    "Total Sessions": 62428.0
+                },
+                {
+                    "Screen Width": 393,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 6319.0,
+                    "2024 Sessions": 12531.0,
+                    "Total Sessions": 18850.0
+                },
+                {
+                    "Screen Width": 430,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 9655.0,
+                    "2024 Sessions": 17987.0,
+                    "Total Sessions": 27642.0
+                },
+                {
+                    "Screen Width": 1494,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 3827.0,
+                    "2024 Sessions": 6604.0,
+                    "Total Sessions": 10431.0
+                },
+                {
+                    "Screen Width": 1710,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 4451.0,
+                    "2024 Sessions": 26111.0,
+                    "Total Sessions": 30562.0
+                },
+                {
+                    "Screen Width": 1740,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 4862.0,
+                    "2024 Sessions": 4615.0,
+                    "Total Sessions": 9477.0
+                },
+                {
+                    "Screen Width": 5120,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 3807.0,
+                    "2024 Sessions": 7700.0,
+                    "Total Sessions": 11507.0
+                },
+                {
+                    "Screen Width": 1383,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 5055.0,
+                    "Total Sessions": 5055.0
+                },
+                {
+                    "Screen Width": 1466,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 3993.0,
+                    "Total Sessions": 3993.0
+                },
+                {
+                    "Screen Width": 1496,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 4307.0,
+                    "Total Sessions": 4307.0
+                },
+                {
+                    "Screen Width": 1587,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 5640.0,
+                    "Total Sessions": 5640.0
+                },
+                {
+                    "Screen Width": 1731,
+                    "2022 Sessions": 0.0,
+                    "2023 Sessions": 0.0,
+                    "2024 Sessions": 4771.0,
+                    "Total Sessions": 4771.0
+                }
+            ];
+
+            window.addEventListener("load", function () {
+                fetchDataAndInit();
+            });
+
+            function fetchDataAndInit() {
+                var data = jsonData;
+
+                originalSessionsData.total = data.map(item => ({
+                    screenWidth: item["Screen Width"],
+                    count: item["Total Sessions"]
+                })).sort((a, b) => a.screenWidth - b.screenWidth);
+
+                originalSessionsData[2022] = data.map(item => ({
+                    screenWidth: item["Screen Width"],
+                    count: item["2022 Sessions"]
+                })).sort((a, b) => a.screenWidth - b.screenWidth);
+
+                originalSessionsData[2023] = data.map(item => ({
+                    screenWidth: item["Screen Width"],
+                    count: item["2023 Sessions"]
+                })).sort((a, b) => a.screenWidth - b.screenWidth);
+
+                originalSessionsData[2024] = data.map(item => ({
+                    screenWidth: item["Screen Width"],
+                    count: item["2024 Sessions"]
+                })).sort((a, b) => a.screenWidth - b.screenWidth);
+
+                // Initialize filteredSessionsData with original data
+                filteredSessionsData = JSON.parse(JSON.stringify(originalSessionsData));
+
+                initSteppedProgress('total'); // Initialize with total sessions data
+                initSteppedProgress(2024); // Initialize with 2024 data
+                initSteppedProgress(2023); // Initialize with 2023 data
+                initSteppedProgress(2022); // Initialize with 2022 data
+                addGlobalEventListeners(); // Add global event listeners after initializing the progress
+            }
+
+            function formatNumber(value) {
+                if (value >= 1000000) {
+                    return (value / 1000000).toFixed(1) + 'M';
+                } else if (value >= 1000) {
+                    return (value / 1000).toFixed(1) + 'K';
+                } else {
+                    return value.toString();
+                }
+            }
+
+            function initSteppedProgress(year) {
+                var colorValues = fixedColors; // Use fixed colors
+
+                var steppedProgress = document.querySelector(`[data-stepped-bar="${year}"]`);
+                if (steppedProgress) {
+                    var data = {
+                        title: `Screen Widths ${year === 'total' ? 'Total Sessions' : year}`,
+                        sessionsData: filteredSessionsData[year]
+                    };
+
+                    //#region: Markup
+
+                    var step = createElementWithClass(DIV, "syncro-progress-stepped");
+
+                    var row = createElementWithClass(DIV, "syncro-row");
+
+                    var valueTotal = data.sessionsData.reduce((total, session) => total + session.count, 0);
+
+                    var widths = data.sessionsData.map(function (session) {
+                        var width = (session.count / valueTotal) * 100;
+                        return width;
+                    });
+
+                    data.sessionsData.forEach(function (session, i) {
+                        var stepItem = createElementWithClass(
+                            DIV,
+                            "syncro-progress-stepped-item"
+                        );
+                        stepItem.setAttribute(
+                            "data-id",
+                            "progress-stepped-item-" + year + "-" + i
+                        );
+                        stepItem.setAttribute("data-value", session.count); // Set the data-value attribute
+                        stepItem.setAttribute("data-name", session.screenWidth); // Set the data-name attribute
+                        stepItem.textContent = widths[i].toFixed(2) + "%";
+                        stepItem.style.width = widths[i] + "%";
+                        stepItem.style.backgroundColor = colorValues[i % colorValues.length];
+
+                        // Create tooltip
+                        var tooltip = createElementWithClass(SPAN, "tooltip");
+                        tooltip.textContent = `HI`;
+                        stepItem.appendChild(tooltip);
+
+                        step.appendChild(stepItem);
+
+                        var dot = createElementWithClass(SPAN, "syncro-dot");
+                        dot.style.backgroundColor = colorValues[i % colorValues.length];
+
+                        var category = createElementWithClass(SPAN, "syncro-category-name");
+                        category.textContent = session.screenWidth;
+
+                        var btn = createElementWithClass(BUTTON, "syncro-btn");
+                        btn.setAttribute(
+                            "data-target",
+                            "progress-stepped-item-" + year + "-" + i
+                        );
+                        btn.appendChild(dot);
+                        btn.appendChild(category);
+
+                        var col = createElementWithClass(DIV, "syncro-col-auto");
+                        col.appendChild(btn);
+
+                        row.appendChild(col);
+                    });
+
+                    var cardBody = createElementWithClass(DIV, "syncro-card-body");
+                    cardBody.appendChild(step);
+                    cardBody.appendChild(row);
+
+                    var card = createElementWithClass(DIV, "syncro-card");
+                    card.appendChild(cardBody);
+
+                    var markup = createElementWithClass(DIV);
+                    markup.appendChild(card);
+
+                    steppedProgress.innerHTML = markup.innerHTML;
+
+                    //#endregion: Markup
+
+                    //#region: Event Listeners
+
+                    [].forEach.call(
+                        steppedProgress.querySelectorAll(".syncro-progress-stepped-item"),
+                        function (el) {
+                            el.addEventListener("mouseenter", (e) => {
+                                toggleActive(e, el);
+                            });
+                            el.addEventListener("mouseleave", (e) => {
+                                toggleActive(e, el);
+                            });
+                        }
+                    );
+                    [].forEach.call(
+                        steppedProgress.querySelectorAll(".syncro-btn"),
+                        function (el) {
+                            el.addEventListener("click", function () {
+                                const dataID = el.getAttribute("data-target");
+                                var targetElm = document.querySelector(
+                                    '[data-id="' + dataID + '"]'
+                                );
+
+                                if (targetElm.classList.contains("active")) {
+                                    targetElm.classList.remove("active");
+                                } else {
+                                    [].forEach.call(
+                                        steppedProgress.querySelectorAll(
+                                            ".syncro-progress-stepped-item"
+                                        ),
+                                        function (el) {
+                                            el.classList.remove("active");
+                                        }
+                                    );
+                                    targetElm.classList.add("active");
+                                }
+                            });
+                        }
+                    );
+                    //#endregion
+                }
+            }
+
+            function addGlobalEventListeners() {
+                var applyButton = document.querySelector(".apply-button");
+                var resetButton = document.querySelector(".reset-button");
+                var startInput = document.querySelector("#start-width");
+                var endInput = document.querySelector("#end-width");
+
+                applyButton.addEventListener("click", function () {
+                    var startWidth = parseInt(startInput.value);
+                    var endWidth = parseInt(endInput.value);
+
+                    if (isNaN(startWidth) || isNaN(endWidth) || startWidth >= endWidth) {
+                        alert("Please enter a valid range where End Width is greater than Start Width.");
+                        return;
+                    }
+                    // Set section widths to 2500 when the user applies a filter
+                    document.getElementById('total-section').style.width = '2500px';
+                    document.getElementById('2024-section').style.width = '2500px';
+                    document.getElementById('2023-section').style.width = '2500px';
+                    document.getElementById('2022-section').style.width = '2500px';
+
+                    ['total', 2022, 2023, 2024].forEach(year => {
+                        var filteredData = originalSessionsData[year].filter(function (session) {
+                            return session.screenWidth >= startWidth && session.screenWidth <= endWidth;
+                        }).sort((a, b) => a.screenWidth - b.screenWidth); // Sort filtered data by screen width
+
+                        filteredSessionsData[year] = filteredData;
+                        initSteppedProgress(year); // Reinitialize with filtered data
+                    });
+                });
+
+                resetButton.addEventListener("click", function () {
+                    // Revert section widths back to 8300 on reset
+                    document.getElementById('total-section').style.width = '8300px';
+                    document.getElementById('2024-section').style.width = '8300px';
+                    document.getElementById('2023-section').style.width = '8300px';
+                    document.getElementById('2022-section').style.width = '8300px';
+                    filteredSessionsData = JSON.parse(JSON.stringify(originalSessionsData));
+                    ['total', 2022, 2023, 2024].forEach(year => {
+                        startInput.value = "";
+                        endInput.value = "";
+                        initSteppedProgress(year); // Reinitialize with original data
+                    });
+                });
+            }
+
+            function toggleActive(e, el) {
+                if (e.type === "mouseenter") {
+                    if (!el.classList.contains("active")) {
+                        el.classList.add("active");
+                        var tooltip = el.querySelector(".tooltip");
+                        tooltip.textContent = `${el.getAttribute("data-name")}px: ${formatNumber(parseFloat(el.getAttribute("data-value")))}`;
+                    }
+                } else if (e.type === "mouseleave") {
+                    if (el.classList.contains("active")) {
+                        el.classList.remove("active");
+                        var tooltip = el.querySelector(".tooltip");
+                        tooltip.textContent = `Width: ${el.getAttribute("data-name")}, Value: ${el.getAttribute("data-value")}`;
+                    }
+                }
+            }
+
+            function createElementWithClass(element, className = "") {
+                var ele = document.createElement(element);
+                if (className) {
+                    var classList = className.split(" ");
+                    classList.forEach(function (value, index) {
+                        ele.classList.add(value);
+                    });
+                }
+                return ele;
+            }
+
+            // Scroll to section function
+            window.scrollToSection = function (sectionId) {
+                document.getElementById(`${sectionId}-section`).scrollIntoView({ behavior: 'smooth' });
+            };
+        })();
+    </script>
+</body>
+
+</html>
