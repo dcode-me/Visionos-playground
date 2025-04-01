@@ -1,0 +1,222 @@
+<h2>Variable Mapper</h2>
+
+<!-- Section 1: Current Mapping -->
+<div id="current-mapping" style="display: none;">
+  <h3>Current Mapping</h3>
+  <p id="current-mapping-info"></p>
+</div>
+
+<!-- Section 2: Variable Selection -->
+<div id="variable-selection">
+  <h3>Select Variable</h3>
+  <label for="collections">Collection:</label>
+  <select id="collections"></select>
+
+  <!-- Search Input -->
+  <label for="search">Search:</label>
+  <input type="text" id="search" placeholder="Search by name or value" />
+
+  <table id="variables-table" border="1">
+    <thead>
+      <tr>
+        <th>Checkbox</th>
+        <th>Variable Name</th>
+        <th>Variable Value</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<style>
+  #variables-table th:nth-child(2) {
+    width: 40%;
+    /* Adjust the width of the "Variable Name" column */
+  }
+
+  #current-mapping {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  #current-mapping.error {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    border: 1px solid #f5c6cb;
+  }
+
+  #current-mapping.warning {
+    background-color: #fff3cd; /* Light yellow */
+    color: #856404; /* Dark yellow */
+    border: 1px solid #ffeeba;
+  }
+
+  #current-mapping.success {
+    background-color: #d3f9d8; /* Light green */
+    color: #155724; /* Dark green */
+    border: 1px solid #c3e6cb;
+  }
+</style>
+
+<script>
+  const collectionsDropdown = document.getElementById('collections');
+  const variablesTable = document.getElementById('variables-table').querySelector('tbody');
+  const currentMappingDiv = document.getElementById('current-mapping');
+  const currentMappingInfo = document.getElementById('current-mapping-info');
+  const searchInput = document.getElementById('search');
+
+  // Listen for messages from the plugin code
+  window.onmessage = (event) => {
+    const { type, data } = event.data.pluginMessage;
+    // console.log(type, data);
+
+    if (type === 'update-collections') {
+      // Populate collections dropdown
+      collectionsDropdown.innerHTML = '';
+
+      // Add a default placeholder option
+      const placeholderOption = document.createElement('option');
+      placeholderOption.value = '';
+      placeholderOption.textContent = '-Select collection-';
+      placeholderOption.disabled = true;
+      placeholderOption.selected = true;
+      collectionsDropdown.appendChild(placeholderOption);
+
+      // Add collections to the dropdown
+      data.collections.forEach((collection) => {
+        const option = document.createElement('option');
+        option.value = collection.id;
+        option.textContent = collection.name;
+        collectionsDropdown.appendChild(option);
+      });
+    }
+    else if (type === 'update-variables') {
+      // Populate variables table
+      variablesTable.innerHTML = '';
+      data.variables.forEach((variable, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><input type="checkbox" ${variable.isMapped ? 'disabled' : ''} data-index="${index}"></td>
+          <td>${variable.name}</td>
+          <td>${variable.value}</td>
+          <td><button ${variable.isMapped ? 'disabled' : ''} disabled>Apply</button></td>
+        `;
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        const applyButton = row.querySelector('button');
+
+        // Handle checkbox change
+        checkbox.addEventListener('change', () => {
+          // Uncheck all other checkboxes and disable their buttons
+          const allCheckboxes = variablesTable.querySelectorAll('input[type="checkbox"]');
+          allCheckboxes.forEach((cb) => {
+            if (cb !== checkbox) {
+              cb.checked = false;
+              const siblingButton = cb.closest('tr').querySelector('button');
+              siblingButton.disabled = true;
+            }
+          });
+
+          // Enable or disable the current button based on the checkbox state
+          applyButton.disabled = !checkbox.checked;
+        });
+
+        // Handle apply button click
+        applyButton.addEventListener('click', () => {
+          parent.postMessage(
+            { pluginMessage: { type: 'apply-variable', variableId: variable.id } },
+            '*'
+          );
+        });
+
+        if (variable.isMapped) {
+          row.style.backgroundColor = '#d3f9d8'; // Highlight mapped rows
+        }
+
+        variablesTable.appendChild(row);
+      });
+    }
+    else if (type === 'update-current-mapping') {
+      // console.log(data);
+
+      if (data.mapping) {
+        // Success: Variable is bound
+        currentMappingDiv.style.display = 'block';
+        currentMappingDiv.className = 'success'; // Apply success styling
+        currentMappingInfo.innerHTML = `
+          <div>Collection: ${data.mapping.colllectionName}</div>
+          <div>Variable Name: ${data.mapping.name}</div>
+          <div>Value: ${data.mapping.value}</div>
+        `;
+
+        // Automatically select the corresponding collection in the dropdown
+        const collectionOptions = collectionsDropdown.options;
+        for (let i = 0; i < collectionOptions.length; i++) {
+          if (collectionOptions[i].textContent === data.mapping.colllectionName) {
+            collectionsDropdown.selectedIndex = i;
+            break;
+          }
+        }
+
+        // Trigger the change event to fetch variables for the selected collection
+        collectionsDropdown.dispatchEvent(new Event('change'));
+      } else {
+        // Determine the type of message
+        if (data.message.includes('Please select a single text node to view or apply variable mappings.')) {
+          // Error: No valid node selected
+          currentMappingDiv.className = 'error'; // Apply error styling
+        } else if (data.message.includes('No variable is bound')) {
+          // Warning: No variable bound
+          currentMappingDiv.className = 'warning'; // Apply warning styling
+        }
+
+        // Display the message
+        currentMappingDiv.style.display = 'block';
+        currentMappingInfo.textContent = `${data.message}`;
+        collectionsDropdown.selectedIndex = 0; // Reset dropdown to default
+
+        // Clear the variables table
+        variablesTable.innerHTML = ''; // Reset the table content
+      }
+    } else if (type === 'toast') {
+      alert(data.message); // Display the toast message
+      if (data.success) {
+        // If the operation was successful, notify the plugin to re-trigger the UI
+        parent.postMessage({ pluginMessage: { type: 'refresh-ui' } }, '*');
+      }
+    }
+  };
+
+  // Handle collection change
+  collectionsDropdown.addEventListener('change', () => {
+    const selectedCollectionId = collectionsDropdown.value;
+    parent.postMessage(
+      { pluginMessage: { type: 'fetch-variables', collectionId: selectedCollectionId } },
+      '*'
+    );
+  });
+
+  // Listen for input events on the search field
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const rows = variablesTable.querySelectorAll('tr');
+
+    rows.forEach((row) => {
+      const nameCell = row.querySelector('td:nth-child(2)');
+      const valueCell = row.querySelector('td:nth-child(3)');
+
+      if (nameCell && valueCell) {
+        const nameText = nameCell.textContent.toLowerCase();
+        const valueText = valueCell.textContent.toLowerCase();
+
+        // Show or hide the row based on the search term
+        if (nameText.includes(searchTerm) || valueText.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    });
+  });
+</script>
