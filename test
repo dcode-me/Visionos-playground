@@ -1,299 +1,301 @@
-figma.showUI(__html__, { width: 800, height: 600 });
+<h2>Variable Mapper</h2>
 
-let currentTextNode: TextNode | null = null;
-let copiedVariable: Variable | null = null; // Store the copied variable
+<!-- Section 1: Copy and Paste -->
+<div id="copy-paste-actions" style="margin-bottom: 10px;">
+  <button id="copy-variable">Copy Variable</button>
+  <button id="paste-variable">Paste Variable</button>
+</div>
 
-// Function to handle selection changes
-function handleSelectionChange() {
-  const selection = figma.currentPage.selection;
-  if (selection.length === 1 && selection[0].type === "TEXT") {
-    currentTextNode = selection[0] as TextNode;
-    updateCurrentMapping();
-  } else {
-    currentTextNode = null;
-    figma.ui.postMessage({
-      type: "update-current-mapping",
-      data: {
-        mapping: null,
-        message:
-          "Please select a single text node to view or apply variable mappings.",
-      },
-    });
-  }
-}
+<!-- Section 2: Current Mapping -->
+<div id="current-mapping" style="display: none;">
+  <h3>Current Mapping</h3>
+  <p id="current-mapping-info"></p>
+</div>
 
-// Update current mapping in the UI
-async function updateCurrentMapping() {
-  if (!currentTextNode) {
-    notifyUI("No text node is selected.");
-    return;
-  }
+<!-- Section 3: Variable Selection -->
+<div id="variable-selection">
+  <h3>Select Variable</h3>
+  <label for="collections">Collection:</label>
+  <select id="collections"></select>
 
-  const boundVariable = currentTextNode.boundVariables?.characters;
-  if (!boundVariable) {
-    notifyUI("No variable is bound to this text node.");
-    return;
-  }
+  <!-- Search Input -->
+  <label for="search">Search:</label>
+  <input type="text" id="search" placeholder="Search by name or value" />
 
-  const variable = await figma.variables.getVariableByIdAsync(boundVariable.id);
-  if (!variable || variable.resolvedType !== "STRING") {
-    notifyUI("The bound variable is not of type STRING.");
-    return;
-  }
+  <!-- Export Button -->
+  <button id="export-csv">Export Collection to CSV</button>
 
-  const collection = await figma.variables.getVariableCollectionByIdAsync(
-    variable.variableCollectionId
-  );
-  if (!collection || collection.modes.length === 0) {
-    notifyUI("The variable's collection has no modes or is invalid.");
-    return;
+  <table id="variables-table" border="1">
+    <thead>
+      <tr>
+        <th>Checkbox</th>
+        <th>Variable Name</th>
+        <th>Variable Value</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<style>
+  #variables-table th:nth-child(2) {
+    width: 40%;
+    /* Adjust the width of the "Variable Name" column */
   }
 
-  const defaultModeId = collection.modes[0].modeId;
-  figma.ui.postMessage({
-    type: "update-current-mapping",
-    data: {
-      mapping: {
-        colllectionName: collection.name,
-        id: variable.id,
-        name: variable.name,
-        value: variable.valuesByMode[defaultModeId],
-      },
-      message: "Variable mapping updated successfully.",
-    },
-  });
-}
-
-function notifyUI(message: string) {
-  figma.ui.postMessage({
-    type: "update-current-mapping",
-    data: { mapping: null, message },
-  });
-}
-
-// Copy the variable bound to the selected text node
-async function copyVariable() {
-  if (!currentTextNode) {
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "No valid text node is selected to copy a variable.", success: false },
-    });
-    return;
+  #current-mapping {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
   }
 
-  const boundVariable = currentTextNode.boundVariables?.characters;
-  if (!boundVariable) {
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "No variable is bound to the selected text node.", success: false },
-    });
-    return;
+  #current-mapping.error {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    border: 1px solid #f5c6cb;
   }
 
-  const variable = await figma.variables.getVariableByIdAsync(boundVariable.id);
-  if (variable && variable.resolvedType === "STRING") {
-    copiedVariable = variable; // Store the copied variable
-    // figma.ui.postMessage({
-    //   type: "toast",
-    //   data: { message: `Variable "${variable.name}" copied successfully!`, success: true },
-    // });
-  } else {
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "The bound variable is not of type STRING or does not exist.", success: false },
-    });
-  }
-}
-
-// Paste the copied variable to the selected text node
-async function pasteVariable() {
-  if (!currentTextNode) {
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "No valid text node is selected to paste a variable.", success: false },
-    });
-    return;
+  #current-mapping.warning {
+    background-color: #fff3cd; /* Light yellow */
+    color: #856404; /* Dark yellow */
+    border: 1px solid #ffeeba;
   }
 
-  if (!copiedVariable) {
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "No variable has been copied. Use Cmd + Shift + < to copy a variable first.", success: false },
-    });
-    return;
+  #current-mapping.success {
+    background-color: #d3f9d8; /* Light green */
+    color: #155724; /* Dark green */
+    border: 1px solid #c3e6cb;
   }
+</style>
 
-  // Bind the copied variable to the current text node
-  currentTextNode.setBoundVariable("characters", copiedVariable);
-  // figma.ui.postMessage({
-  //   type: "toast",
-  //   data: { message: `Variable "${copiedVariable.name}" pasted successfully!`, success: true },
-  // });
-}
+<script>
+  const collectionsDropdown = document.getElementById('collections');
+  const variablesTable = document.getElementById('variables-table').querySelector('tbody');
+  const currentMappingDiv = document.getElementById('current-mapping');
+  const currentMappingInfo = document.getElementById('current-mapping-info');
+  const searchInput = document.getElementById('search');
+  const exportButton = document.getElementById('export-csv');
+  const copyButton = document.getElementById('copy-variable');
+  const pasteButton = document.getElementById('paste-variable');
 
-// Fetch collections and send to UI
-async function fetchCollections() {
-  const collections = await figma.variables.getLocalVariableCollectionsAsync();
-  figma.ui.postMessage({
-    type: "update-collections",
-    data: { collections: collections.map((c) => ({ id: c.id, name: c.name })) },
-  });
-}
+  // Listen for messages from the plugin code
+  window.onmessage = (event) => {
+    const { type, data } = event.data.pluginMessage;
 
-// Fetch variables for a collection and send to UI
-async function fetchVariables(collectionId: string) {
-  const collection = await figma.variables.getVariableCollectionByIdAsync(
-    collectionId
-  );
+    if (type === 'update-collections') {
+      // Populate collections dropdown
+      collectionsDropdown.innerHTML = '';
 
-  if (collection) {
-    const defaultModeId = collection.modes[0].modeId;
+      // Add a default placeholder option
+      const placeholderOption = document.createElement('option');
+      placeholderOption.value = '';
+      placeholderOption.textContent = '-Select collection-';
+      placeholderOption.disabled = true;
+      placeholderOption.selected = true;
+      collectionsDropdown.appendChild(placeholderOption);
 
-    // Fetch all variables in the collection
-    const variables = await Promise.all(
-      collection.variableIds.map((id) =>
-        figma.variables.getVariableByIdAsync(id)
-      )
-    );
-
-    // Get the bound variable ID from the selected text node
-    const boundVariableId = currentTextNode?.boundVariables?.characters?.id;
-
-    // Filter variables to include only those of type 'STRING'
-    const stringVariables = variables.filter(
-      (variable) => variable?.resolvedType === "STRING"
-    );
-
-    // Send the filtered variables to the UI
-    figma.ui.postMessage({
-      type: "update-variables",
-      data: {
-        variables: stringVariables.map((variable) => ({
-          id: variable!.id,
-          name: variable!.name,
-          value: String(variable!.valuesByMode[defaultModeId]), // Convert value to string
-          isMapped: variable!.id === boundVariableId,
-        })),
-      },
-    });
-  }
-}
-
-// Apply variable to the selected text node
-async function applyVariable(variableId: string) {
-  if (!currentTextNode) {
-    // Notify the user if no valid text node is selected
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "No valid text node is selected. Please select a text node.", success: false },
-    });
-    return;
-  }
-
-  const variable = await figma.variables.getVariableByIdAsync(variableId);
-  if (variable && variable.resolvedType === "STRING") {
-    // Bind the variable to the text node
-    currentTextNode.setBoundVariable("characters", variable);
-
-    // Notify the user via a toast message and indicate success
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "Variable successfully bound to the text node!", success: true },
-    });
-  } else {
-    // Notify the user if the variable is not of type STRING or does not exist
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "Variable is not of type STRING or does not exist.", success: false },
-    });
-  }
-}
-
-// Export collection to CSV
-async function exportCollectionToCSV(collectionId: string) {
-  const collection = await figma.variables.getVariableCollectionByIdAsync(collectionId);
-
-  if (!collection) {
-    figma.ui.postMessage({
-      type: "toast",
-      data: { message: "Collection not found.", success: false },
-    });
-    return;
-  }
-
-  const variables = await Promise.all(
-    collection.variableIds.map((id) => figma.variables.getVariableByIdAsync(id))
-  );
-
-  const csvRows = [
-    ["Variable Name", "Variable Value", "Variable ID"], // Header row
-  ];
-
-  const defaultModeId = collection.modes[0]?.modeId;
-
-  variables.forEach((variable) => {
-    if (variable && variable.resolvedType === "STRING") {
-      const value = variable.valuesByMode[defaultModeId] || "";
-      csvRows.push([variable.name, String(value), variable.id]);
+      // Add collections to the dropdown
+      data.collections.forEach((collection) => {
+        const option = document.createElement('option');
+        option.value = collection.id;
+        option.textContent = collection.name;
+        collectionsDropdown.appendChild(option);
+      });
     }
+    else if (type === 'update-variables') {
+      // Populate variables table
+      variablesTable.innerHTML = '';
+      data.variables.forEach((variable, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><input type="checkbox" ${variable.isMapped ? 'disabled' : ''} data-index="${index}"></td>
+          <td>${variable.name}</td>
+          <td>${variable.value}</td>
+          <td><button ${variable.isMapped ? 'disabled' : ''} disabled>Apply</button></td>
+        `;
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        const applyButton = row.querySelector('button');
+
+        // Handle checkbox change
+        checkbox.addEventListener('change', () => {
+          // Uncheck all other checkboxes and disable their buttons
+          const allCheckboxes = variablesTable.querySelectorAll('input[type="checkbox"]');
+          allCheckboxes.forEach((cb) => {
+            if (cb !== checkbox) {
+              cb.checked = false;
+              const siblingButton = cb.closest('tr').querySelector('button');
+              siblingButton.disabled = true;
+            }
+          });
+
+          // Enable or disable the current button based on the checkbox state
+          applyButton.disabled = !checkbox.checked;
+        });
+
+        // Handle apply button click
+        applyButton.addEventListener('click', () => {
+          parent.postMessage(
+            { pluginMessage: { type: 'apply-variable', variableId: variable.id } },
+            '*'
+          );
+        });
+
+        if (variable.isMapped) {
+          row.style.backgroundColor = '#d3f9d8'; // Highlight mapped rows
+        }
+
+        variablesTable.appendChild(row);
+      });
+    }
+    else if (type === 'update-current-mapping') {
+      if (data.mapping) {
+        currentMappingDiv.style.display = 'block';
+        currentMappingDiv.className = 'success'; // Apply success styling
+        currentMappingInfo.innerHTML = `
+          <div>Collection: ${data.mapping.colllectionName}</div>
+          <div>Variable Name: ${data.mapping.name}</div>
+          <div>Value: ${data.mapping.value}</div>
+        `;
+
+        // Automatically select the corresponding collection in the dropdown
+        const collectionOptions = collectionsDropdown.options;
+        for (let i = 0; i < collectionOptions.length; i++) {
+          if (collectionOptions[i].textContent === data.mapping.colllectionName) {
+            collectionsDropdown.selectedIndex = i;
+            break;
+          }
+        }
+
+        // Trigger the change event to fetch variables for the selected collection
+        collectionsDropdown.dispatchEvent(new Event('change'));
+      } else {
+        if (data.message.includes('Please select a single text node to view or apply variable mappings.')) {
+          currentMappingDiv.className = 'error'; // Apply error styling
+        } else if (data.message.includes('No variable is bound')) {
+          currentMappingDiv.className = 'warning'; // Apply warning styling
+        }
+
+        currentMappingDiv.style.display = 'block';
+        currentMappingInfo.textContent = `${data.message}`;
+        collectionsDropdown.selectedIndex = 0; // Reset dropdown to default
+        variablesTable.innerHTML = ''; // Reset the table content
+      }
+    } else if (type === 'toast') {
+      alert(data.message); // Display the toast message
+      if (data.success) {
+        parent.postMessage({ pluginMessage: { type: 'refresh-ui' } }, '*');
+      }
+    }
+    else if (type === 'export-csv') {
+      const { csvContent, collectionName } = data;
+
+      // Create a blob and a download link
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${collectionName}.csv`;
+      link.style.display = 'none';
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  // Handle collection change
+  collectionsDropdown.addEventListener('change', () => {
+    const selectedCollectionId = collectionsDropdown.value;
+    parent.postMessage(
+      { pluginMessage: { type: 'fetch-variables', collectionId: selectedCollectionId } },
+      '*'
+    );
   });
 
-  // Convert rows to CSV format
-  const csvContent = csvRows.map((row) => row.join(",")).join("\n");
+  // Listen for input events on the search field
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const rows = variablesTable.querySelectorAll('tr');
 
-  // Send the CSV data back to the UI
-  figma.ui.postMessage({
-    type: "export-csv",
-    data: { csvContent, collectionName: collection.name },
+    rows.forEach((row) => {
+      const nameCell = row.querySelector('td:nth-child(2)');
+      const valueCell = row.querySelector('td:nth-child(3)');
+
+      if (nameCell && valueCell) {
+        const nameText = nameCell.textContent.toLowerCase();
+        const valueText = valueCell.textContent.toLowerCase();
+
+        // Show or hide the row based on the search term
+        if (nameText.includes(searchTerm) || valueText.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    });
   });
-}
 
-// Handle messages from the UI
-figma.ui.onmessage = async (msg) => {
-  console.log("Message received in backend:", msg); // Debugging: Log the received message
+  // Handle export button click
+  exportButton.addEventListener('click', () => {
+    const selectedCollectionId = collectionsDropdown.value;
 
-  if (msg.type === "copy-variable") {
-    console.log("Copy variable message received."); // Debugging: Log copy message
-    await copyVariable();
-  } else if (msg.type === "paste-variable") {
-    console.log("Paste variable message received."); // Debugging: Log paste message
-    await pasteVariable();
-  } else if (msg.type === "fetch-variables") {
-    await fetchVariables(msg.collectionId);
-  } else if (msg.type === "apply-variable") {
-    await applyVariable(msg.variableId);
-  } else if (msg.type === "export-collection") {
-    await exportCollectionToCSV(msg.collectionId);
-  } else if (msg.type === "refresh-ui") {
-    handleSelectionChange();
-  }
-};
+    if (!selectedCollectionId) {
+      alert('Please select a collection to export.');
+      return;
+    }
 
-// // Listen for keyboard shortcuts
-// figma.ui.onmessage = async (msg) => {
-//   if (msg.type === "keydown") {
-//     if (msg.metaKey && msg.shiftKey && msg.key === "<") {
-//       // Cmd + Shift + < to copy variable
-//       copyVariable();
-//     } else if (msg.metaKey && msg.shiftKey && msg.key === ">") {
-//       // Cmd + Shift + > to paste variable
-//       pasteVariable();
-//     }
-//   } else if (msg.type === "fetch-variables") {
-//     await fetchVariables(msg.collectionId);
-//   } else if (msg.type === "apply-variable") {
-//     await applyVariable(msg.variableId);
-//   } else if (msg.type === "export-collection") {
-//     await exportCollectionToCSV(msg.collectionId);
-//   } else if (msg.type === "refresh-ui") {
-//     // Re-trigger the UI to load the current state of the selected node
-//     handleSelectionChange();
-//   }
-// };
+    parent.postMessage(
+      { pluginMessage: { type: 'export-collection', collectionId: selectedCollectionId } },
+      '*'
+    );
+  });
 
-// Listen for selection changes
-figma.on("selectionchange", handleSelectionChange);
+  // Handle Copy button click
+  copyButton.addEventListener('click', () => {
+    console.log("Copy button clicked."); // Debugging: Log copy button click
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'copy-variable', // Message type
+        },
+      },
+      '*'
+    );
+  });
 
-// Initial setup
-fetchCollections();
-handleSelectionChange();
+  // Handle Paste button click
+  pasteButton.addEventListener('click', () => {
+    console.log("Paste button clicked."); // Debugging: Log paste button click
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'paste-variable', // Message type
+        },
+      },
+      '*'
+    );
+  });
+
+  document.addEventListener("keydown", (event) => {
+    console.log("Keydown event in UI:", event); // Debugging: Log keydown event in UI
+
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "keydown",
+          metaKey: event.metaKey,
+          altKey: event.altKey,
+          shiftKey: event.shiftKey,
+          key: event.key,
+        },
+      },
+      "*"
+    );
+  });
+
+  window.addEventListener("load", () => {
+    window.focus(); // Ensure the iframe has focus
+    console.log("UI loaded and focused."); // Debugging: Log when the UI is loaded
+  });
+</script>
