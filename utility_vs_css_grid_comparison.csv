@@ -1,0 +1,25 @@
+Aspect,Utility-Based CSS Framework (Bootstrap),Native CSS Grid
+Core Philosophy,Predefined utility classes abstract layout behavior for speed and standardization,"Native CSS layout system built into the browser — powerful, declarative, and two-dimensional"
+Layout Approach,"Top-down, class-driven layout using a fixed 12-column grid","Declarative, code-driven layout with full control over rows, columns, and spacing"
+Column System,"12-column system (`.col-6`, `.col-md-4`) with responsive variants",No fixed column system — define your own with `grid-template-columns`
+Responsiveness,Achieved through breakpoint-specific utility classes,"Achieved through media queries or modern techniques like `auto-fit`, `auto-fill`, and container queries"
+Flexibility,Limited to what’s defined in the utility class set,"Total flexibility — create any number of rows/columns, alignments, or complex nested layouts"
+Customization,Requires configuration overrides or custom utility classes,"Direct manipulation with full control over track sizes, repeat patterns, named lines, areas, etc."
+Learning Curve,Easy for beginners — class names abstract away layout logic,"Requires understanding of CSS Grid properties, but offers deeper control"
+Markup Clarity,"Often verbose, class-heavy HTML",Semantic HTML + CSS separation
+Semantics & Maintainability,Less semantic — logic is embedded in class names,Fully semantic HTML + maintainable layout defined in stylesheets
+Use of CSS Features,Wraps older layout techniques — Flexbox or floats depending on version,"Uses modern CSS features: `grid-template-areas`, `grid-auto-flow`, `minmax()`, `fr`, etc."
+Two-Dimensional Layout,Not truly supported — only horizontal control (rows/columns),Native support for two-dimensional layouts (rows AND columns simultaneously)
+Nesting Support,Nested grids possible with additional `.row`/`.col` combinations,"Native nesting support — grids inside grids, or combining Flexbox + Grid"
+Design System Integration,Needs custom mapping of utility classes to design tokens,"Direct integration with design tokens (spacing, layout, breakpoints)"
+Performance / Bundle Size,Can introduce bloat — unused utilities unless purged,No additional CSS unless authored — minimal and optimized
+Scalability,Can become messy in large codebases due to inconsistent class usage,Scales cleanly when built as layout components or design system primitives
+Support for Named Areas,Not supported — layout is positional only,"Supports `grid-template-areas` — ideal for semantic, maintainable structure"
+Gap Handling,Gap typically managed with negative margins and padding (gutters),"Native `gap` support with Grid — clean, simple spacing"
+Direction Awareness,Layouts are row-based and depend on class structure,"Layout direction, flow, alignment all defined explicitly — flexible across writing modes (LTR/RTL)"
+CSS Authoring,"Very little actual CSS needed, but lots of HTML utility clutter","Requires CSS authoring, but leads to better separation of concerns"
+Best For,"Rapid prototyping, marketing sites, teams without custom design systems","Scalable products, complex UIs, internal systems, and design-system-based frontends"
+Component Abstraction,Difficult — logic lives in class soup,Easy — layout lives in CSS or encapsulated in layout primitives/components
+Design–Dev Hand-off,Class names often don’t reflect design decisions,Design handoff is clearer when using Grid tokens and semantic layout declarations
+Adaptability to Modern CSS,"Lags behind — e.g., no native support for subgrid, container queries","Fully compatible with modern specs: subgrid, min-content, container queries, etc."
+Accessibility & Semantics,Not inherently accessible — semantics must be added manually,Supports semantic HTML structure — layout does not interfere with accessibility
