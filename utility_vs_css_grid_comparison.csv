@@ -23,3 +23,12 @@ Component Abstraction,Difficult — logic lives in class soup,Easy — layout li
 Design–Dev Hand-off,Class names often don’t reflect design decisions,Design handoff is clearer when using Grid tokens and semantic layout declarations
 Adaptability to Modern CSS,"Lags behind — e.g., no native support for subgrid, container queries","Fully compatible with modern specs: subgrid, min-content, container queries, etc."
 Accessibility & Semantics,Not inherently accessible — semantics must be added manually,Supports semantic HTML structure — layout does not interfere with accessibility
+Availability	‚ùå Not supported ‚Äî frameworks use predefined % or class-based widths	‚úÖ Fully supported in native CSS Grid
+Column Width Control	Based on 12-column math (`col-4` = ~33.33%)	`grid-template-columns: 1fr 2fr` gives fluid, proportional control
+Responsiveness	Requires class combinations and breakpoints (`col-md-6`, `col-lg-4`, etc.)	Uses `auto-fit`, `minmax()`, and `fr` for intrinsic, responsive behavior
+Simplicity	Complex markup to get responsive ratios	One-line declaration handles layout logic elegantly
+Customization	Requires utility overrides or custom class definitions	Fully customizable per layout ‚Äî no class pollution
+Use Case Fit	Good for rigid, consistent layouts with predefined structure	Ideal for flexible, fluid designs that adapt to container or viewport size
+Integration with Tokens	Indirect ‚Äî requires mapping classes to spacing/width tokens	Direct ‚Äî `fr` units can be used with spacing, gaps, and named grid areas
+Layout Power	Linear ‚Äî mostly one-dimensional (rows)	Two-dimensional ‚Äî supports dynamic rows and columns simultaneously
+Learning Curve	Lower (for basic use), but rigid	Slightly higher, but more expressive and future-proof
