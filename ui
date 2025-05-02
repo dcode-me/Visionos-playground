@@ -1,0 +1,334 @@
+<h2>Variable Mapper</h2>
+
+<!-- Section 1: Copy and Paste -->
+<div id="copy-paste-actions" style="margin-bottom: 10px;">
+  <button id="copy-variable">Copy Variable</button>
+  <button id="paste-variable">Paste Variable</button>
+</div>
+
+<!-- Section 2: Current Mapping -->
+<div id="current-mapping" style="display: none;">
+  <h3>Current Mapping</h3>
+  <p id="current-mapping-info"></p>
+</div>
+
+<!-- Section 3: Variable Selection -->
+<div id="variable-selection">
+  <h3>Select Variable</h3>
+  <label for="collections">Collection:</label>
+  <select id="collections"></select>
+
+  <!-- Search Input -->
+  <label for="search">Search:</label>
+  <input type="text" id="search" placeholder="Search by name or value" />
+
+  <!-- Export Button -->
+  <button id="export-csv">Export Collection to CSV</button>
+  <!-- Add Export JSON Button -->
+  <button id="export-json">Export Collection to JSON</button>
+
+  <table id="variables-table" border="1">
+    <thead>
+      <tr>
+        <th>Checkbox</th>
+        <th>Variable Name</th>
+        <th>Variable Value</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<style>
+  #variables-table th:nth-child(2) {
+    width: 40%;
+    /* Adjust the width of the "Variable Name" column */
+  }
+
+  #current-mapping {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  #current-mapping.error {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    border: 1px solid #f5c6cb;
+  }
+
+  #current-mapping.warning {
+    background-color: #fff3cd; /* Light yellow */
+    color: #856404; /* Dark yellow */
+    border: 1px solid #ffeeba;
+  }
+
+  #current-mapping.success {
+    background-color: #d3f9d8; /* Light green */
+    color: #155724; /* Dark green */
+    border: 1px solid #c3e6cb;
+  }
+</style>
+
+<script>
+  const collectionsDropdown = document.getElementById('collections');
+  const variablesTable = document.getElementById('variables-table').querySelector('tbody');
+  const currentMappingDiv = document.getElementById('current-mapping');
+  const currentMappingInfo = document.getElementById('current-mapping-info');
+  const searchInput = document.getElementById('search');
+  const exportButton = document.getElementById('export-csv');
+  const copyButton = document.getElementById('copy-variable');
+  const pasteButton = document.getElementById('paste-variable');
+  const exportJsonButton = document.getElementById('export-json');
+
+  // Listen for messages from the plugin code
+  window.onmessage = (event) => {
+    const { type, data } = event.data.pluginMessage;
+
+    if (type === 'update-collections') {
+      // Populate collections dropdown
+      collectionsDropdown.innerHTML = '';
+
+      // Add a default placeholder option
+      const placeholderOption = document.createElement('option');
+      placeholderOption.value = '';
+      placeholderOption.textContent = '-Select collection-';
+      placeholderOption.disabled = true;
+      placeholderOption.selected = true;
+      collectionsDropdown.appendChild(placeholderOption);
+
+      // Add collections to the dropdown
+      data.collections.forEach((collection) => {
+        const option = document.createElement('option');
+        option.value = collection.id;
+        option.textContent = collection.name;
+        collectionsDropdown.appendChild(option);
+      });
+    }
+    else if (type === 'update-variables') {
+      // Populate variables table
+      variablesTable.innerHTML = '';
+      data.variables.forEach((variable, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><input type="checkbox" ${variable.isMapped ? 'disabled' : ''} data-index="${index}"></td>
+          <td>${variable.name}</td>
+          <td>${variable.value}</td>
+          <td><button ${variable.isMapped ? 'disabled' : ''} disabled>Apply</button></td>
+        `;
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        const applyButton = row.querySelector('button');
+
+        // Handle checkbox change
+        checkbox.addEventListener('change', () => {
+          // Uncheck all other checkboxes and disable their buttons
+          const allCheckboxes = variablesTable.querySelectorAll('input[type="checkbox"]');
+          allCheckboxes.forEach((cb) => {
+            if (cb !== checkbox) {
+              cb.checked = false;
+              const siblingButton = cb.closest('tr').querySelector('button');
+              siblingButton.disabled = true;
+            }
+          });
+
+          // Enable or disable the current button based on the checkbox state
+          applyButton.disabled = !checkbox.checked;
+        });
+
+        // Handle apply button click
+        applyButton.addEventListener('click', () => {
+          parent.postMessage(
+            { pluginMessage: { type: 'apply-variable', variableId: variable.id } },
+            '*'
+          );
+        });
+
+        if (variable.isMapped) {
+          row.style.backgroundColor = '#d3f9d8'; // Highlight mapped rows
+        }
+
+        variablesTable.appendChild(row);
+      });
+    }
+    else if (type === 'update-current-mapping') {
+      if (data.mapping) {
+        currentMappingDiv.style.display = 'block';
+        currentMappingDiv.className = 'success'; // Apply success styling
+        currentMappingInfo.innerHTML = `
+          <div>Collection: ${data.mapping.colllectionName}</div>
+          <div>Variable Name: ${data.mapping.name}</div>
+          <div>Value: ${data.mapping.value}</div>
+        `;
+
+        // Automatically select the corresponding collection in the dropdown
+        const collectionOptions = collectionsDropdown.options;
+        for (let i = 0; i < collectionOptions.length; i++) {
+          if (collectionOptions[i].textContent === data.mapping.colllectionName) {
+            collectionsDropdown.selectedIndex = i;
+            break;
+          }
+        }
+
+        // Trigger the change event to fetch variables for the selected collection
+        collectionsDropdown.dispatchEvent(new Event('change'));
+      } else {
+        if (data.message.includes('Please select a single text node to view or apply variable mappings.')) {
+          currentMappingDiv.className = 'error'; // Apply error styling
+        } else if (data.message.includes('No variable is bound')) {
+          currentMappingDiv.className = 'warning'; // Apply warning styling
+        }
+
+        currentMappingDiv.style.display = 'block';
+        currentMappingInfo.textContent = `${data.message}`;
+        collectionsDropdown.selectedIndex = 0; // Reset dropdown to default
+        variablesTable.innerHTML = ''; // Reset the table content
+      }
+    } else if (type === 'toast') {
+      alert(data.message); // Display the toast message
+      if (data.success) {
+        parent.postMessage({ pluginMessage: { type: 'refresh-ui' } }, '*');
+      }
+    }
+    else if (type === 'export-csv') {
+      const { csvContent, collectionName } = data;
+
+      // Create a blob and a download link
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${collectionName}.csv`;
+      link.style.display = 'none';
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    else if (type === 'export-json') {
+      const { jsonContent, collectionName } = data;
+
+      // Create a blob and a download link
+      const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${collectionName}.json`;
+      link.style.display = 'none';
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  // Handle collection change
+  collectionsDropdown.addEventListener('change', () => {
+    const selectedCollectionId = collectionsDropdown.value;
+    parent.postMessage(
+      { pluginMessage: { type: 'fetch-variables', collectionId: selectedCollectionId } },
+      '*'
+    );
+  });
+
+  // Listen for input events on the search field
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const rows = variablesTable.querySelectorAll('tr');
+
+    rows.forEach((row) => {
+      const nameCell = row.querySelector('td:nth-child(2)');
+      const valueCell = row.querySelector('td:nth-child(3)');
+
+      if (nameCell && valueCell) {
+        const nameText = nameCell.textContent.toLowerCase();
+        const valueText = valueCell.textContent.toLowerCase();
+
+        // Show or hide the row based on the search term
+        if (nameText.includes(searchTerm) || valueText.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Handle export button click
+  exportButton.addEventListener('click', () => {
+    const selectedCollectionId = collectionsDropdown.value;
+
+    if (!selectedCollectionId) {
+      alert('Please select a collection to export.');
+      return;
+    }
+
+    parent.postMessage(
+      { pluginMessage: { type: 'export-collection', collectionId: selectedCollectionId } },
+      '*'
+    );
+  });
+
+  // Handle Export JSON button click
+  exportJsonButton.addEventListener('click', () => {
+    const selectedCollectionId = collectionsDropdown.value;
+
+    if (!selectedCollectionId) {
+      alert('Please select a collection to export.');
+      return;
+    }
+
+    parent.postMessage(
+      { pluginMessage: { type: 'export-collection-json', collectionId: selectedCollectionId } },
+      '*'
+    );
+  });
+
+  // Handle Copy button click
+  copyButton.addEventListener('click', () => {
+    console.log("Copy button clicked."); // Debugging: Log copy button click
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'copy-variable', // Message type
+        },
+      },
+      '*'
+    );
+  });
+
+  // Handle Paste button click
+  pasteButton.addEventListener('click', () => {
+    console.log("Paste button clicked."); // Debugging: Log paste button click
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'paste-variable', // Message type
+        },
+      },
+      '*'
+    );
+  });
+
+  document.addEventListener("keydown", (event) => {
+    console.log("Keydown event in UI:", event); // Debugging: Log keydown event in UI
+
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "keydown",
+          metaKey: event.metaKey,
+          altKey: event.altKey,
+          shiftKey: event.shiftKey,
+          key: event.key,
+        },
+      },
+      "*"
+    );
+  });
+
+  window.addEventListener("load", () => {
+    window.focus(); // Ensure the iframe has focus
+    console.log("UI loaded and focused."); // Debugging: Log when the UI is loaded
+  });
+</script>
