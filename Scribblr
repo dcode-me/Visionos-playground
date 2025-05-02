@@ -1,0 +1,5 @@
+<a href="/product/designstudio-pro" class="card" aria-label="View details for DesignStudio Pro">
+  <img src="logo.svg" alt="" aria-hidden="true" class="card-logo">
+  <h2 class="card-title">DesignStudio Pro</h2>
+  <p class="card-description">Powerful design tool for modern teams</p>
+</a>
