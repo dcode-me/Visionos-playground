@@ -3,3 +3,11 @@
   <h2 class="card-title">DesignStudio Pro</h2>
   <p class="card-description">Powerful design tool for modern teams</p>
 </a>
+
+✅ Key Accessibility Notes
+	•	✅ aria-label: Helps screen readers understand the purpose of the card.
+	•	✅ <a> element: Entire card is focusable and clickable.
+	•	✅ alt="" + aria-hidden="true": Treats the logo as decorative — not read aloud.
+	•	✅ Use of semantic heading (<h2>) improves screen reader experience.
+	•	✅ Only one focusable element per card.
+
