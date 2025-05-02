@@ -11,3 +11,20 @@
 	•	✅ Use of semantic heading (<h2>) improves screen reader experience.
 	•	✅ Only one focusable element per card.
 
+const jsonData = {
+    variables: variables
+      .filter(
+        (variable) =>
+          variable &&
+          variable.resolvedType === "STRING" &&
+          !variable.name.startsWith("Placeholder/") &&
+          !variable.name.startsWith("Common/")
+      )
+      .map((variable) => ({
+        name: variable!.name,
+        language: collection.modes.reduce((acc, mode) => {
+          acc[mode.name] = String(variable!.valuesByMode[mode.modeId] || "");
+          return acc;
+        }, {} as Record<string, string>),
+      })),
+  };
