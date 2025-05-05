@@ -264,22 +264,52 @@ async function exportCollectionToJSON(collectionId: string) {
     collection.variableIds.map((id) => figma.variables.getVariableByIdAsync(id))
   );
 
-  const jsonData = {
-    variables: variables
-      .filter((variable) => variable && variable.resolvedType === "STRING")
-      .map((variable) => ({
-        name: variable!.name,
-        language: collection.modes.reduce((acc, mode) => {
-          acc[mode.name] = String(variable!.valuesByMode[mode.modeId] || "");
-          return acc;
-        }, {} as Record<string, string>),
-      })),
-  };
+  const nestedData: Record<string, any> = {};
+
+  // Hardcoded mode name
+  const hardcodedModeName = "FR"; // Change this to "FR" or any other mode name as needed
+
+  // Find the mode ID for the hardcoded mode name
+  const hardcodedMode = collection.modes.find((mode) => mode.name === hardcodedModeName);
+  if (!hardcodedMode) {
+    figma.ui.postMessage({
+      type: "toast",
+      data: { message: `Mode "${hardcodedModeName}" not found in the collection.`, success: false },
+    });
+    return;
+  }
+
+  const hardcodedModeId = hardcodedMode.modeId;
+
+  variables
+    .filter(
+      (variable) =>
+        variable &&
+        variable.resolvedType === "STRING" &&
+        !variable.name.startsWith("Placeholder/") &&
+        !variable.name.startsWith("Common/")
+    )
+    .forEach((variable) => {
+      const parts = variable!.name.split("/");
+      const value = variable!.valuesByMode[hardcodedModeId] || "";
+
+      let currentLevel = nestedData;
+      parts.forEach((part, index) => {
+        if (index === parts.length - 1) {
+          currentLevel[part] = value; // Use the value for the hardcoded mode
+        } else {
+          if (!currentLevel[part]) {
+            currentLevel[part] = {};
+          }
+          currentLevel = currentLevel[part];
+        }
+      });
+    });
 
   // Send the JSON data back to the UI
   figma.ui.postMessage({
     type: "export-json",
-    data: { jsonContent: JSON.stringify(jsonData, null, 2), collectionName: collection.name },
+    data: { jsonContent: JSON.stringify(nestedData, null, 2), collectionName: collection.name },
   });
 }
 
@@ -305,28 +335,6 @@ figma.ui.onmessage = async (msg) => {
     handleSelectionChange();
   }
 };
-
-// // Listen for keyboard shortcuts
-// figma.ui.onmessage = async (msg) => {
-//   if (msg.type === "keydown") {
-//     if (msg.metaKey && msg.shiftKey && msg.key === "<") {
-//       // Cmd + Shift + < to copy variable
-//       copyVariable();
-//     } else if (msg.metaKey && msg.shiftKey && msg.key === ">") {
-//       // Cmd + Shift + > to paste variable
-//       pasteVariable();
-//     }
-//   } else if (msg.type === "fetch-variables") {
-//     await fetchVariables(msg.collectionId);
-//   } else if (msg.type === "apply-variable") {
-//     await applyVariable(msg.variableId);
-//   } else if (msg.type === "export-collection") {
-//     await exportCollectionToCSV(msg.collectionId);
-//   } else if (msg.type === "refresh-ui") {
-//     // Re-trigger the UI to load the current state of the selected node
-//     handleSelectionChange();
-//   }
-// };
 
 // Listen for selection changes
 figma.on("selectionchange", handleSelectionChange);
