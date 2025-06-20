@@ -1,0 +1,76 @@
+
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background-color: #f5f5f5; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        h2 { color: #0072c6; }
+    </style>
+</head>
+<body>
+
+<p>Hi [Recipient Name],</p>
+
+<p>As part of our recent analysis, I wanted to highlight a key insight regarding <strong>Windows display scaling behavior</strong>—especially the default <strong>150% scaling factor</strong>—and its impact on how users experience our web applications.</p>
+
+<h2>📐 Why 150% Scaling Is Common</h2>
+<p>
+Windows automatically recommends a scaling factor based on <strong>pixel density (PPI)</strong>. On <strong>laptops with 1920×1080 resolution</strong>—which are physically smaller (13″ to 15.6″)—this results in high PPI (~141–165), making UI elements appear too small at 100% scale. Windows responds by recommending <strong>150% scaling</strong> to maintain legibility and usability.
+</p>
+
+<p>
+This also applies to <strong>high-PPI desktop monitors</strong>, such as 4K displays at 27″ or higher, where scaling is often set to 150–200% by default.
+</p>
+
+<p>
+🔗 <a href="https://learn.microsoft.com/en-us/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows" target="_blank">Microsoft Learn: Display Scaling in Windows</a>
+</p>
+
+<h2>📊 Real-World Data: Sessions at 1920+ Width</h2>
+
+<table>
+<thead>
+<tr><th>Category</th><th>Sessions</th><th>% of 1920+</th><th>% of Total (3,968,708)</th></tr>
+</thead>
+<tbody>
+<tr><td>Windows</td><td>2,581,374</td><td>96.4%</td><td>65.0%</td></tr>
+<tr><td>Mac</td><td>91,808</td><td>3.4%</td><td>2.3%</td></tr>
+<tr><td>Others</td><td>5,840</td><td>0.2%</td><td>0.15%</td></tr>
+<tr><td><strong>Total (1920+)</strong></td><td><strong>2,678,022</strong></td><td><strong>100%</strong></td><td><strong>67.5%</strong></td></tr>
+</tbody>
+</table>
+
+<h2>🖥 How Windows Scaling Works (Based on DPI)</h2>
+
+<table>
+<thead>
+<tr><th>Screen Size</th><th>Resolution</th><th>PPI</th><th>Recommended Scaling</th></tr>
+</thead>
+<tbody>
+<tr><td>13.3″</td><td>1920×1080</td><td>~165</td><td>150%</td></tr>
+<tr><td>15.6″</td><td>1920×1080</td><td>~141</td><td>125–150%</td></tr>
+<tr><td>27″</td><td>4K (3840×2160)</td><td>~163</td><td>150–175%</td></tr>
+<tr><td>32″</td><td>4K (3840×2160)</td><td>~137</td><td>125–150%</td></tr>
+</tbody>
+</table>
+
+<p>
+🔗 <a href="https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process" target="_blank">Microsoft DPI Scaling Guidelines</a>
+</p>
+
+<h2>✅ What This Means for Us</h2>
+<p>
+Given the data and OS behavior, the <strong>likelihood of a user viewing our application on Windows at 1920+ resolution with 150% scaling is high</strong>. It's critical we <strong>optimize our design and layout testing for this scenario</strong> to ensure visual clarity and usability.
+</p>
+
+<p>Let me know if you'd like help simulating this setup for QA, or if you'd like a live demo of how scaling affects our UI components.</p>
+
+<p>Best regards,<br>
+[Your Name]</p>
+
+</body>
+</html>
