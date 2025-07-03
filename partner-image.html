@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner Card</title>
+  <style>
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, max-content);
+      grid-auto-rows: 1fr;
+      gap: 32px;
+      justify-content: center;
+      align-items: stretch;
+      width: 100%;
+      place-items: center;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f6fa;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      gap: 24px;
+      padding: 16px;
+      width: 340px;
+      max-width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      justify-content: flex-start;
+    }
+    .card-logo-container {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      /* margin-bottom removed, handled by gap */
+    }
+    .card-logo {
+      width: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .card-title-desc-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card-title {
+      font-size: 18px;
+      line-height: 28px;
+      font-weight: 500;
+      color: #001928;
+      margin: 0;
+    }
+    .card-desc {
+      font-size: 14px;
+      line-height: 20px;
+      color: #646c76;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-grid" id="cardGrid"></div>
+  <script>
+    fetch('EN.json')
+      .then(response => response.json())
+      .then(data => {
+        const offers = data["Partner Offers"];
+        const keys = Object.keys(offers).filter(k => k !== "Title");
+        const grid = document.getElementById('cardGrid');
+        keys.forEach(key => {
+          const offer = offers[key];
+          // Create a logo filename by lowercasing and replacing spaces with underscores
+          const logoFile = `${key}.svg`;
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="card-logo-container">
+              <img src="${logoFile}" alt="${offer.title} Logo" class="card-logo" />
+            </div>
+            <div class="card-title-desc-group">
+              <h2 class="card-title">${offer.title}</h2>
+              <p class="card-desc">${offer.short_description}</p>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>
