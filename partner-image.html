@@ -68,6 +68,37 @@
       color: #646c76;
       margin: 0;
     }
+    .suggest-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      gap: 24px;
+    }
+    .suggest-title {
+      font-size: 18px;
+      line-height: 28px;
+      font-weight: 500;
+      color: #001928;
+      margin: 0;
+    }
+    .suggest-btn {
+      padding: 8px 24px;
+      border-radius: 999px;
+      border: none;
+      background: #0079c1;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .suggest-btn:hover {
+      background: #22334a;
+    }
   </style>
 </head>
 <body>
@@ -96,6 +127,15 @@
           `;
           grid.appendChild(card);
         });
+        const suggestCard = document.createElement('div');
+        suggestCard.className = 'card';
+        suggestCard.innerHTML = `
+          <div class="suggest-card-content">
+            <h2 class="suggest-title">Don't see the app you want?</h2>
+            <button class="suggest-btn">Suggest an app</button>
+          </div>
+        `;
+        grid.appendChild(suggestCard);
       });
   </script>
 </body>
