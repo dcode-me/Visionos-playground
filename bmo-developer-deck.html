@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Developer.bmo.com</title>
+  <meta name="description" content="Slide-style deck for developer.bmo.com landing page." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    
+    :root {
+      --bmo-blue: #0079c1;
+      --bmo-dark: #004c7a;
+      --accent: #00a0df;
+      --success: #10b981;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --light: #f8fafc;
+      --bg: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+      --card: rgba(255, 255, 255, 0.95);
+      --card-hover: rgba(255, 255, 255, 1);
+      --border: rgba(0, 121, 193, 0.1);
+      --shadow: 0 10px 40px rgba(0, 121, 193, 0.08);
+      --shadow-lg: 0 20px 60px rgba(0, 121, 193, 0.12);
+      --glow: 0 0 40px rgba(0, 160, 223, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html, body { height: 100%; overflow: hidden; }
+    
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* Background decoration */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(0, 160, 223, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(0, 121, 193, 0.06) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(-20px, -20px) rotate(1deg); }
+      66% { transform: translate(20px, -10px) rotate(-1deg); }
+    }
+
+    /* Deck container */
+    .deck {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Slide */
+    section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 80px clamp(40px, 5vw, 100px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(100%);
+    }
+    
+    section.active {
+      position: relative;
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    /* Slide content - base styles */
+    .slide-content {
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* Optional animation on slide change */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Typography */
+    .slide-title {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--ink) 0%, var(--bmo-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 32px;
+      letter-spacing: -0.01em;
+    }
+
+    .content {
+      display: grid;
+      gap: 24px;
+    }
+
+    .content p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+
+    .content strong {
+      font-weight: 700;
+      color: var(--bmo-blue);
+    }
+
+    .content ul {
+      list-style: none;
+      display: grid;
+      gap: 16px;
+    }
+
+    .content li {
+      position: relative;
+      padding-left: 32px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--ink);
+      transition: transform 0.3s ease;
+    }
+
+    .content li:hover {
+      transform: translateX(8px);
+    }
+
+    .content li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    /* Cards */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--bmo-blue), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      background: var(--card-hover);
+      border-color: var(--accent);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card p:first-child {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--bmo-blue);
+      margin-bottom: 20px;
+    }
+
+    /* Brand */
+    .brand {
+      position: fixed;
+      top: 24px;
+      left: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      z-index: 100;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--bmo-blue), var(--accent));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      font-size: 24px;
+      box-shadow: 0 8px 24px rgba(0, 121, 193, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .mark:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    .name {
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    /* Progress */
+    .progress-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: rgba(0, 121, 193, 0.1);
+      z-index: 100;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--bmo-blue), var(--accent));
+      width: 0;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 20px rgba(0, 160, 223, 0.5);
+    }
+
+    /* Controls */
+    .controls {
+      position: fixed;
+      right: 32px;
+      bottom: 32px;
+      display: flex;
+      gap: 16px;
+      z-index: 100;
+    }
+
+    .btn {
+      appearance: none;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, var(--bmo-blue), var(--accent));
+      color: white;
+      border-radius: 999px;
+      width: 56px;
+      height: 56px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 20px;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0, 121, 193, 0.3);
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: var(--glow);
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    /* Slide counter */
+    .slide-counter {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--muted);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .slide-counter .current {
+      color: var(--bmo-blue);
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    /* Accent text */
+    .accent {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+      
+      section {
+        padding: 40px 24px;
+      }
+
+      .slide-title {
+        font-size: 32px;
+      }
+
+      .controls {
+        bottom: 80px;
+      }
+    }
+
+    /* Initial load - no animation */
+    body:not(.initialized) .slide-content {
+      transition: none;
+    }
+    
+    body:not(.initialized) section.active .slide-content {
+      opacity: 1;
+      transform: none;
+    }
+    
+    /* Reduced motion: disable animation but keep content visible */
+    @media (prefers-reduced-motion: reduce) {
+      section.active .slide-content {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Print */
+    @media print {
+      .deck { position: static; }
+      .slides { display: block; }
+      section { page-break-after: always; height: auto; }
+      .controls, .progress-container, .brand, .slide-counter { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" role="application" aria-label="Slide deck">
+    <div class="slides" id="slides">
+      <!-- 1. Title -->
+      <section class="active" aria-label="Title slide">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">developer.bmo.com</h1>
+            <p class="slide-subtitle">Minimal landing page that routes to Open Banking APIs and Commercial Banking APIs</p>
+          </div>
+          <div class="content">
+            <p><strong>Goal:</strong> Ship a non-scrolling, fast, accessible landing page that clearly splits traffic to the right portal.</p>
+            <div class="two-col">
+              <div class="card">
+                <p>Primary Outcomes</p>
+                <ul>
+                  <li>Reduce friction & confusion for developers</li>
+                  <li>Establish a single front door for all BMO APIs</li>
+                  <li>Align with brand, security, and accessibility</li>
+                </ul>
+              </div>
+              <div class="card">
+                <p>Destinations</p>
+                <ul>
+                  <li>Open Banking API Portal</li>
+                  <li>Commercial Banking API Portal</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Problem -->
+      <section aria-label="Problem">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">The Problem</h1>
+            <p class="slide-subtitle">Multiple portals, no unified entry point</p>
+          </div>
+          <div class="content">
+            <div class="card">
+              <p>Current Challenges</p>
+              <ul>
+                <li>Developers and partners may not know which portal matches their use case</li>
+                <li>Fragmented first impression; risk of misrouting and higher drop-off</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Users & Segments -->
+      <section aria-label="Users and segments">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">User Segments & Needs</h1>
+            <p class="slide-subtitle">Clarity, speed, trust</p>
+          </div>
+          <div class="content">
+            <div class="two-col">
+              <div class="card">
+                <p>Segments</p>
+                <ul>
+                  <li>Fintech developers / TPPs → Open Banking</li>
+                  <li>Corporate devs / IT teams → Commercial Banking</li>
+                  <li>Internal: Sales, Solutions, DevRel → share a single URL</li>
+                </ul>
+              </div>
+              <div class="card">
+                <p>Top Needs</p>
+                <ul>
+                  <li>Immediate recognition of the right portal</li>
+                  <li>One-click proceed; no scrolling</li>
+                  <li>BMO-branded, secure, accessible experience</li>
+                  <li>Consistent footer/legal links</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Objectives -->
+      <section aria-label="Objectives">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">Project Objectives</h1>
+            <p class="slide-subtitle">Simple, static, future-proof</p>
+          </div>
+          <div class="content">
+            <div class="card">
+              <p>Key Deliverables</p>
+              <ul>
+                <li>Launch a single minimal landing at <strong>developer.bmo.com</strong></li>
+                <li>Present two clear choices: <em>Open Banking</em> and <em>Commercial Banking</em></li>
+                <li>Non-scrolling, footer always visible</li>
+                <li>Compliance with brand & WCAG 2.1 AA accessibility</li>
+                <li>Allow easy expansion if new portals are added</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Scope -->
+      <section aria-label="Scope">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">Scope</h1>
+            <p class="slide-subtitle">What we will / won't do</p>
+          </div>
+          <div class="content">
+            <div class="two-col">
+              <div class="card">
+                <p>In Scope</p>
+                <ul>
+                  <li>Single landing page (desktop + mobile responsive)</li>
+                  <li>Branding + accessibility compliance</li>
+                  <li>Footer with Privacy, Terms, Contact</li>
+                  <li>Lexicon DSM adoption</li>
+                </ul>
+              </div>
+              <div class="card">
+                <p>Out of Scope</p>
+                <ul>
+                  <li>Redesign of underlying API portals</li>
+                  <li>Marketing content or lead forms</li>
+                  <li>Multi-page navigation or dynamic features</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Timeline -->
+      <!-- <section aria-label="Timeline">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">Timeline <span class="accent">(Indicative)</span></h1>
+            <p class="slide-subtitle">Six weeks end-to-end; compressible</p>
+          </div>
+          <div class="content">
+            <div class="two-col">
+              <div class="card">
+                <p>Standard Plan</p>
+                <ul>
+                  <li>Week 1 – Kickoff & requirements alignment</li>
+                  <li>Week 2 – Design mock & stakeholder sign-off</li>
+                  <li>Weeks 3–4 – Build & internal testing</li>
+                  <li>Week 5 – Accessibility & compliance review</li>
+                  <li>Week 6 – Launch</li>
+                </ul>
+              </div>
+              <div class="card">
+                <p>Fast-Track Option</p>
+                <ul>
+                  <li>Weeks 1–2: Design + Dev in parallel</li>
+                  <li>Week 3: QA/Accessibility → Launch</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- 7. Technology -->
+      <!--
+      <section aria-label="Technology">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">Technology</h1>
+            <p class="slide-subtitle">Lightweight and maintainable</p>
+          </div>
+          <div class="content">
+            <div class="two-col">
+              <div class="card">
+                <p>Frontend</p>
+                <ul>
+                  <li>Static HTML + CSS (BMO design tokens)</li>
+                  <li>Minimal JS (ARIA, analytics hooks)</li>
+                </ul>
+              </div>
+              <div class="card">
+                <p>Platform</p>
+                <ul>
+                  <li>Host on existing BMO infra (Azure/Akamai, etc.)</li>
+                  <li>Optional analytics to measure traffic split</li>
+                  <li>CI/CD integration for approvals & rollbacks</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      -->
+
+      <!-- 8. Risks -->
+      <!--
+      <section aria-label="Risks and considerations">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">Risks & Considerations</h1>
+            <p class="slide-subtitle">Keep scope tight; align approvals</p>
+          </div>
+          <div class="content">
+            <div class="two-col">
+              <div class="card">
+                <p>Risks</p>
+                <ul>
+                  <li>Scope creep: requests for extra content</li>
+                  <li>Branding/compliance review delays</li>
+                  <li>Ownership ambiguity for maintenance</li>
+                </ul>
+              </div>
+              <div class="card">
+                <p>Mitigations</p>
+                <ul>
+                  <li>Written scope & change-control</li>
+                  <li>Early brand/legal accessibility checks</li>
+                  <li>Assign a clear owning team (DevRel/Digital)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      -->
+
+      <!-- 9. Success Metrics -->
+      <!--
+      <section aria-label="Success metrics">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">Success Metrics</h1>
+            <p class="slide-subtitle">Measure clarity and conversion</p>
+          </div>
+          <div class="content">
+            <div class="two-col">
+              <div class="card">
+                <p>Primary KPIs</p>
+                <ul>
+                  <li>Time-to-click (landing → portal)</li>
+                  <li>Bounce rate on landing</li>
+                  <li>Traffic split (Open Banking vs Commercial)</li>
+                </ul>
+              </div>
+              <div class="card">
+                <p>Quality Signals</p>
+                <ul>
+                  <li>Accessibility audit passes (WCAG AA)</li>
+                  <li>Load time & Core Web Vitals</li>
+                  <li>Zero production incidents post-launch</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      -->
+
+      <!-- 10. Next Steps -->
+      <!--
+      <section aria-label="Next steps">
+        <div class="slide-content">
+          <div>
+            <h1 class="slide-title">Next Steps</h1>
+            <p class="slide-subtitle">From kickoff to launch</p>
+          </div>
+          <div class="content">
+            <div class="card">
+              <p>Action Items</p>
+              <ul>
+                <li>Confirm owners: content, brand, accessibility, engineering, approvals</li>
+                <li>Lock URLs for both portals and footer legal links</li>
+                <li>Approve minimal design mock (non-scrolling layout)</li>
+                <li>Set up CI/CD & analytics tags</li>
+                <li>Schedule accessibility & compliance reviews</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      -->
+    </div>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <div class="slide-counter">
+    <span class="current" id="current">1</span> / <span id="total">5</span>
+  </div>
+
+  <div class="controls" aria-label="controls">
+    <button class="btn" id="prev" aria-label="Previous slide">◀</button>
+    <button class="btn" id="next" aria-label="Next slide">▶</button>
+  </div>
+
+  <script>
+    const track = document.getElementById('slides');
+    const progress = document.getElementById('progress');
+    const currentDisplay = document.getElementById('current');
+    const totalDisplay = document.getElementById('total');
+    const slides = Array.from(track.children);
+    const total = slides.length;
+    let index = 0;
+
+    totalDisplay.textContent = total;
+
+    function go(i) {
+      // Remove active class from current slide
+      if (slides[index]) {
+        slides[index].classList.remove('active');
+      }
+      
+      index = Math.max(0, Math.min(total - 1, i));
+      progress.style.width = `${((index + 1) / total) * 100}%`;
+      currentDisplay.textContent = index + 1;
+      document.title = `Slide ${index + 1} of ${total} – Developer.bmo.com`;
+      
+      // Add active class to new slide
+      if (slides[index]) {
+        slides[index].classList.add('active');
+      }
+    }
+
+    function next() { go(index + 1) }
+    function prev() { go(index - 1) }
+
+    document.getElementById('next').addEventListener('click', next);
+    document.getElementById('prev').addEventListener('click', prev);
+
+    addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { 
+        e.preventDefault(); 
+        next(); 
+      }
+      if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { 
+        e.preventDefault(); 
+        prev(); 
+      }
+      if (e.key === 'Home') { 
+        e.preventDefault(); 
+        go(0); 
+      }
+      if (e.key === 'End') { 
+        e.preventDefault(); 
+        go(total - 1); 
+      }
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    track.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    track.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      if (touchEndX < touchStartX - 50) next();
+      if (touchEndX > touchStartX + 50) prev();
+    }
+
+    // Click to advance (not on buttons)
+    track.addEventListener('click', (e) => {
+      if (!e.target.closest('.btn')) next();
+    });
+
+    // Initialize
+    function init() {
+      // Set initial progress
+      progress.style.width = `${(1 / total) * 100}%`;
+      currentDisplay.textContent = 1;
+      document.title = `Slide 1 of ${total} – Developer.bmo.com`;
+      
+      // Make sure first slide is active
+      slides[0].classList.add('active');
+      
+      // Mark body as initialized to enable animations
+      setTimeout(() => {
+        document.body.classList.add('initialized');
+      }, 100);
+    }
+    
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMO Developer Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(0, 121, 193, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 75% 75%, rgba(237, 28, 36, 0.08) 0%, transparent 35%),
+                radial-gradient(circle at 85% 25%, rgba(0, 121, 193, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 15% 85%, rgba(0, 121, 193, 0.08) 0%, transparent 40%),
+                linear-gradient(180deg, #ffffff 0%, #f0f4f8 50%, #e8eef5 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 200px,
+                    rgba(0, 121, 193, 0.03) 200px,
+                    rgba(0, 121, 193, 0.03) 201px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 200px,
+                    rgba(0, 121, 193, 0.03) 200px,
+                    rgba(0, 121, 193, 0.03) 201px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 16px;
+            background: #f5f7fa;
+            border-radius: 8px;
+        }
+
+        .language-switcher button {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switcher button:hover {
+            background: #e9ecef;
+        }
+
+        .language-switcher button.active {
+            background: #0075BE;
+            color: white;
+        }
+
+        .language-divider {
+            width: 1px;
+            height: 20px;
+            background: #d0d0d0;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero-section {
+            margin-bottom: 60px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        /* Cards Container */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        .api-card {
+            background: white;
+            border-radius: 12px;
+            padding: 48px 40px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .api-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #0075BE;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .api-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,117,190,0.15);
+            border-color: #0075BE;
+        }
+
+        .api-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            background: #f0f8ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #0075BE;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .card-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0075BE;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .arrow-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .api-card:hover .arrow-icon {
+            transform: translateX(4px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0079C1;
+            padding: 24px 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            transition: opacity 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: -12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            color: white;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <svg class="logo" width="209" height="72" viewBox="0 0 209 72" xmlns="http://www.w3.org/2000/svg">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g transform="translate(-33.000000, -34.000000)">
+                            <rect x="0" y="0" width="274.53" height="139.94"></rect>
+                            <path d="M56,62 C56,65.76 54.28,67.84 49.75,67.84 L45.88,67.84 L45.88,56.35 C46.37,56.3 48.01,56.27 48.5,56.27 L49.82,56.27 C54.44,56.27 56,58.23 56,62 Z M65.2,77 C65.2,71.07 60.36,68.92 54.49,68.79 L54.49,68.57 C59.49,68.16 63.58,66.07 63.58,61.03 C63.58,55.42 58.94,54.37 53.75,54.37 C47.51,54.37 40.19,54.54 33.97,54.37 L33.97,56.3 C35.28,56.21 38.48,56.39 38.48,58.04 L38.48,81.92 C38.48,83.52 35.2,83.74 33.97,83.74 L33.97,85.62 C39.97,85.46 47.12,85.62 53.17,85.62 C59.53,85.62 65.2,83.47 65.2,77 Z M57.2,76.39 C57.2,81.3 55.49,83.63 49.55,83.63 L45.85,83.63 L45.85,69.87 L49.79,69.87 C55.22,69.87 57.23,71.7 57.23,76.35 L57.2,76.39 Z" fill="#0079C1" fill-rule="nonzero"></path>
+                            <path d="M105.45,85.57 C102.65,85.57 99.86,85.57 97.07,85.62 L97.07,83.7 C98.34,83.7 101.86,83.63 101.86,81.92 L101.86,59.74 L101.76,59.74 L89.14,86 L87.62,86 L75.31,59.69 L75.22,59.69 L75.22,81.92 C75.22,83.67 78.71,83.7 80.03,83.7 L80.09,85.62 C76.6,85.51 71.84,85.43 68.41,85.62 L68.41,83.7 C69.74,83.7 72.74,83.59 72.74,81.92 L72.74,58 C72.74,56.37 69.64,56.23 68.41,56.23 L68.41,54.3 C72.41,54.47 76.65,54.47 80.62,54.3 L91.14,76.49 L101.91,54.38 C105.73,54.55 110.05,54.5 113.91,54.33 L113.91,56.26 C112.64,56.26 109.31,56.35 109.31,58.03 L109.31,81.92 C109.31,83.63 112.6,83.7 113.91,83.7 L113.91,85.62 C111.08,85.54 108.24,85.57 105.45,85.57 Z" fill="#0079C1" fill-rule="nonzero"></path>
+                            <path d="M143.29,69.94 C143.29,75.94 142.7,84.23 133.84,84.23 C124.98,84.23 124.34,75.9 124.34,69.94 C124.34,63.98 124.98,55.71 133.84,55.71 C142.7,55.71 143.29,64 143.29,69.94 Z M151.57,69.94 C151.57,59.59 145.25,53.78 133.84,53.78 C122.43,53.78 116.05,59.54 116.05,69.94 C116.05,80.34 122.38,86.14 133.84,86.14 C145.3,86.14 151.57,80.35 151.57,69.94 Z" fill="#0079C1" fill-rule="nonzero"></path>
+                            <path d="M204.56,34 C184.677749,34 168.56,50.117749 168.56,70 C168.56,89.882251 184.677749,106 204.56,106 C224.442251,106 240.56,89.882251 240.56,70 C240.56,50.117749 224.442251,34 204.56,34 Z" fill="#ED1C24" fill-rule="nonzero"></path>
+                            <rect x="240.56" y="105.97" width="33.97" height="33.97"></rect>
+                            <rect x="0" y="105.97" width="33.97" height="33.97"></rect>
+                            <path d="M203.46,59 L197.21,50.85 C196.946665,50.5028122 196.535757,50.2992088 196.1,50.3 C195.67683,50.2976313 195.277034,50.4938271 195.02,50.83 L187.58,60.2 L187.58,74.9 L195,65.41 C195.272572,65.0633019 195.688985,64.8606231 196.13,64.86 C196.576598,64.8584097 196.998295,65.065559 197.27,65.42 L203.55,73.63 C203.790682,73.9419108 204.156432,74.1321005 204.55,74.15 C204.944673,74.1362572 205.312086,73.9452027 205.55,73.63 L211.83,65.42 C212.104645,65.0691639 212.524458,64.8629399 212.97,64.86 C213.41206,64.8560515 213.830382,65.0596594 214.1,65.41 L221.5,74.89 L221.5,60.19 L214.06,50.82 C213.798823,50.4834822 213.395972,50.2876005 212.97,50.2899782 C212.53532,50.2937702 212.126312,50.4964317 211.86,50.84 L205.66,59 C205.398755,59.34309 204.991219,59.5431533 204.56,59.54 C204.129846,59.5385487 203.724237,59.3394316 203.46,59 Z M221.55,85.67 L187.55,85.67 L187.55,85.67 L187.55,85.67 L187.55,74.89 L221.55,74.89 L221.55,74.89 L221.55,74.89 L221.55,85.67 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+            </svg>
+            <span class="logo-text">BMO Developer</span>
+            <div class="language-switcher">
+                <button class="active" onclick="switchLanguage('en')">EN</button>
+                <div class="language-divider"></div>
+                <button onclick="switchLanguage('fr')">FR</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="hero-section">
+                <h1 class="hero-title">Build with BMO APIs</h1>
+                <p class="hero-subtitle">Choose your integration path to access our banking services</p>
+            </div>
+
+            <div class="cards-container">
+                <!-- Open Banking APIs Card -->
+                <a href="/open-banking" class="api-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Open Banking APIs</h2>
+                    <p class="card-description">
+                        Access account information, initiate payments, and leverage open banking standards for innovative financial solutions.
+                    </p>
+                    <span class="card-link">
+                        Explore Open Banking
+                        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+
+                <!-- Commercial Banking APIs Card -->
+                <a href="/commercial-banking" class="api-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Commercial Banking APIs</h2>
+                    <p class="card-description">
+                        Enterprise-grade APIs for treasury management, cash flow optimization, and comprehensive commercial banking services.
+                    </p>
+                    <span class="card-link">
+                        Explore Commercial APIs
+                        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.bmo.com/main/about-bmo/privacy-security/our-privacy-code/">BMO Privacy</a>
+                <a href="https://www.bmo.com/main/personal/legal/">BMO Legal</a>
+                <a href="https://www.bmo.com/main/personal/ways-to-bank/security-centre/">BMO Security</a>
+                <a href="https://www23.bmo.com/olbbwem/olbb-static-file/non-secure/Documents/BMO_TPSAPIDeveloperPortal_TC.pdf">Terms and Conditions</a>
+                <a href="https://www.bmo.com/main/about-bmo/accessibility/">Accessibility</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Bank of Montreal. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchLanguage(lang) {
+            // Update active button
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update content based on language
+            const translations = {
+                en: {
+                    heroTitle: 'Build with BMO APIs',
+                    heroSubtitle: 'Choose your integration path to access our banking services',
+                    openBankingTitle: 'Open Banking APIs',
+                    openBankingDesc: 'Access account information, initiate payments, and leverage open banking standards for innovative financial solutions.',
+                    openBankingLink: 'Explore Open Banking',
+                    commercialTitle: 'Commercial Banking APIs',
+                    commercialDesc: 'Enterprise-grade APIs for treasury management, cash flow optimization, and comprehensive commercial banking services.',
+                    commercialLink: 'Explore Commercial APIs',
+                    bmoPrivacy: 'BMO Privacy',
+                    bmoLegal: 'BMO Legal',
+                    bmoSecurity: 'BMO Security',
+                    terms: 'Terms and Conditions',
+                    accessibility: 'Accessibility',
+                    copyright: '© 2025 Bank of Montreal. All rights reserved.'
+                },
+                fr: {
+                    heroTitle: 'Construire avec les API BMO',
+                    heroSubtitle: 'Choisissez votre parcours d\'intégration pour accéder à nos services bancaires',
+                    openBankingTitle: 'API Open Banking',
+                    openBankingDesc: 'Accédez aux informations de compte, initiez des paiements et exploitez les normes bancaires ouvertes pour des solutions financières innovantes.',
+                    openBankingLink: 'Explorer Open Banking',
+                    commercialTitle: 'API Bancaires Commerciales',
+                    commercialDesc: 'API de niveau entreprise pour la gestion de trésorerie, l\'optimisation des flux de trésorerie et des services bancaires commerciaux complets pour votre entreprise.',
+                    commercialLink: 'Explorer API Commerciales',
+                    bmoPrivacy: 'Confidentialité BMO',
+                    bmoLegal: 'Mentions légales BMO',
+                    bmoSecurity: 'Sécurité BMO',
+                    terms: 'Modalités et conditions',
+                    accessibility: 'Accessibilité',
+                    copyright: '© 2025 Banque de Montréal. Tous droits réservés.'
+                }
+            };
+
+            const t = translations[lang];
+            
+            // Update text content
+            document.querySelector('.hero-title').textContent = t.heroTitle;
+            document.querySelector('.hero-subtitle').textContent = t.heroSubtitle;
+            
+            const cards = document.querySelectorAll('.api-card');
+            cards[0].querySelector('.card-title').textContent = t.openBankingTitle;
+            cards[0].querySelector('.card-description').textContent = t.openBankingDesc;
+            cards[0].querySelector('.card-link').childNodes[0].textContent = t.openBankingLink + ' ';
+            
+            cards[1].querySelector('.card-title').textContent = t.commercialTitle;
+            cards[1].querySelector('.card-description').textContent = t.commercialDesc;
+            cards[1].querySelector('.card-link').childNodes[0].textContent = t.commercialLink + ' ';
+            
+            // Update footer
+            const footerLinks = document.querySelectorAll('.footer-links a');
+            footerLinks[0].textContent = t.bmoPrivacy;
+            footerLinks[1].textContent = t.bmoLegal;
+            footerLinks[2].textContent = t.bmoSecurity;
+            footerLinks[3].textContent = t.terms;
+            footerLinks[4].textContent = t.accessibility;
+            document.querySelector('.footer-copyright').textContent = t.copyright;
+        }
+    </script>
+</body>
+</html>
