@@ -1,31 +1,39 @@
 import pandas as pd
-import glob
+import sys
 import os
 
 def main():
-    # Find the first Excel file in the folder
-    excel_files = glob.glob("*.xlsx")
-    if not excel_files:
-        print("❌ No Excel file found in this folder. Please add a .xlsx file.")
+    if len(sys.argv) < 2:
+        print("⚠️ Usage: python3 convert.py <excel_file.xlsx>")
         return
 
-    excel_file = excel_files[0]  # take the first one
+    excel_file = sys.argv[1]
+
+    if not os.path.exists(excel_file):
+        print(f"❌ File not found: {excel_file}")
+        return
+
     print(f"✅ Found Excel file: {excel_file}")
 
-    # Load the Excel file
     try:
-        df = pd.read_excel(excel_file)
+        # Load all sheets into a dict {sheet_name: DataFrame}
+        sheets = pd.read_excel(excel_file, sheet_name=None)
     except Exception as e:
         print(f"❌ Error reading {excel_file}: {e}")
         return
 
-    # Convert to JSON
-    json_file = os.path.splitext(excel_file)[0] + ".json"
-    try:
-        df.to_json(json_file, orient="records", indent=4)
-        print(f"🎉 Converted to JSON: {json_file}")
-    except Exception as e:
-        print(f"❌ Error converting to JSON: {e}")
+    base_name = os.path.splitext(excel_file)[0]
+
+    for sheet_name, df in sheets.items():
+        # Clean up sheet name for filename
+        safe_name = sheet_name.replace(" ", "_").replace("/", "_")
+        json_file = f"{base_name}_{safe_name}.json"
+
+        try:
+            df.to_json(json_file, orient="records", indent=4)
+            print(f"🎉 Exported sheet '{sheet_name}' → {json_file}")
+        except Exception as e:
+            print(f"❌ Error converting sheet '{sheet_name}': {e}")
 
 if __name__ == "__main__":
     main()
