@@ -1,0 +1,31 @@
+import pandas as pd
+import glob
+import os
+
+def main():
+    # Find the first Excel file in the folder
+    excel_files = glob.glob("*.xlsx")
+    if not excel_files:
+        print("❌ No Excel file found in this folder. Please add a .xlsx file.")
+        return
+
+    excel_file = excel_files[0]  # take the first one
+    print(f"✅ Found Excel file: {excel_file}")
+
+    # Load the Excel file
+    try:
+        df = pd.read_excel(excel_file)
+    except Exception as e:
+        print(f"❌ Error reading {excel_file}: {e}")
+        return
+
+    # Convert to JSON
+    json_file = os.path.splitext(excel_file)[0] + ".json"
+    try:
+        df.to_json(json_file, orient="records", indent=4)
+        print(f"🎉 Converted to JSON: {json_file}")
+    except Exception as e:
+        print(f"❌ Error converting to JSON: {e}")
+
+if __name__ == "__main__":
+    main()
