@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMO Developer Portal - Build the Future of Banking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bmo-blue: #0079C1;
+            --bmo-red: #ED1C24;
+            --dark-blue: #003C71;
+            --light-blue: #E6F3FA;
+            --gradient-start: #0079C1;
+            --gradient-end: #003C71;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        /* Header - Original styling from bmo-developer-landing.html */
+        .header {
+            background: white;
+            padding: 16px 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 16px;
+            background: #f5f7fa;
+            border-radius: 8px;
+        }
+
+        .language-switcher button {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switcher button:hover {
+            background: #e9ecef;
+        }
+
+        .language-switcher button.active {
+            background: #0075BE;
+            color: white;
+        }
+
+        .language-divider {
+            width: 1px;
+            height: 20px;
+            background: #d0d0d0;
+        }
+
+        /* Main Content Area */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            background: #f8f9fa;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 500px;
+            padding: 100px 60px 180px;
+            text-align: center;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Subtle background pattern */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 121, 193, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(237, 28, 36, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 121, 193, 0.02) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title strong {
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--bmo-blue) 0%, var(--dark-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: #64748b;
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* API Tiles Container */
+        .api-tiles-container {
+            position: relative;
+            margin-top: -150px;
+            padding: 0 60px 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            gap: 40px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .api-tile {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            cursor: pointer;
+            flex: 1;
+            max-width: 540px;
+            min-width: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .api-tile:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+        }
+
+        .api-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--bmo-blue), var(--bmo-red));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .api-tile:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Card Header with Icon and Flags */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .tile-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--light-blue), white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tile-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--bmo-blue);
+            stroke-width: 1.5;
+        }
+
+        .tile-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        /* Region Flags */
+        .region-flags {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .flag-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0f8ff;
+            border: 1px solid #d0e4f4;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .flag-icon {
+            width: 16px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .flag-us {
+            background: linear-gradient(180deg, #B22234 0%, #B22234 7.69%, #fff 7.69%, #fff 15.38%, #B22234 15.38%, #B22234 23.08%, #fff 23.08%, #fff 30.77%, #B22234 30.77%, #B22234 38.46%, #fff 38.46%, #fff 46.15%, #B22234 46.15%, #B22234 53.85%, #fff 53.85%, #fff 61.54%, #B22234 61.54%, #B22234 69.23%, #fff 69.23%, #fff 76.92%, #B22234 76.92%, #B22234 84.62%, #fff 84.62%, #fff 92.31%, #B22234 92.31%, #B22234 100%);
+        }
+
+        .flag-us::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40%;
+            height: 53.85%;
+            background: #3C3B6E;
+        }
+
+        .flag-ca {
+            background: linear-gradient(90deg, #FF0000 0%, #FF0000 25%, white 25%, white 75%, #FF0000 75%, #FF0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flag-ca::before {
+            content: '🍁';
+            color: #FF0000;
+            font-size: 10px;
+            line-height: 1;
+        }
+
+        .tile-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .tile-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: auto;
+        }
+
+        .action-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            min-width: 0;
+            display: block;
+        }
+
+        .action-card:hover {
+            background: var(--light-blue);
+            border-color: var(--bmo-blue);
+            box-shadow: 0 4px 12px rgba(0,121,193,0.15);
+        }
+
+        .action-link {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--bmo-blue);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+
+        .action-link svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--bmo-blue);
+            transition: transform 0.2s ease;
+        }
+
+        .action-card:hover .action-link svg {
+            transform: translateX(3px);
+        }
+
+        .action-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+
+        /* Footer - Original styling from bmo-developer-landing.html */
+        .footer {
+            background: #0079C1;
+            padding: 24px 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            transition: opacity 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: -12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            color: white;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .api-tiles-container {
+                padding: 0 40px 40px;
+                gap: 30px;
+                margin-top: -120px;
+            }
+
+            .api-tile {
+                min-width: 380px;
+                padding: 28px;
+            }
+
+            .tile-title {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 920px) {
+            .api-tiles-container {
+                flex-direction: column;
+                padding: 0 30px 30px;
+                gap: 24px;
+                align-items: stretch;
+                margin-top: -100px;
+            }
+
+            .api-tile {
+                max-width: 500px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-section {
+                padding: 80px 40px 140px;
+                min-height: 450px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .tile-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .api-tiles-container {
+                padding: 20px;
+            }
+
+            .hero-section {
+                padding: 24px 20px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <svg class="logo" width="209" height="72" viewBox="0 0 209 72" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-33.000000, -34.000000)">
+                        <rect x="0" y="0" width="274.53" height="139.94"></rect>
+                        <path d="M56,62 C56,65.76 54.28,67.84 49.75,67.84 L45.88,67.84 L45.88,56.35 C46.37,56.3 48.01,56.27 48.5,56.27 L49.82,56.27 C54.44,56.27 56,58.23 56,62 Z M65.2,77 C65.2,71.07 60.36,68.92 54.49,68.79 L54.49,68.57 C59.49,68.16 63.58,66.07 63.58,61.03 C63.58,55.42 58.94,54.37 53.75,54.37 C47.51,54.37 40.19,54.54 33.97,54.37 L33.97,56.3 C35.28,56.21 38.48,56.39 38.48,58.04 L38.48,81.92 C38.48,83.52 35.2,83.74 33.97,83.74 L33.97,85.62 C39.97,85.46 47.12,85.62 53.17,85.62 C59.53,85.62 65.2,83.47 65.2,77 Z M57.2,76.39 C57.2,81.3 55.49,83.63 49.55,83.63 L45.85,83.63 L45.85,69.87 L49.79,69.87 C55.22,69.87 57.23,71.7 57.23,76.35 L57.2,76.39 Z" fill="#0079C1" fill-rule="nonzero"></path>
+                        <path d="M105.45,85.57 C102.65,85.57 99.86,85.57 97.07,85.62 L97.07,83.7 C98.34,83.7 101.86,83.63 101.86,81.92 L101.86,59.74 L101.76,59.74 L89.14,86 L87.62,86 L75.31,59.69 L75.22,59.69 L75.22,81.92 C75.22,83.67 78.71,83.7 80.03,83.7 L80.09,85.62 C76.6,85.51 71.84,85.43 68.41,85.62 L68.41,83.7 C69.74,83.7 72.74,83.59 72.74,81.92 L72.74,58 C72.74,56.37 69.64,56.23 68.41,56.23 L68.41,54.3 C72.41,54.47 76.65,54.47 80.62,54.3 L91.14,76.49 L101.91,54.38 C105.73,54.55 110.05,54.5 113.91,54.33 L113.91,56.26 C112.64,56.26 109.31,56.35 109.31,58.03 L109.31,81.92 C109.31,83.63 112.6,83.7 113.91,83.7 L113.91,85.62 C111.08,85.54 108.24,85.57 105.45,85.57 Z" fill="#0079C1" fill-rule="nonzero"></path>
+                        <path d="M143.29,69.94 C143.29,75.94 142.7,84.23 133.84,84.23 C124.98,84.23 124.34,75.9 124.34,69.94 C124.34,63.98 124.98,55.71 133.84,55.71 C142.7,55.71 143.29,64 143.29,69.94 Z M151.57,69.94 C151.57,59.59 145.25,53.78 133.84,53.78 C122.43,53.78 116.05,59.54 116.05,69.94 C116.05,80.34 122.38,86.14 133.84,86.14 C145.3,86.14 151.57,80.35 151.57,69.94 Z" fill="#0079C1" fill-rule="nonzero"></path>
+                        <path d="M204.56,34 C184.677749,34 168.56,50.117749 168.56,70 C168.56,89.882251 184.677749,106 204.56,106 C224.442251,106 240.56,89.882251 240.56,70 C240.56,50.117749 224.442251,34 204.56,34 Z" fill="#ED1C24" fill-rule="nonzero"></path>
+                        <rect x="240.56" y="105.97" width="33.97" height="33.97"></rect>
+                        <rect x="0" y="105.97" width="33.97" height="33.97"></rect>
+                        <path d="M203.46,59 L197.21,50.85 C196.946665,50.5028122 196.535757,50.2992088 196.1,50.3 C195.67683,50.2976313 195.277034,50.4938271 195.02,50.83 L187.58,60.2 L187.58,74.9 L195,65.41 C195.272572,65.0633019 195.688985,64.8606231 196.13,64.86 C196.576598,64.8584097 196.998295,65.065559 197.27,65.42 L203.55,73.63 C203.790682,73.9419108 204.156432,74.1321005 204.55,74.15 C204.944673,74.1362572 205.312086,73.9452027 205.55,73.63 L211.83,65.42 C212.104645,65.0691639 212.524458,64.8629399 212.97,64.86 C213.41206,64.8560515 213.830382,65.0596594 214.1,65.41 L221.5,74.89 L221.5,60.19 L214.06,50.82 C213.798823,50.4834822 213.395972,50.2876005 212.97,50.2899782 C212.53532,50.2937702 212.126312,50.4964317 211.86,50.84 L205.66,59 C205.398755,59.34309 204.991219,59.5431533 204.56,59.54 C204.129846,59.5385487 203.724237,59.3394316 203.46,59 Z M221.55,85.67 L187.55,85.67 L187.55,85.67 L187.55,85.67 L187.55,74.89 L221.55,74.89 L221.55,74.89 L221.55,74.89 L221.55,85.67 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </svg>
+            <span class="logo-text">BMO Developer</span>
+            <div class="language-switcher">
+                <button class="active" onclick="switchLanguage('en')">EN</button>
+                <div class="language-divider"></div>
+                <button onclick="switchLanguage('fr')">FR</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Build the <strong>Future</strong> of Banking</h1>
+            <p class="hero-subtitle">Powerful APIs that transform financial experiences for businesses and customers</p>
+        </div>
+
+        <!-- API Tiles Container -->
+        <div class="api-tiles-container">
+                <!-- Commercial Banking APIs Tile (First) -->
+                <div class="api-tile">
+                    <!-- Card Header with Icon and Flags -->
+                    <div class="card-header">
+                        <div class="tile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                            </svg>
+                        </div>
+                        <div class="region-flags">
+                            <div class="flag-badge">
+                                <span class="flag-icon flag-us"></span>
+                                <span>US</span>
+                            </div>
+                            <div class="flag-badge">
+                                <span class="flag-icon flag-ca"></span>
+                                <span>CA</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="tile-title">Commercial Banking APIs</h3>
+                    <p class="tile-description">Enterprise solutions for treasury management, cash flow optimization, and comprehensive commercial banking services.</p>
+
+                    <div class="tile-actions">
+                        <div class="action-card">
+                            <a href="/institutional-apis" class="action-link">
+                                Institutional APIs
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </a>
+                            <p class="action-desc">Enterprise-grade APIs for institutional clients and treasury services</p>
+                        </div>
+
+                        <div class="action-card">
+                            <a href="/prebuilt-integrations" class="action-link">
+                                Prebuilt Integrations
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </a>
+                            <p class="action-desc">Ready-to-use connectors for popular business platforms</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open Banking APIs Tile -->
+                <div class="api-tile">
+                    <!-- Card Header with Icon and Flags -->
+                    <div class="card-header">
+                        <div class="tile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                            </svg>
+                        </div>
+                        <div class="region-flags">
+                            <div class="flag-badge">
+                                <span class="flag-icon flag-us"></span>
+                                <span>US</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="tile-title">Open Banking APIs</h3>
+                    <p class="tile-description">Secure account access, payment initiation, and data sharing following global open banking standards.</p>
+
+                    <div class="tile-actions">
+                        <div class="action-card">
+                            <a href="/bdb-apis" class="action-link">
+                                BDB APIs
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </a>
+                            <p class="action-desc">Business Direct Banking APIs for account information and payments</p>
+                        </div>
+
+                        <div class="action-card">
+                            <a href="/alto-apis" class="action-link">
+                                ALTO APIs
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </a>
+                            <p class="action-desc">Advanced Lending and Transaction Origination platform APIs</p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.bmo.com/main/about-bmo/privacy-security/our-privacy-code/">BMO Privacy</a>
+                <a href="https://www.bmo.com/main/personal/legal/">BMO Legal</a>
+                <a href="https://www.bmo.com/main/personal/ways-to-bank/security-centre/">BMO Security</a>
+                <a href="https://www23.bmo.com/olbbwem/olbb-static-file/non-secure/Documents/BMO_TPSAPIDeveloperPortal_TC.pdf">Terms and Conditions</a>
+                <a href="https://www.bmo.com/main/about-bmo/accessibility/">Accessibility</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Bank of Montreal. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchLanguage(lang) {
+            // Update active button
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update content based on language
+            const translations = {
+                en: {
+                    heroTitle: 'Build the Future of Banking',
+                    heroSubtitle: 'Powerful APIs that transform financial experiences for businesses and customers',
+                    commercialTitle: 'Commercial Banking APIs',
+                    commercialDesc: 'Enterprise solutions for treasury management, cash flow optimization, and comprehensive commercial banking services.',
+                    institutionalTitle: 'Institutional APIs',
+                    institutionalDesc: 'Enterprise-grade APIs for institutional clients and treasury services',
+                    prebuiltTitle: 'Prebuilt Integrations',
+                    prebuiltDesc: 'Ready-to-use connectors for popular business platforms',
+                    openBankingTitle: 'Open Banking APIs',
+                    openBankingDesc: 'Secure account access, payment initiation, and data sharing following global open banking standards.',
+                    bdbTitle: 'BDB APIs',
+                    bdbDesc: 'Business Direct Banking APIs for account information and payments',
+                    altoTitle: 'ALTO APIs',
+                    altoDesc: 'Advanced Lending and Transaction Origination platform APIs',
+                    bmoPrivacy: 'BMO Privacy',
+                    bmoLegal: 'BMO Legal',
+                    bmoSecurity: 'BMO Security',
+                    terms: 'Terms and Conditions',
+                    accessibility: 'Accessibility',
+                    copyright: '© 2025 Bank of Montreal. All rights reserved.'
+                },
+                fr: {
+                    heroTitle: 'Construire l\'avenir bancaire',
+                    heroSubtitle: 'Des API puissantes qui transforment les expériences financières pour les entreprises et les clients',
+                    commercialTitle: 'API Bancaires Commerciales',
+                    commercialDesc: 'Solutions d\'entreprise pour la gestion de trésorerie, l\'optimisation des flux de trésorerie et des services bancaires commerciaux complets.',
+                    institutionalTitle: 'API Institutionnelles',
+                    institutionalDesc: 'API de niveau entreprise pour clients institutionnels et services de trésorerie',
+                    prebuiltTitle: 'Intégrations Préconstruites',
+                    prebuiltDesc: 'Connecteurs prêts à l\'emploi pour les plateformes d\'affaires populaires',
+                    openBankingTitle: 'API Open Banking',
+                    openBankingDesc: 'Accès sécurisé aux comptes, initiation de paiements et partage de données selon les normes bancaires ouvertes mondiales.',
+                    bdbTitle: 'API BDB',
+                    bdbDesc: 'API de services bancaires directs aux entreprises pour les informations de compte et les paiements',
+                    altoTitle: 'API ALTO',
+                    altoDesc: 'API de plateforme avancée de prêts et d\'origination de transactions',
+                    bmoPrivacy: 'Confidentialité BMO',
+                    bmoLegal: 'Mentions légales BMO',
+                    bmoSecurity: 'Sécurité BMO',
+                    terms: 'Modalités et conditions',
+                    accessibility: 'Accessibilité',
+                    copyright: '© 2025 Banque de Montréal. Tous droits réservés.'
+                }
+            };
+
+            const t = translations[lang];
+
+            // Update text content
+            document.querySelector('.hero-title').textContent = t.heroTitle;
+            document.querySelector('.hero-subtitle').textContent = t.heroSubtitle;
+
+            const tiles = document.querySelectorAll('.api-tile');
+            tiles[0].querySelector('.tile-title').textContent = t.commercialTitle;
+            tiles[0].querySelector('.tile-description').textContent = t.commercialDesc;
+            tiles[1].querySelector('.tile-title').textContent = t.openBankingTitle;
+            tiles[1].querySelector('.tile-description').textContent = t.openBankingDesc;
+
+            // Update action cards
+            const commercialActions = tiles[0].querySelectorAll('.action-card');
+            commercialActions[0].querySelector('.action-link').childNodes[0].textContent = t.institutionalTitle + ' ';
+            commercialActions[0].querySelector('.action-desc').textContent = t.institutionalDesc;
+            commercialActions[1].querySelector('.action-link').childNodes[0].textContent = t.prebuiltTitle + ' ';
+            commercialActions[1].querySelector('.action-desc').textContent = t.prebuiltDesc;
+
+            const openBankingActions = tiles[1].querySelectorAll('.action-card');
+            openBankingActions[0].querySelector('.action-link').childNodes[0].textContent = t.bdbTitle + ' ';
+            openBankingActions[0].querySelector('.action-desc').textContent = t.bdbDesc;
+            openBankingActions[1].querySelector('.action-link').childNodes[0].textContent = t.altoTitle + ' ';
+            openBankingActions[1].querySelector('.action-desc').textContent = t.altoDesc;
+
+            // Update footer
+            const footerLinks = document.querySelectorAll('.footer-links a');
+            footerLinks[0].textContent = t.bmoPrivacy;
+            footerLinks[1].textContent = t.bmoLegal;
+            footerLinks[2].textContent = t.bmoSecurity;
+            footerLinks[3].textContent = t.terms;
+            footerLinks[4].textContent = t.accessibility;
+            document.querySelector('.footer-copyright').textContent = t.copyright;
+        }
+    </script>
+</body>
+</html>
