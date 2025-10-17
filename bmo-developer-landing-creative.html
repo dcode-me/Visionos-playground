@@ -45,54 +45,43 @@
             position: relative;
         }
 
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.8;
+        }
+
         .logo {
             height: 40px;
             width: auto;
         }
 
-        .logo-text {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-            font-weight: 600;
-            color: #1a1a1a;
+        .logo path[fill="#0079C1"] {
+            fill: var(--bmo-blue);
         }
 
         .language-switcher {
             display: flex;
-            gap: 8px;
             align-items: center;
-            padding: 8px 16px;
-            background: #f5f7fa;
-            border-radius: 8px;
-        }
-
-        .language-switcher button {
-            background: none;
-            border: none;
+            gap: 8px;
             color: #666;
             font-size: 14px;
-            font-weight: 500;
-            padding: 4px 8px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
-        .language-switcher button:hover {
-            background: #e9ecef;
+        .language-switcher:hover {
+            color: var(--bmo-blue);
         }
 
-        .language-switcher button.active {
-            background: #0075BE;
-            color: white;
-        }
-
-        .language-divider {
-            width: 1px;
+        .language-switcher svg {
+            width: 20px;
             height: 20px;
-            background: #d0d0d0;
         }
 
         /* Main Content Area */
@@ -134,6 +123,20 @@
             pointer-events: none;
         }
 
+
+        .title-badge {
+            display: inline-block;
+            background: #F2F8FC;
+            border: 1px solid #C1E7FF;
+            border-radius: 24px;
+            padding: 10px 28px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--bmo-blue);
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
 
         .hero-title {
             font-size: 64px;
@@ -197,11 +200,13 @@
             min-width: 420px;
             display: flex;
             flex-direction: column;
+            border: 1px solid #e0e0e0;
         }
 
         .api-tile:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,117,190,0.15);
+            border-color: var(--bmo-blue);
         }
 
         .api-tile::before {
@@ -211,10 +216,9 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--bmo-blue), var(--bmo-red));
+            background: var(--bmo-blue);
             transform: scaleX(0);
             transition: transform 0.3s ease;
-            transform-origin: left;
         }
 
         .api-tile:hover::before {
@@ -366,7 +370,7 @@
         }
 
         .action-card:hover .action-link svg {
-            transform: translateX(3px);
+            transform: translateX(4px);
         }
 
         .action-desc {
@@ -386,14 +390,14 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
 
         .footer-links {
             display: flex;
-            gap: 24px;
             align-items: center;
+            gap: 0;
         }
 
         .footer-links a {
@@ -401,24 +405,21 @@
             text-decoration: none;
             font-size: 13px;
             transition: opacity 0.3s ease;
-            position: relative;
+            padding: 0 20px;
         }
 
-        .footer-links a:not(:last-child)::after {
-            content: '|';
-            position: absolute;
-            right: -12px;
-            color: rgba(255, 255, 255, 0.5);
+        .footer-links .separator {
+            color: rgba(255, 255, 255, 0.4);
+            height: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 300;
         }
 
         .footer-links a:hover {
             opacity: 0.8;
             text-decoration: underline;
-        }
-
-        .footer-copyright {
-            color: white;
-            font-size: 13px;
         }
 
         /* Responsive */
@@ -497,7 +498,8 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <svg class="logo" width="209" height="72" viewBox="0 0 209 72" xmlns="http://www.w3.org/2000/svg">
+            <a href="/" class="logo-link">
+                <svg class="logo" width="209" height="72" viewBox="0 0 209 72" xmlns="http://www.w3.org/2000/svg">
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <g transform="translate(-33.000000, -34.000000)">
                         <rect x="0" y="0" width="274.53" height="139.94"></rect>
@@ -511,12 +513,13 @@
                     </g>
                 </g>
             </svg>
-            <span class="logo-text">BMO Developer</span>
-            <div class="language-switcher">
-                <button class="active" onclick="switchLanguage('en')">EN</button>
-                <div class="language-divider"></div>
-                <button onclick="switchLanguage('fr')">FR</button>
-            </div>
+            </a>
+            <a href="#" class="language-switcher" onclick="toggleLanguage(event)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                </svg>
+                <span id="languageText">English</span>
+            </a>
         </div>
     </header>
 
@@ -524,6 +527,7 @@
     <div class="main-container">
         <!-- Hero Section -->
         <div class="hero-section">
+            <div class="title-badge">BMO Developer</div>
             <h1 class="hero-title">Build the <strong>Future</strong> of Banking</h1>
             <p class="hero-subtitle">Powerful APIs that transform financial experiences for businesses and customers</p>
         </div>
@@ -624,26 +628,32 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="https://www.bmo.com/main/about-bmo/privacy-security/our-privacy-code/">BMO Privacy</a>
-                <a href="https://www.bmo.com/main/personal/legal/">BMO Legal</a>
-                <a href="https://www.bmo.com/main/personal/ways-to-bank/security-centre/">BMO Security</a>
-                <a href="https://www23.bmo.com/olbbwem/olbb-static-file/non-secure/Documents/BMO_TPSAPIDeveloperPortal_TC.pdf">Terms and Conditions</a>
-                <a href="https://www.bmo.com/main/about-bmo/accessibility/">Accessibility</a>
-            </div>
-            <div class="footer-copyright">
-                © 2025 Bank of Montreal. All rights reserved.
+                <a href="#">Privacy Canada</a>
+                <a href="#">Privacy US</a>
+                <span class="separator">|</span>
+                <a href="#">Legal Canada</a>
+                <a href="#">Legal US</a>
+                <span class="separator">|</span>
+                <a href="#">Security Canada</a>
+                <a href="#">Security US</a>
+                <span class="separator">|</span>
+                <a href="#">Terms and Conditions</a>
             </div>
         </div>
     </footer>
 
     <script>
-        function switchLanguage(lang) {
-            // Update active button
-            document.querySelectorAll('.language-switcher button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        let currentLang = 'en';
 
+        function toggleLanguage(event) {
+            event.preventDefault();
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            const languageText = document.getElementById('languageText');
+            languageText.textContent = currentLang === 'en' ? 'English' : 'Français';
+            switchLanguage(currentLang);
+        }
+
+        function switchLanguage(lang) {
             // Update content based on language
             const translations = {
                 en: {
@@ -661,12 +671,13 @@
                     bdbDesc: 'Business Direct Banking APIs for account information and payments',
                     altoTitle: 'ALTO APIs',
                     altoDesc: 'Advanced Lending and Transaction Origination platform APIs',
-                    bmoPrivacy: 'BMO Privacy',
-                    bmoLegal: 'BMO Legal',
-                    bmoSecurity: 'BMO Security',
-                    terms: 'Terms and Conditions',
-                    accessibility: 'Accessibility',
-                    copyright: '© 2025 Bank of Montreal. All rights reserved.'
+                    privacyCanada: 'Privacy Canada',
+                    privacyUS: 'Privacy US',
+                    legalCanada: 'Legal Canada',
+                    legalUS: 'Legal US',
+                    securityCanada: 'Security Canada',
+                    securityUS: 'Security US',
+                    terms: 'Terms and Conditions'
                 },
                 fr: {
                     heroTitle: 'Construire l\'avenir bancaire',
@@ -683,19 +694,28 @@
                     bdbDesc: 'API de services bancaires directs aux entreprises pour les informations de compte et les paiements',
                     altoTitle: 'API ALTO',
                     altoDesc: 'API de plateforme avancée de prêts et d\'origination de transactions',
-                    bmoPrivacy: 'Confidentialité BMO',
-                    bmoLegal: 'Mentions légales BMO',
-                    bmoSecurity: 'Sécurité BMO',
-                    terms: 'Modalités et conditions',
-                    accessibility: 'Accessibilité',
-                    copyright: '© 2025 Banque de Montréal. Tous droits réservés.'
+                    privacyCanada: 'Confidentialité Canada',
+                    privacyUS: 'Confidentialité États-Unis',
+                    legalCanada: 'Mentions légales Canada',
+                    legalUS: 'Mentions légales États-Unis',
+                    securityCanada: 'Sécurité Canada',
+                    securityUS: 'Sécurité États-Unis',
+                    terms: 'Modalités et conditions'
                 }
             };
 
             const t = translations[lang];
 
-            // Update text content
-            document.querySelector('.hero-title').textContent = t.heroTitle;
+            // Update text content - preserve gradient on "Future"/"avenir"
+            const heroTitle = document.querySelector('.hero-title');
+            const titleBadge = document.querySelector('.title-badge');
+            if (lang === 'en') {
+                heroTitle.innerHTML = 'Build the <strong>Future</strong> of Banking';
+                titleBadge.textContent = 'BMO Developer';
+            } else {
+                heroTitle.innerHTML = 'Construire l\'<strong>avenir</strong> bancaire';
+                titleBadge.textContent = 'BMO Développeur';
+            }
             document.querySelector('.hero-subtitle').textContent = t.heroSubtitle;
 
             const tiles = document.querySelectorAll('.api-tile');
@@ -719,12 +739,13 @@
 
             // Update footer
             const footerLinks = document.querySelectorAll('.footer-links a');
-            footerLinks[0].textContent = t.bmoPrivacy;
-            footerLinks[1].textContent = t.bmoLegal;
-            footerLinks[2].textContent = t.bmoSecurity;
-            footerLinks[3].textContent = t.terms;
-            footerLinks[4].textContent = t.accessibility;
-            document.querySelector('.footer-copyright').textContent = t.copyright;
+            footerLinks[0].textContent = t.privacyCanada;
+            footerLinks[1].textContent = t.privacyUS;
+            footerLinks[2].textContent = t.legalCanada;
+            footerLinks[3].textContent = t.legalUS;
+            footerLinks[4].textContent = t.securityCanada;
+            footerLinks[5].textContent = t.securityUS;
+            footerLinks[6].textContent = t.terms;
         }
     </script>
 </body>
