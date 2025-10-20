@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage API Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            background: #fafbfc;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: #f0f4f8;
+            color: #333;
+        }
+
+        .tab-button.active {
+            color: #0079C1;
+            background: white;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #0079C1;
+        }
+
+        .tab-content {
+            padding: 32px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Users Tab Styles */
+        .users-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .user-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #fafbfc;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .user-email {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .user-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .badge.admin {
+            background: #6f42c1;
+            color: white;
+        }
+
+        .badge.sandbox {
+            background: #ffc107;
+            color: #856404;
+        }
+
+        .badge.preprod {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .badge.production {
+            background: #28a745;
+            color: white;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            border-color: #adb5bd;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-danger:disabled {
+            background: #e0e0e0;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        /* Applications Tab Styles */
+        .view-toggle {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
+        .toggle-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+            background: #0079C1;
+            color: white;
+            border-color: #0079C1;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .app-card.selected {
+            border-color: #0079C1;
+            box-shadow: 0 0 0 3px rgba(0, 121, 193, 0.1);
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .app-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .app-id {
+            font-size: 12px;
+            color: #999;
+            font-family: monospace;
+        }
+
+        .app-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .app-details {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #666;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Application Detail View */
+        .app-detail-view {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            margin-top: 24px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .app-detail-view.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .detail-title h2 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .detail-title p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .close-detail {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .close-detail:hover {
+            background: #e9ecef;
+        }
+
+        .environment-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .env-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .env-card.active {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+
+        .env-card.next {
+            border-color: #ffc107;
+            background: #fffbf0;
+        }
+
+        .env-card.locked {
+            opacity: 0.6;
+            background: #f8f9fa;
+        }
+
+        .env-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .env-card.active .env-icon {
+            background: #28a745;
+            color: white;
+        }
+
+        .env-card.next .env-icon {
+            background: #ffc107;
+            color: #856404;
+        }
+
+        .env-card.locked .env-icon {
+            background: #e0e0e0;
+            color: #999;
+        }
+
+        .env-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .env-status {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .env-card.active .env-status {
+            color: #28a745;
+        }
+
+        .env-actions {
+            margin-top: 16px;
+        }
+
+        .btn-primary {
+            background: #0079C1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #005a91;
+        }
+
+        .btn-primary:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+        }
+
+        .api-credentials {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .credentials-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .credentials-header h3 {
+            color: #333;
+        }
+
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .credential-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .credential-value {
+            font-family: monospace;
+            color: #333;
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .back-to-list {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0079C1;
+            text-decoration: none;
+            margin-bottom: 24px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .back-to-list:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .environment-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .applications-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                border-bottom: 1px solid #e0e0e0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Manage API Services</h1>
+            <p>Manage your developer portal users and applications</p>
+        </div>
+
+        <!-- Tabs Container -->
+        <div class="tabs-container">
+            <!-- Tab Headers -->
+            <div class="tabs-header">
+                <button class="tab-button active" onclick="switchTab('users')">Manage Users</button>
+                <button class="tab-button" onclick="switchTab('applications')">Manage Applications</button>
+            </div>
+
+            <!-- Users Tab Content -->
+            <div class="tab-content active" id="users-tab">
+                <h2 style="margin-bottom: 24px;">Active Users</h2>
+                <div class="users-grid">
+                    <!-- Admin User (Cannot be removed) -->
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="user-name">John Smith</div>
+                            <div class="user-email">john.smith@company.com</div>
+                            <div class="user-badges">
+                                <span class="badge admin">Admin</span>
+                                <span class="badge sandbox">Sandbox</span>
+                                <span class="badge preprod">Pre-Production</span>
+                                <span class="badge production">Production</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-secondary">Edit Access</button>
+                            <button class="btn btn-danger" disabled title="Admin user cannot be removed">Remove</button>
+                        </div>
+                    </div>
+
+                    <!-- Regular User 1 -->
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="user-name">Sarah Johnson</div>
+                            <div class="user-email">sarah.johnson@company.com</div>
+                            <div class="user-badges">
+                                <span class="badge sandbox">Sandbox</span>
+                                <span class="badge preprod">Pre-Production</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-secondary">Edit Access</button>
+                            <button class="btn btn-danger">Remove</button>
+                        </div>
+                    </div>
+
+                    <!-- Regular User 2 -->
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="user-name">Michael Chen</div>
+                            <div class="user-email">michael.chen@company.com</div>
+                            <div class="user-badges">
+                                <span class="badge sandbox">Sandbox</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-secondary">Edit Access</button>
+                            <button class="btn btn-danger">Remove</button>
+                        </div>
+                    </div>
+
+                    <!-- Regular User 3 -->
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="user-name">Emily Davis</div>
+                            <div class="user-email">emily.davis@company.com</div>
+                            <div class="user-badges">
+                                <span class="badge sandbox">Sandbox</span>
+                                <span class="badge production">Production</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-secondary">Edit Access</button>
+                            <button class="btn btn-danger">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Tab Content -->
+            <div class="tab-content" id="applications-tab">
+                <h2 style="margin-bottom: 24px;">Your Applications</h2>
+
+                <!-- Applications Grid -->
+                <div class="applications-grid" id="applications-list">
+                    <!-- Application 1 - Sandbox -->
+                    <div class="app-card" onclick="showAppDetail('app1')">
+                        <div class="app-header">
+                            <div>
+                                <div class="app-name">Payment Gateway</div>
+                                <div class="app-id">APP-2024-001</div>
+                            </div>
+                            <span class="badge sandbox">Sandbox</span>
+                        </div>
+                        <div class="app-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Created:</span>
+                                <span class="detail-value">Oct 15, 2024</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">API Calls:</span>
+                                <span class="detail-value">1,234</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value" style="color: #ffc107;">Ready for Pre-Production</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Application 2 - Pre-Production -->
+                    <div class="app-card" onclick="showAppDetail('app2')">
+                        <div class="app-header">
+                            <div>
+                                <div class="app-name">Account Aggregator</div>
+                                <div class="app-id">APP-2024-002</div>
+                            </div>
+                            <span class="badge preprod">Pre-Production</span>
+                        </div>
+                        <div class="app-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Created:</span>
+                                <span class="detail-value">Sep 20, 2024</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">API Calls:</span>
+                                <span class="detail-value">5,678</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value" style="color: #17a2b8;">Testing in Progress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Application 3 - Production -->
+                    <div class="app-card" onclick="showAppDetail('app3')">
+                        <div class="app-header">
+                            <div>
+                                <div class="app-name">Transaction Monitor</div>
+                                <div class="app-id">APP-2024-003</div>
+                            </div>
+                            <span class="badge production">Production</span>
+                        </div>
+                        <div class="app-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Created:</span>
+                                <span class="detail-value">Aug 10, 2024</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">API Calls:</span>
+                                <span class="detail-value">45,234</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value" style="color: #28a745;">Live</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Application 4 - Sandbox -->
+                    <div class="app-card" onclick="showAppDetail('app4')">
+                        <div class="app-header">
+                            <div>
+                                <div class="app-name">Mobile Banking API</div>
+                                <div class="app-id">APP-2024-004</div>
+                            </div>
+                            <span class="badge sandbox">Sandbox</span>
+                        </div>
+                        <div class="app-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Created:</span>
+                                <span class="detail-value">Oct 18, 2024</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">API Calls:</span>
+                                <span class="detail-value">234</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value" style="color: #666;">In Development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Detail View -->
+                <div class="app-detail-view" id="app-detail">
+                    <!-- Content will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+
+            // Hide app detail view when switching tabs
+            document.getElementById('app-detail').classList.remove('active');
+            document.getElementById('applications-list').style.display = 'grid';
+        }
+
+        // Application detail data
+        const appData = {
+            app1: {
+                name: 'Payment Gateway',
+                id: 'APP-2024-001',
+                created: 'October 15, 2024',
+                description: 'Secure payment processing API for online transactions',
+                currentEnv: 'sandbox',
+                environments: {
+                    sandbox: { active: true, apiCalls: '1,234', since: 'Oct 15, 2024' },
+                    preprod: { active: false },
+                    production: { active: false }
+                }
+            },
+            app2: {
+                name: 'Account Aggregator',
+                id: 'APP-2024-002',
+                created: 'September 20, 2024',
+                description: 'API for aggregating account information across multiple services',
+                currentEnv: 'preprod',
+                environments: {
+                    sandbox: { active: true, apiCalls: '3,456', since: 'Sep 20, 2024' },
+                    preprod: { active: true, apiCalls: '2,222', since: 'Oct 1, 2024' },
+                    production: { active: false }
+                }
+            },
+            app3: {
+                name: 'Transaction Monitor',
+                id: 'APP-2024-003',
+                created: 'August 10, 2024',
+                description: 'Real-time transaction monitoring and analytics API',
+                currentEnv: 'production',
+                environments: {
+                    sandbox: { active: true, apiCalls: '10,234', since: 'Aug 10, 2024' },
+                    preprod: { active: true, apiCalls: '15,000', since: 'Sep 1, 2024' },
+                    production: { active: true, apiCalls: '20,000', since: 'Sep 15, 2024' }
+                }
+            },
+            app4: {
+                name: 'Mobile Banking API',
+                id: 'APP-2024-004',
+                created: 'October 18, 2024',
+                description: 'API for mobile banking application integration',
+                currentEnv: 'sandbox',
+                environments: {
+                    sandbox: { active: true, apiCalls: '234', since: 'Oct 18, 2024' },
+                    preprod: { active: false },
+                    production: { active: false }
+                }
+            }
+        };
+
+        function showAppDetail(appId) {
+            const app = appData[appId];
+            const detailView = document.getElementById('app-detail');
+            const appsList = document.getElementById('applications-list');
+
+            // Hide applications list
+            appsList.style.display = 'none';
+
+            // Build detail view HTML
+            let detailHTML = `
+                <a class="back-to-list" onclick="hideAppDetail()">← Back to Applications</a>
+
+                <div class="detail-header">
+                    <div class="detail-title">
+                        <h2>${app.name}</h2>
+                        <p>${app.id} • Created ${app.created}</p>
+                        <p style="margin-top: 8px;">${app.description}</p>
+                    </div>
+                    <button class="close-detail" onclick="hideAppDetail()">Close</button>
+                </div>
+
+                <h3 style="margin-bottom: 20px;">Environment Status</h3>
+                <div class="environment-cards">
+                    <!-- Sandbox -->
+                    <div class="env-card ${app.environments.sandbox.active ? 'active' : 'locked'}">
+                        <div class="env-icon">${app.environments.sandbox.active ? '✓' : '🔒'}</div>
+                        <div class="env-name">Sandbox</div>
+                        <div class="env-status">
+                            ${app.environments.sandbox.active ? 'Active' : 'Not Started'}
+                        </div>
+                        ${app.environments.sandbox.active ? `
+                            <div style="font-size: 12px; color: #666;">
+                                <div>Since: ${app.environments.sandbox.since}</div>
+                                <div>API Calls: ${app.environments.sandbox.apiCalls}</div>
+                            </div>
+                        ` : ''}
+                        ${app.currentEnv === 'sandbox' && app.environments.sandbox.active ? `
+                            <div class="env-actions">
+                                <button class="btn btn-primary" onclick="upgradeEnvironment('${appId}', 'preprod')">
+                                    Upgrade to Pre-Production
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <!-- Pre-Production -->
+                    <div class="env-card ${app.environments.preprod.active ? 'active' : app.currentEnv === 'sandbox' ? 'next' : 'locked'}">
+                        <div class="env-icon">
+                            ${app.environments.preprod.active ? '✓' : app.currentEnv === 'sandbox' ? '→' : '🔒'}
+                        </div>
+                        <div class="env-name">Pre-Production</div>
+                        <div class="env-status">
+                            ${app.environments.preprod.active ? 'Active' : app.currentEnv === 'sandbox' ? 'Ready to Upgrade' : 'Locked'}
+                        </div>
+                        ${app.environments.preprod.active ? `
+                            <div style="font-size: 12px; color: #666;">
+                                <div>Since: ${app.environments.preprod.since}</div>
+                                <div>API Calls: ${app.environments.preprod.apiCalls}</div>
+                            </div>
+                        ` : ''}
+                        ${app.currentEnv === 'preprod' && app.environments.preprod.active ? `
+                            <div class="env-actions">
+                                <button class="btn btn-primary" onclick="upgradeEnvironment('${appId}', 'production')">
+                                    Upgrade to Production
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <!-- Production -->
+                    <div class="env-card ${app.environments.production.active ? 'active' : app.currentEnv === 'preprod' ? 'next' : 'locked'}">
+                        <div class="env-icon">
+                            ${app.environments.production.active ? '✓' : app.currentEnv === 'preprod' ? '→' : '🔒'}
+                        </div>
+                        <div class="env-name">Production</div>
+                        <div class="env-status">
+                            ${app.environments.production.active ? 'Live' : app.currentEnv === 'preprod' ? 'Ready to Deploy' : 'Locked'}
+                        </div>
+                        ${app.environments.production.active ? `
+                            <div style="font-size: 12px; color: #666;">
+                                <div>Since: ${app.environments.production.since}</div>
+                                <div>API Calls: ${app.environments.production.apiCalls}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <!-- API Credentials Section -->
+                <div class="api-credentials">
+                    <div class="credentials-header">
+                        <h3>API Credentials - ${app.currentEnv.charAt(0).toUpperCase() + app.currentEnv.slice(1)}</h3>
+                        <button class="btn btn-secondary" onclick="regenerateKeys('${appId}')">Regenerate Keys</button>
+                    </div>
+                    <div class="credential-item">
+                        <span class="credential-label">Client ID:</span>
+                        <span class="credential-value">${appId.toUpperCase()}-${Math.random().toString(36).substring(2, 10).toUpperCase()}</span>
+                    </div>
+                    <div class="credential-item">
+                        <span class="credential-label">Client Secret:</span>
+                        <span class="credential-value">••••••••••••••••••••</span>
+                    </div>
+                    <div class="credential-item">
+                        <span class="credential-label">API Endpoint:</span>
+                        <span class="credential-value">https://api-${app.currentEnv}.bmo.com/v1/</span>
+                    </div>
+                </div>
+            `;
+
+            detailView.innerHTML = detailHTML;
+            detailView.classList.add('active');
+        }
+
+        function hideAppDetail() {
+            document.getElementById('app-detail').classList.remove('active');
+            document.getElementById('applications-list').style.display = 'grid';
+        }
+
+        function upgradeEnvironment(appId, targetEnv) {
+            const envName = targetEnv === 'preprod' ? 'Pre-Production' : 'Production';
+            if (confirm(`Are you sure you want to upgrade "${appData[appId].name}" to ${envName}?`)) {
+                alert(`Application "${appData[appId].name}" has been submitted for ${envName} upgrade. You will receive an email confirmation shortly.`);
+                // In a real application, this would make an API call
+            }
+        }
+
+        function regenerateKeys(appId) {
+            if (confirm('Are you sure you want to regenerate API keys? Existing keys will stop working immediately.')) {
+                alert('New API credentials have been generated and sent to your registered email.');
+                // In a real application, this would make an API call
+            }
+        }
+
+        // User management functions
+        document.querySelectorAll('.btn-danger:not(:disabled)').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (confirm('Are you sure you want to remove this user from the developer portal?')) {
+                    const userCard = this.closest('.user-card');
+                    userCard.style.transition = 'all 0.3s ease';
+                    userCard.style.opacity = '0';
+                    userCard.style.transform = 'translateX(20px)';
+                    setTimeout(() => {
+                        userCard.remove();
+                    }, 300);
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-secondary').forEach(btn => {
+            if (btn.textContent === 'Edit Access') {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    alert('Edit access functionality would open a modal to manage user permissions.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
