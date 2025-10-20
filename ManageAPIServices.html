@@ -524,6 +524,142 @@
             text-decoration: underline;
         }
 
+        /* Production API Account Management Styles */
+        .api-accounts-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .api-accounts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .api-accounts-header h3 {
+            color: #333;
+        }
+
+        .api-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .api-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #fafbfc;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .api-item-header:hover {
+            background: #f0f4f8;
+        }
+
+        .api-item-header.expanded {
+            background: #e8f4ff;
+        }
+
+        .api-info {
+            flex: 1;
+        }
+
+        .api-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .api-stats {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .api-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .expand-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+
+        .api-item-header.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .api-accounts-list {
+            display: none;
+            padding: 20px;
+        }
+
+        .api-accounts-list.expanded {
+            display: block;
+        }
+
+        .accounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .account-chip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .account-number {
+            font-family: monospace;
+            color: #333;
+        }
+
+        .account-type {
+            font-size: 12px;
+            color: #666;
+            margin-left: 8px;
+        }
+
+        .btn-disconnect {
+            background: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-disconnect:hover {
+            background: #c82333;
+        }
+
+
         @media (max-width: 768px) {
             .environment-cards {
                 grid-template-columns: 1fr;
@@ -801,6 +937,69 @@
                     sandbox: { active: true, apiCalls: '10,234', since: 'Aug 10, 2024' },
                     preprod: { active: true, apiCalls: '15,000', since: 'Sep 1, 2024' },
                     production: { active: true, apiCalls: '20,000', since: 'Sep 15, 2024' }
+                },
+                productionApis: {
+                    'account-info': {
+                        name: 'Account Information API',
+                        linkedAccounts: [
+                            { number: '****1234', type: 'Checking' },
+                            { number: '****5678', type: 'Savings' },
+                            { number: '****9012', type: 'Checking' },
+                            { number: '****3456', type: 'Business' },
+                            { number: '****7890', type: 'Savings' },
+                            { number: '****2345', type: 'Checking' },
+                            { number: '****6789', type: 'Business' },
+                            { number: '****0123', type: 'Savings' },
+                            { number: '****4567', type: 'Checking' },
+                            { number: '****8901', type: 'Business' }
+                        ]
+                    },
+                    'image-retrieval': {
+                        name: 'Image Retrieval API',
+                        linkedAccounts: [
+                            { number: '****1234', type: 'Checking' },
+                            { number: '****3456', type: 'Business' },
+                            { number: '****7890', type: 'Savings' },
+                            { number: '****0123', type: 'Savings' },
+                            { number: '****8901', type: 'Business' }
+                        ]
+                    },
+                    'ach-payment': {
+                        name: 'ACH Payment API',
+                        linkedAccounts: [
+                            { number: '****1234', type: 'Checking' },
+                            { number: '****9012', type: 'Checking' },
+                            { number: '****3456', type: 'Business' },
+                            { number: '****6789', type: 'Business' },
+                            { number: '****4567', type: 'Checking' }
+                        ]
+                    },
+                    'eft-payment': {
+                        name: 'EFT API',
+                        linkedAccounts: [
+                            { number: '****5678', type: 'Savings' },
+                            { number: '****3456', type: 'Business' },
+                            { number: '****2345', type: 'Checking' },
+                            { number: '****8901', type: 'Business' }
+                        ]
+                    },
+                    'wire-payment': {
+                        name: 'Wire Payments API',
+                        linkedAccounts: [
+                            { number: '****3456', type: 'Business' },
+                            { number: '****6789', type: 'Business' },
+                            { number: '****8901', type: 'Business' }
+                        ]
+                    },
+                    'instant-payment': {
+                        name: 'Instant Payments API',
+                        linkedAccounts: [
+                            { number: '****1234', type: 'Checking' },
+                            { number: '****9012', type: 'Checking' },
+                            { number: '****2345', type: 'Checking' },
+                            { number: '****4567', type: 'Checking' }
+                        ]
+                    }
                 }
             },
             app4: {
@@ -835,7 +1034,12 @@
                         <p>${app.id} • Created ${app.created}</p>
                         <p style="margin-top: 8px;">${app.description}</p>
                     </div>
-                    <button class="close-detail" onclick="hideAppDetail()">Close</button>
+                    <div style="display: flex; gap: 12px;">
+                        ${app.currentEnv === 'production' ? `
+                            <button class="btn btn-disconnect" onclick="disconnectApp('${appId}')">Disconnect Application</button>
+                        ` : ''}
+                        <button class="close-detail" onclick="hideAppDetail()">Close</button>
+                    </div>
                 </div>
 
                 <h3 style="margin-bottom: 20px;">Environment Status</h3>
@@ -923,10 +1127,64 @@
                         <span class="credential-value">https://api-${app.currentEnv}.bmo.com/v1/</span>
                     </div>
                 </div>
+
+                ${app.currentEnv === 'production' && app.productionApis ? `
+                    <!-- Production API Account Management -->
+                    <div class="api-accounts-section">
+                        <div class="api-accounts-header">
+                            <h3>API-Specific Account Access</h3>
+                        </div>
+
+                        ${Object.keys(app.productionApis).map(apiKey => {
+                            const api = app.productionApis[apiKey];
+                            return `
+                                <div class="api-item">
+                                    <div class="api-item-header" onclick="toggleApiAccounts('${apiKey}')">
+                                        <div class="api-info">
+                                            <div class="api-name">${api.name}</div>
+                                            <div class="api-stats">${api.linkedAccounts.length} accounts linked</div>
+                                        </div>
+                                        <div class="api-actions">
+                                            <span class="expand-icon">▼</span>
+                                        </div>
+                                    </div>
+                                    <div class="api-accounts-list" id="accounts-${apiKey}">
+                                        <div class="accounts-grid">
+                                            ${api.linkedAccounts.map(account => `
+                                                <div class="account-chip">
+                                                    <span class="account-number">${account.number}</span>
+                                                    <span class="account-type">${account.type}</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                ` : ''}
             `;
 
             detailView.innerHTML = detailHTML;
             detailView.classList.add('active');
+        }
+
+        function toggleApiAccounts(apiKey) {
+            const header = event.currentTarget;
+            const accountsList = document.getElementById(`accounts-${apiKey}`);
+
+            header.classList.toggle('expanded');
+            accountsList.classList.toggle('expanded');
+        }
+
+        function disconnectApp(appId) {
+            const app = appData[appId];
+
+            if (confirm(`Are you sure you want to disconnect "${app.name}" from production? This will remove access to all linked accounts across all APIs.`)) {
+                alert(`"${app.name}" has been disconnected from production. The application will no longer have access to any production APIs or accounts.`);
+                // In a real application, this would make an API call
+                // and refresh the view to show the application is no longer in production
+            }
         }
 
         function hideAppDetail() {
