@@ -1,19 +1,8 @@
-**Purpose**
-
-The **BMO Developer Experience (DevX)** initiative defines and delivers how developers discover, onboard, and integrate with BMO’s APIs across business lines.
-
-The goal is to provide a unified, intuitive experience starting from **developer.bmo.com**, where developers can choose between BMO’s two primary API ecosystems:
-
-1. **Commercial Banking APIs** — APIs designed for institutional, enterprise, and business clients.  
-2. **U.S. Open Banking APIs** — APIs designed to support digital and retail integrations within BMO’s U.S. businesses.
-
-Both of these ecosystems share the same global developer homepage but serve distinct developer audiences and business objectives.
-
----
-
 **Scope Overview**
 
 The current program focuses on defining, planning, and implementing the **Commercial Banking API experience** — specifically the developer journey, tooling, and processes associated with **Institutional APIs**.
+
+---
 
 ### 1. Commercial Banking APIs
 
@@ -30,21 +19,19 @@ The Commercial Banking API ecosystem is divided into two main categories:
 • These integrations leverage BMO data and services but are managed through third-party partner ecosystems.  
 • Not part of current design or delivery scope; mentioned only for contextual completeness.
 
-### 2. U.S. Open Banking APIs
+---
 
-The U.S. Open Banking API ecosystem is managed by separate lines of business, each owning its own experience and landing pages. These will eventually connect to the unified developer homepage but operate independently from this initiative.
+{expand:title=Learn more about U.S. Open Banking APIs}
+{panel:bgColor=#f4f5f7}
+The **U.S. Open Banking API** ecosystem is managed independently by other BMO business lines. It will eventually connect to the unified developer homepage but is not part of the current design or implementation scope.
 
-**a. BMO Digital Banking APIs**  
-• Focused on retail digital banking experiences and U.S. consumer banking integrations.  
-• Owned and managed by the Digital Banking team.
+**Structure:**
+- **BMO Digital Banking APIs** — Focused on retail digital banking and consumer banking integrations.  
+- **BMO Alto APIs** — Operated by the **BMO Alto** subsidiary, aligned with the U.S. Retail Banking organization.  
 
-**b. BMO Alto APIs**  
-• Focused on the automotive and retail financing ecosystem within BMO’s U.S. subsidiary, **BMO Alto**.  
-• Operates in close alignment with U.S. Retail Banking APIs.  
-• Owned and managed by the Alto business and technology teams.
-
-The Developer Experience program will reference these ecosystems at the **homepage branching level** only (developer.bmo.com → Commercial Banking APIs or U.S. Open Banking APIs).  
-There is **no direct ownership or design responsibility** for those downstream pages within the current scope.
+These APIs will maintain their own landing pages and experiences, managed by their respective business units.  
+{panel}
+{expand}
 
 ---
 
@@ -59,12 +46,4 @@ There is **no direct ownership or design responsibility** for those downstream p
 - Redesign or management of U.S. Open Banking API landing pages  
 - Pre-built partner integrations (FISPAN, Xero, NetSuite, Oracle, QuickBooks) beyond documentation reference  
 - Retail API experience definition or delivery  
-- Production operations and API performance management beyond design scope  
-
----
-
-**Summary**
-
-In short, this program defines the **Commercial Banking Developer Experience** within BMO’s broader API ecosystem — focusing on how institutional developers and partners discover, access, and integrate with BMO’s enterprise APIs.
-
-The outcomes of this work will serve as the model for future lines of business and form the foundation of a cohesive, enterprise-wide **BMO Developer Experience** hosted under a single developer portal.
+- Production operations and API performance management beyond design scope
