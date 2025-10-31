@@ -1,48 +1,21 @@
-## 🧩 Core Portal Modules by Phase
+## User Journey Phases
 
-| Phase | Key MFEs | Description |
-|-------|-----------|-------------|
-| Discover | Solutions Gallery, API Catalog | Public entry & use-case orientation |
-| Evaluate | Auth Hub, API Docs, Download Center | Deep dive & sandbox setup |
-| Learn | Tutorials, Consent UX, Error Library | Developer onboarding |
-| Build | Explorer+, Test Data, Starter Projects | Integration readiness |
-| Scale | Org Workspace, Analytics, Changelog | Operations & monitoring |
+The BMO Developer Experience is structured around five key user journey phases.  
+Each phase page captures the **current experience**, **proposed enhancements**, and eventually the **approved FY2026 scope**, including design references, mockups, and linked decisions.
 
----
+**Journey Phases**
 
-## 🧾 Decision Log
+1. [[Phase 1 — Discover]]  
+   Identify how clients and developers find BMO’s APIs and learn about available capabilities.
 
-| ID | Decision | Status | Owner | Date |
-|----|-----------|--------|--------|------|
-| DR-001 | Unify Modify/Revoke consent flows | ✅ Approved | API Product | 2025-06-04 |
-| DR-002 | Add “Auth & Env Hub” MFE | 🟡 In Discussion | Eng | 2025-11-01 |
-| DR-003 | Introduce AI Doc Assistant MVP | 🔵 Proposed | Design | TBD |
+2. [[Phase 2 — Evaluate]]  
+   Understand the process developers follow to assess APIs, environments, and authentication.
 
----
+3. [[Phase 3 — Learn (Onboarding & Integration Planning)]]  
+   Review onboarding flow, tutorials, and consent setup.
 
-## 🗓 Workshop Notes & Actions
+4. [[Phase 4 — Build (Integration & Consent)]]  
+   Track how developers implement and integrate APIs with sandbox and production environments.
 
-| Date | Topic | Key Actions | Owner | Due |
-|------|--------|--------------|--------|------|
-| 2025-11-01 | Initial Requirements | Capture API pain points, align personas | UX | Nov 3 |
-| 2025-11-02 | Module Planning | Validate MVP MFEs | Eng | Nov 6 |
-
----
-
-## ❓ Open Questions / Risks
-
-- [ ] How will API usage analytics be collected securely?  
-- [ ] Can Marketplace and Dev Portal share a common identity layer?  
-- [ ] Should PCA consent be reusable across APIs?  
-- [ ] Is the sandbox environment fully isolated for third-party developers?  
-
----
-
-## 📚 References
-
-- [BMO Developer Portal (current)](https://developer.bmo.com/api/commercial/)  
-- [DevPortal Awards](https://devportalawards.org/)  
-- [Stripe Developer Portal](https://stripe.com/docs/api)  
-- [Plaid Developer Portal](https://plaid.com/docs/)  
-
----
+5. [[Phase 5 — Operate & Scale]]  
+   Manage API usage, monitoring, and post-launch analytics for enterprise clients.
