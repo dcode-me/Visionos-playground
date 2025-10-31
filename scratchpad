@@ -1,97 +1,95 @@
-# 🧭 BMO API Developer Portal — Redesign Hub (Live Doc)
+# 🧭 BMO Developer Experience — Program Hub (Live Doc)
 
-> **Goal:** Redesign the Commercial API Developer Portal for BMO’s Commercial / TPS APIs.  
-> **Vision:** Deliver an award-winning developer experience aligned with the 2025 DevPortal Awards.  
-> **Status:** 🔵 Planning & Requirements Phase  
-> **Owners:**  
-> • Design Lead — @mention  
-> • API Product Owner — @mention  
-> • Technical Lead — @mention  
-
----
-
-## 🎯 Journey Overview
-Below is the current → future API Developer Portal journey from Figma.  
-*(Embed the live Figma frame here using “/Figma” or by pasting the frame link and choosing **Embed** display mode.)*
+> **Purpose:**  
+> The BMO Developer Experience (DevX) program unifies how developers interact with BMO’s APIs, tools, and onboarding processes across all lines of business — including **Commercial Banking**, **Retail Banking**, and **Open Banking**.  
+>  
+> The goal is to provide a seamless, secure, and modern experience for internal and external developers through a consistent design, registration, and management model.  
+>  
+> **Scope:**  
+> - Developer homepage: [developer.bmo.com](https://developer.bmo.com) — the central entry point for all API products.  
+> - Program branches:  
+>   - Commercial Banking APIs (Consent, Registration, App Management)  
+>   - Retail Banking APIs  
+>   - Open Banking (Canada and International initiatives)
 
 ---
 
-## 🚀 Combined Journey (Current → Future)
+## 📘 Release Overview
 
-{expand:title=Phase 1 — Discover}
-**Goal:** Identify if BMO’s API program fits commercial client needs.  
-**Current:**  
-- Clients or IT teams explore developer.bmo.com or Marketplace for API info.  
-- Sales shares documentation manually.  
-**Future Enhancements:**  
-- Public **Solutions Gallery** (business-first entry).  
-- **API Catalog** with filters (Product, Country, Maturity).  
-- **Why BMO** section with trust, security, and innovation story.  
-- **AI-powered discovery search** (“Show me APIs for ERP integration”).  
+| Release | Timeline | Description | Status |
+|----------|-----------|-------------|---------|
+| **Current Release (FY2025)** | Oct–Nov 2025 | Focused on Commercial Banking API enhancements including onboarding, consent, and app management. | ✅ Released |
+| **Previous Release (TBD)** | TBD 2021 | Earlier foundation release of the Commercial API portal, initial developer documentation framework. | 🕓 Historical |
+| **Planned FY2026 Delivery** | Oct–Nov 2026 (Target) | Unified BMO Developer Experience covering multiple lines of business and shared components. | 🔵 In Planning |
+
+---
+
+## 🚀 FY2026 Delivery Plan — Major Phases
+
+| Phase | Description | Target Period |
+|--------|--------------|---------------|
+| **1. Discovery** | Assess existing developer touchpoints across Commercial, Retail, and Open Banking lines of business. Identify overlaps, gaps, and future-state opportunities. | Q1 FY2026 |
+| **2. Research & Insights** | Conduct internal stakeholder interviews and competitive benchmarking. Map current-to-future developer journeys. | Q1–Q2 FY2026 |
+| **3. Design & Experience Definition** | Define unified design system components, shared navigation model, and standardized onboarding patterns. | Q2 FY2026 |
+| **4. User Feedback & Validation** | Run usability sessions with developer personas (internal and external). Incorporate feedback into wireframes and prototypes. | Q2–Q3 FY2026 |
+| **5. Development & Integration** | Build core components (portal shell, documentation viewer, consent UX, analytics, and self-service tools). | Q3 FY2026 |
+| **6. Production Readiness & Launch** | Conduct security reviews, deployment, and final QA. Launch to production across lines of business. | Q4 FY2026 |
+
+---
+
+## 🎯 Vision Overview
+
+{expand:title=Unified Developer Experience}
+The BMO Developer Experience will provide a single entry point for all API-based integrations.  
+From **developer.bmo.com**, users will be able to discover APIs by line of business (Commercial, Retail, Open Banking), review documentation, register applications, manage consents, and monitor usage — all within a consistent interface and authentication model.
 {expand}
 
-{expand:title=Phase 2 — Evaluate}
-**Goal:** Determine feasibility and security alignment.  
-**Current:**  
-- Teams review PDFs, basic sandbox access, manual pre-prod request.  
-- PCA consent model unclear.  
-**Future Enhancements:**  
-- **3-panel interactive docs** (nav | content | code).  
-- **Auth & Environments Hub** (visual Sandbox → Pre-prod → Prod).  
-- **Download Center** (OpenAPI, Postman, SDKs).  
-- **Consent FAQ** explaining PCA model.  
-- **Pre-prod request flow** automated in portal.  
+{expand:title=Commercial Banking APIs}
+Focus areas include:  
+- Sign-up and consent flows for third-party providers (TPPs)  
+- App registration and key management within BMO’s banking environment  
+- Entitlement-aware consent process for PCAs and account owners  
+- Enhanced sandbox and pre-production testing environments  
 {expand}
 
-{expand:title=Phase 3 — Learn}
-**Goal:** Learn how to integrate through guided content.  
-**Current:**  
-- Manual onboarding via sales & solution delivery.  
-- Credentials emailed manually.  
-**Future Enhancements:**  
-- **Guided Tutorials** (Make first payment, Get balances, Check status).  
-- **Unified Consent UX** (Modify/Revoke flow).  
-- **Error & Troubleshooting Library.**  
-- **Security & Compliance Cookbook.**  
-- **Automated credential delivery** inside dashboard.  
+{expand:title=Retail Banking & Open Banking APIs}
+Focus areas include:  
+- Expansion of developer onboarding and API discovery for retail products  
+- Integration with open banking frameworks (regional and global)  
+- Shared design system and consistent navigation patterns  
 {expand}
 
-{expand:title=Phase 4 — Build}
-**Goal:** Integrate and test production-like APIs.  
-**Current:**  
-- Integration and consent validation handled manually.  
-**Future Enhancements:**  
-- **API Explorer+** with live scenario data.  
-- **Test Data Library** (accounts, counterparties).  
-- **Starter Projects** (Node / .NET / Java).  
-- **Integration Checklist** (logging, retries, webhook readiness).  
-- **AI Smart Support Chat** for contextual help.  
-{expand}
-
-{expand:title=Phase 5 — Scale}
-**Goal:** Operate, monitor, and grow API integrations.  
-**Current:**  
-- Billing and usage handled manually.  
-- Limited visibility on consent and analytics.  
-**Future Enhancements:**  
-- **Org Workspace Dashboard** (apps, keys, accounts).  
-- **Usage & Analytics** (calls, latency, error ratios).  
-- **Partner / ERP Connector Hub** (FISPAN, SAP, QuickBooks).  
-- **Changelog & Announcements** with RSS/email.  
-- **Automated billing integration** with transparent usage tracking.  
+{expand:title=Governance & Collaboration}
+- Centralized decision and documentation management through this Live Doc  
+- Dedicated sections for open questions, design decisions, and progress tracking  
+- Integration with Figma for visual journey maps and prototype updates  
+- Ongoing iteration and continuous improvement model  
 {expand}
 
 ---
 
-## 🧩 Core Portal Modules by Phase
+## 🧩 Key Workstreams
 
-| Phase | Key MFEs | Description |
-|-------|-----------|-------------|
-| Discover | Solutions Gallery, API Catalog | Public entry & use-case orientation |
-| Evaluate | Auth Hub, API Docs, Download Center | Deep dive & sandbox setup |
-| Learn | Tutorials, Consent UX, Error Library | Developer onboarding |
-| Build | Explorer+, Test Data, Starter Projects | Integration readiness |
-| Scale | Org Workspace, Analytics, Changelog | Operations & monitoring |
+| Workstream | Description | Responsible Team |
+|-------------|--------------|------------------|
+| **Developer Homepage (Unified Entry)** | Redesign of [developer.bmo.com](https://developer.bmo.com) to serve as the global entry for all developer experiences. | UX / Platform |
+| **API Catalog & Documentation Framework** | Shared framework for discoverability, multi-line documentation, and reference tooling. | API Product / Docs |
+| **Registration & Consent Flow Modernization** | Streamlined self-service onboarding and entitlements-based consent. | Commercial Tech / Security |
+| **Design System & Accessibility** | Consistent design tokens, accessibility compliance, and dark mode support. | Design System / UX |
+| **Analytics & Monitoring** | Unified metrics across all API environments to measure usage, adoption, and stability. | DevOps / API Platform |
+
+---
+
+## 🗓 Program Activities & Milestones
+
+| Date | Activity | Output | Owner |
+|------|-----------|---------|--------|
+| Nov 2025 | Discovery Workshops | Journey Maps & User Personas | UX / Product |
+| Jan 2026 | Research Synthesis | Current vs Future Journey Report | Research |
+| Mar 2026 | Design System Integration | Updated DSM and UI components | Design |
+| Jun 2026 | Prototype Feedback | User testing results and recommendations | UX |
+| Aug 2026 | Development Complete | QA-ready builds for release | Engineering |
+| Oct–Nov 2026 | Launch | Production deployment of unified experience | All Teams |
 
 ---
 
@@ -99,50 +97,30 @@ Below is the current → future API Developer Portal journey from Figma.
 
 | ID | Decision | Status | Owner | Date |
 |----|-----------|--------|--------|------|
-| DR-001 | Unify Modify/Revoke consent flows | ✅ Approved | API Product | 2025-06-04 |
-| DR-002 | Add “Auth & Env Hub” MFE | 🟡 In Discussion | Eng | 2025-11-01 |
-| DR-003 | Introduce AI Doc Assistant MVP | 🔵 Proposed | Design | TBD |
-
----
-
-## 🗓 Workshop Notes & Actions
-
-| Date | Topic | Key Actions | Owner | Due |
-|------|--------|--------------|--------|------|
-| 2025-11-01 | Initial Requirements | Capture API pain points, align personas | UX | Nov 3 |
-| 2025-11-02 | Module Planning | Validate MVP MFEs | Eng | Nov 6 |
+| DR-001 | Unify Modify/Revoke Consent Flows across all API programs | ✅ Approved | API Product | Jun 2025 |
+| DR-002 | Create a common Auth & Environment Hub | 🟡 In Discussion | Eng / Platform | Nov 2025 |
+| DR-003 | Standardize navigation model across LOBs | 🔵 Proposed | UX / Design System | TBD |
 
 ---
 
 ## ❓ Open Questions / Risks
 
-- [ ] How will API usage analytics be collected securely?  
-- [ ] Can Marketplace and Dev Portal share a common identity layer?  
-- [ ] Should PCA consent be reusable across APIs?  
-- [ ] Is the sandbox environment fully isolated for third-party developers?  
+- [ ] How will Retail, Commercial, and Open Banking portals share authentication and analytics layers?  
+- [ ] What degree of self-service registration will be enabled in phase 1 vs. later phases?  
+- [ ] How will sandbox environments be separated or unified across lines of business?  
+- [ ] Who will own the long-term governance of shared developer assets (content, docs, components)?  
 
 ---
 
-## 🏆 DevPortal Awards Target Mapping
+## 📚 References & Linked Artifacts
 
-| Category | Feature | Status |
-|-----------|----------|---------|
-| Best Onboarding | Guided Tutorials + Consent UX | Planned |
-| Best Reference Docs | 3-panel API Docs | In Design |
-| Best Use of Analytics | Usage Dashboard | Planned |
-| Best DX Innovation | AI Doc Assistant | Proposed |
-| Best Governance | Changelog & Version Policy | Planned |
+- [Developer Portal — Current Release (Commercial)](https://developer.bmo.com/api/commercial/)  
+- [Figma Journey Map (embed link placeholder)]  
+- [Design System Repository (DSM)]  
+- [Open Banking Canada Specifications](https://openbankingcanada.ca/)  
+- [Atlassian Confluence — Decision Log Index]  
 
 ---
 
-## 📚 References
-
-- [BMO Developer Portal (current)](https://developer.bmo.com/api/commercial/)  
-- [DevPortal Awards](https://devportalawards.org/)  
-- [Stripe Developer Portal](https://stripe.com/docs/api)  
-- [Plaid Developer Portal](https://plaid.com/docs/)  
-
----
-
-✅ **Next Step:** Embed your live Figma Journey Map above and invite stakeholders to co-edit.  
-Use `/decision`, `/task`, and `/status` macros inline to capture ongoing updates.
+✅ **Next Step:**  
+Embed your Figma Journey Map above, assign owners to the FY2026 phases, and begin populating discovery research findings as they become available.
