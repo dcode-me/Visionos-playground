@@ -1,29 +1,11 @@
-**Vision Overview**
+**Key Workstreams**
 
-The **BMO Developer Experience (DevX)** defines how developers across all lines of business engage with BMO’s APIs — creating a unified, intuitive, and secure experience across discovery, onboarding, and integration.
-
----
-
-/info
-title: Unified Developer Experience
-The unified entry point at **developer.bmo.com** will connect both **Commercial Banking APIs** and **U.S. Open Banking APIs** under a consistent interface.  
-Developers will be able to discover APIs by business domain, understand authentication and consent models, and onboard using a standardized registration and sandbox framework.
----
-
-/info
-title: Commercial Banking APIs
-This is the **core focus** of the FY2026 work.  
-The team will redesign the existing Institutional API experience — simplifying user journeys, aligning the consent and onboarding flows, and improving usability across Payments and Account Information APIs.  
-No new APIs will be added during this phase; the emphasis is on enhancement, not expansion.
----
-
-/info
-title: Governance & Collaboration
-A consistent governance model will guide how API products, documentation, and UI patterns evolve across lines of business.  
-Shared terminology, component libraries, and approval workflows will ensure every BMO API follows the same developer-first standards for usability, security, and accessibility.
----
-
-/info
-title: Scalability & Future Alignment
-The framework and design principles defined here will extend naturally to other BMO API ecosystems — including Digital Banking and BMO Alto APIs — once they align under the unified developer homepage.  
-This work lays the foundation for a scalable, cross-business developer platform.
+| **Workstream** | **Description** | **Primary Focus (Journey Phase)** | **Owner(s)** |
+|----------------|-----------------|----------------------------------|---------------|
+| **Solutions & Discovery Experience** | Redesign the public-facing experience on developer.bmo.com to make it easier for clients and developers to find APIs by use case. Introduce business-oriented solution cards, API catalog filters, and AI-powered search for commercial banking APIs. | Discover | UX / Platform / Product |
+| **API Reference & Evaluation Framework** | Replace static API listings and PDFs with an interactive 3-panel API reference. Include live “Try it” console, Auth & Environment hub, downloadable specs, and dynamic changelog metrics to improve evaluation workflows. | Evaluate | Engineering / API Product / Documentation |
+| **Onboarding & Consent Experience** | Redefine how developers and PCAs onboard to APIs. Introduce guided tutorials, unified consent UX (Modify / Revoke / Continue), and improved sandbox feedback loops. Replace email-based credential delivery with automated dashboard provisioning. | Learn | UX / Engineering / Security |
+| **Integration & Build Tooling** | Develop integrated tools to support live integration, testing, and consent validation. Includes API Explorer+, Diagnostics Panel, Smart Support Chat, and reusable starter app templates (Node, .NET, Java). | Build | Engineering / Platform / Support |
+| **Operational Dashboards & Analytics** | Create post-integration visibility through unified Org Workspace dashboards, usage metrics, latency/error tracking, and automated billing integration. Extend to changelog and announcements modules for continuous communication. | Operate & Scale | API Platform / DevOps / Support |
+| **Governance & Experience Standards** | Define unified design, terminology, and process standards across Commercial APIs. Document how user journeys, flows, and visual patterns evolve for future Retail and U.S. Open Banking alignment. | Cross-phase | Design System / UX / API Product |
+| **Integrated Homepage Alignment** | Coordinate with the parallel initiative responsible for the unified developer homepage (developer.bmo.com). Ensure navigation, content hierarchy, and branding remain consistent across both Commercial and Open Banking areas. | Cross-phase | Digital Strategy / Platform |
