@@ -1,54 +1,53 @@
-## Phase 2 — Evaluate
+## Phase 3 — Learn (Onboarding & Integration Planning)
 
 ### Current Experience
-The current evaluation process focuses on technical feasibility but requires multiple hand-offs between client teams and BMO representatives.  
-The experience today is functional but fragmented, with limited interactivity inside the portal itself.
+The current onboarding process is functional but manual, with multiple hand-offs between Sales, Implementation, and Technical teams.  
+Most steps happen outside the portal, relying on forms, calls, and emails.
 
-1. The client’s IT team gains access to a secure Developer Portal environment to review API documentation and data models.  
-2. They manually download specifications or Postman collections to evaluate API fit.  
-3. Sandbox access and environment requests are handled via forms or direct emails.  
-4. Teams conduct internal feasibility analysis before submitting production upgrade requests through the Marketplace or Sales.  
-5. BMO Sales or Product teams manually coordinate follow-up sessions and pre-production enablement.
+1. The Primary Customer Admin (PCA) or client contact logs into OLBB and submits a production enrollment form (including pricing and setup details).  
+2. The Sales team schedules onboarding calls, confirms pricing, and initiates the implementation request.  
+3. A Solution Delivery Consultant (SDC) reviews the form, verifies details, and creates an onboarding ticket.  
+4. Documentation and Legal teams prepare contracts and service documentation manually.  
+5. Once approved, the SDC enrolls the client, generates credentials (Client ID, API Key, Secret), and shares them securely by email.
 
 ---
 
 ### Proposed Enhancements
-The redesigned **Evaluate** phase aims to make evaluation faster, self-service, and developer-friendly — replacing manual steps with interactive documentation and a clearer sandbox path.
+The redesigned **Learn** phase focuses on **guided, in-portal onboarding**, reducing manual touchpoints and improving transparency for both developers and PCAs.
 
-1. **API Reference MFE (Modular Frontend Experience)**  
-   Three-panel documentation layout: navigation, content, and interactive “Try It” console.  
-   Supports real-time code samples, curl commands, and live responses.  
-   🔗 Reference: [Stripe API Reference](https://stripe.com/docs/api) · [Twilio API Explorer](https://www.twilio.com/docs/usage/api)  
+1. **Guided Tutorials & Quick-Start Journeys**  
+   Step-by-step, use-case-based guides (e.g., *Create first payment*, *Check account balance*, *Subscribe to status webhook*).  
+   Encourages self-learning and reduces dependency on Sales or Implementation.  
+   🔗 Reference: [Stripe Quickstart Guides](https://stripe.com/docs/development/quickstart) · [Twilio Tutorials](https://www.twilio.com/docs/usage/tutorials)  
 
-2. **Auth & Environments Hub**  
-   Centralized visualization of Sandbox → Pre-Prod → Prod environments with scope and token details.  
-   Enables self-serve token generation and simplified environment switching.  
-   🔗 Reference: [Plaid API Environments](https://plaid.com/docs/api/#environments)  
+2. **Unified Consent UX Module**  
+   System automatically retrieves requested + existing consents, filters by entitlement, and displays toggle-based Modify / Revoke / Continue flow.  
+   Simplifies the experience for PCAs managing multiple accounts.  
+   🔗 Reference: [Plaid Consent UX Example](https://plaid.com/docs/quickstart/#link-token-create)  
 
-3. **Download Center**  
-   One location for all OpenAPI specs, Postman collections, SDKs, and sample apps.  
-   Encourages quick evaluation without file-hunting or version confusion.  
-   🔗 Reference: [Adyen Developer Docs – Downloads](https://docs.adyen.com/development-resources/api-libraries)  
+3. **Interactive API Sandbox (Scenario Data)**  
+   Developers can test both success and failure cases (e.g., insufficient funds, missing entitlement) directly within the portal.  
+   Reduces the need for separate Postman environments.  
+   🔗 Reference: [Adyen API Explorer](https://docs.adyen.com/api-explorer/)  
 
-4. **Commercial FAQ & Consent Guide**  
-   Dedicated section explaining PCA-level consent, entitlements, and common security questions.  
-   Reduces dependency on ad-hoc sales or support clarifications.  
-   🔗 Reference: [Plaid Security & Compliance](https://plaid.com/security/)  
+4. **Security & Compliance Guides**  
+   Embedded best-practice docs for token storage, logging, and PCI-compliant integrations.  
+   Reduces back-and-forth with InfoSec reviews.  
+   🔗 Reference: [AWS Security Best Practices](https://aws.amazon.com/architecture/security-best-practices/)  
 
-5. **Pre-Production Request Flow**  
-   Converts current manual email process into an automated portal request, enabling one-click upgrade when sandbox testing is complete.  
-   🔗 Reference: [AWS API Gateway – Promotion Workflow](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-rest-api-lifecycle.html)  
+5. **Integration Checklist Generator + Credential Automation**  
+   Auto-generates an onboarding readiness PDF (logging, retries, webhook verification) and delivers credentials securely through the portal dashboard — no more emailed secrets.  
+   🔗 Reference: [Azure API Management Onboarding Checklist](https://learn.microsoft.com/en-us/azure/api-management/)  
 
 ---
 
 ### Approved (Post-Workshop)
-This section will be populated once FY 2026 workshops finalize priorities for Evaluate-phase improvements.  
-Each approved item will link to its Decision Record or design reference.
+This section will be updated once FY 2026 workshops confirm the approved enhancements for the Learn phase.
 
 | Enhancement | Decision | Owner | Reference |
 |--------------|-----------|--------|------------|
-| API Reference MFE | TBD | Engineering | — |
-| Auth & Environment Hub | TBD | Platform | — |
-| Download Center | TBD | API Product | — |
-| Consent Guide | TBD | Legal / UX | — |
-| Pre-Prod Request Flow | TBD | Platform | — |
+| Guided Tutorials | TBD | UX / Docs | — |
+| Unified Consent UX | TBD | Engineering / Security | — |
+| API Sandbox Enhancements | TBD | Platform | — |
+| Security Guides | TBD | Compliance | — |
+| Checklist + Credential Automation | TBD | Platform | — |
