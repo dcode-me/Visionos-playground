@@ -1,53 +1,53 @@
-## Phase 3 — Learn (Onboarding & Integration Planning)
+## Phase 4 — Build (Integration & Consent)
 
 ### Current Experience
-The current onboarding process is functional but manual, with multiple hand-offs between Sales, Implementation, and Technical teams.  
-Most steps happen outside the portal, relying on forms, calls, and emails.
+In the current setup, the integration and consent process is functional but fragmented between the Developer Portal, OLBB, and internal BMO teams.  
+Developers often rely on external coordination to complete the production setup.
 
-1. The Primary Customer Admin (PCA) or client contact logs into OLBB and submits a production enrollment form (including pricing and setup details).  
-2. The Sales team schedules onboarding calls, confirms pricing, and initiates the implementation request.  
-3. A Solution Delivery Consultant (SDC) reviews the form, verifies details, and creates an onboarding ticket.  
-4. Documentation and Legal teams prepare contracts and service documentation manually.  
-5. Once approved, the SDC enrolls the client, generates credentials (Client ID, API Key, Secret), and shares them securely by email.
+1. The client’s IT team integrates their application with BMO’s production API endpoint following static documentation.  
+2. They reconstruct authorization URLs manually based on sample guides.  
+3. The PCA logs into OLBB, reviews requested services, grants consent, and selects eligible accounts.  
+4. The Solution Delivery Consultant (SDC) or API Product Team validates the first consent flow and monitors initial transactions.  
+5. Testing, error diagnosis, and consent updates all occur manually through calls or support requests.
 
 ---
 
 ### Proposed Enhancements
-The redesigned **Learn** phase focuses on **guided, in-portal onboarding**, reducing manual touchpoints and improving transparency for both developers and PCAs.
+The redesigned **Build** phase aims to make integration hands-on and transparent inside the Developer Portal.  
+It gives developers real-time visibility into consent, connection testing, and troubleshooting.
 
-1. **Guided Tutorials & Quick-Start Journeys**  
-   Step-by-step, use-case-based guides (e.g., *Create first payment*, *Check account balance*, *Subscribe to status webhook*).  
-   Encourages self-learning and reduces dependency on Sales or Implementation.  
-   🔗 Reference: [Stripe Quickstart Guides](https://stripe.com/docs/development/quickstart) · [Twilio Tutorials](https://www.twilio.com/docs/usage/tutorials)  
+1. **Interactive Consent Flow UI**  
+   Embed the full consent journey directly in the portal, displaying authorization scopes visually and reducing reliance on OLBB navigation.  
+   🔗 Reference: [Plaid Link Consent Flow](https://plaid.com/docs/link/)  
 
-2. **Unified Consent UX Module**  
-   System automatically retrieves requested + existing consents, filters by entitlement, and displays toggle-based Modify / Revoke / Continue flow.  
-   Simplifies the experience for PCAs managing multiple accounts.  
-   🔗 Reference: [Plaid Consent UX Example](https://plaid.com/docs/quickstart/#link-token-create)  
+2. **Consent Management Dashboard**  
+   A unified PCA view showing who granted what, for which account, and when.  
+   Enables Modify / Revoke actions directly from the dashboard.  
+   🔗 Reference: [Google Cloud OAuth 2.0 Consent Screen](https://developers.google.com/identity/protocols/oauth2)  
 
-3. **Interactive API Sandbox (Scenario Data)**  
-   Developers can test both success and failure cases (e.g., insufficient funds, missing entitlement) directly within the portal.  
-   Reduces the need for separate Postman environments.  
-   🔗 Reference: [Adyen API Explorer](https://docs.adyen.com/api-explorer/)  
+3. **Quickstart App Templates**  
+   Provide ready-to-run starter projects (Node.js, .NET, Java) aligned to each API domain — matching tutorials and sandbox data.  
+   🔗 Reference: [Stripe Sample Apps on GitHub](https://github.com/stripe-samples)  
 
-4. **Security & Compliance Guides**  
-   Embedded best-practice docs for token storage, logging, and PCI-compliant integrations.  
-   Reduces back-and-forth with InfoSec reviews.  
-   🔗 Reference: [AWS Security Best Practices](https://aws.amazon.com/architecture/security-best-practices/)  
+4. **Integration Diagnostics Panel**  
+   Surface correlation IDs, latency, and error mappings per request.  
+   Enables quick debugging without waiting for support logs.  
+   🔗 Reference: [Postman Console + Network Inspector](https://learning.postman.com/docs/sending-requests/troubleshooting-api-requests/)  
 
-5. **Integration Checklist Generator + Credential Automation**  
-   Auto-generates an onboarding readiness PDF (logging, retries, webhook verification) and delivers credentials securely through the portal dashboard — no more emailed secrets.  
-   🔗 Reference: [Azure API Management Onboarding Checklist](https://learn.microsoft.com/en-us/azure/api-management/)  
+5. **Smart Support Chat (Developer Assistant)**  
+   Context-aware AI help embedded within the portal to guide integration, troubleshooting, and consent-related questions.  
+   🔗 Reference: [Twilio Docs AI Assistant Blog](https://www.twilio.com/blog/generative-ai-developer-documentation)  
 
 ---
 
 ### Approved (Post-Workshop)
-This section will be updated once FY 2026 workshops confirm the approved enhancements for the Learn phase.
+This section will be updated once FY 2026 workshops finalize Build-phase priorities.  
+Each approved item will link to its Decision Record or prototype.
 
 | Enhancement | Decision | Owner | Reference |
 |--------------|-----------|--------|------------|
-| Guided Tutorials | TBD | UX / Docs | — |
-| Unified Consent UX | TBD | Engineering / Security | — |
-| API Sandbox Enhancements | TBD | Platform | — |
-| Security Guides | TBD | Compliance | — |
-| Checklist + Credential Automation | TBD | Platform | — |
+| Interactive Consent Flow | TBD | UX / Engineering | — |
+| Consent Dashboard | TBD | Platform / Security | — |
+| Quickstart App Templates | TBD | Developer Relations | — |
+| Integration Diagnostics Panel | TBD | Engineering / DevOps | — |
+| Smart Support Chat | TBD | Platform / AI Team | — |
