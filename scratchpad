@@ -1,25 +1,50 @@
-## Phase {n} — {Phase Name}
+## Phase 1 — Discover
 
 ### Current Experience
-Describe the existing user flow as it stands today.  
-Include screenshots, process diagrams, or links to existing pages or assets.  
-Example:  
-– OLBB login → Marketplace → API card selection → email contact → manual registration  
+The current discovery experience is largely information-driven and depends on sales-assisted navigation.  
+Clients or IT teams arrive at the BMO Developer Portal to understand whether APIs meet their business needs.  
+Today, the process looks like this:
+
+1. Clients or IT leads land on the Developer Portal (often via referral or search) and browse general API information.  
+2. Developer or IT teams review existing documentation to assess feasibility and fit with internal systems.  
+3. Clients may also visit the OLBB Marketplace to explore API cards or contact Sales for further details.  
+4. Sales representatives respond manually with documentation links, API details, and follow-up calls.  
+5. The overall journey is product-centric rather than solution-centric — clients browse “what APIs exist” instead of “how can I automate this workflow.”
+
+---
 
 ### Proposed Enhancements
-Summarize the future-state concepts envisioned for this phase.  
-Include reference links, Figma mockups, or prototypes.  
-Example:  
-– Solutions Gallery for business use cases  
-– AI search for “Find an API” intent  
-– Simplified onboarding navigation  
+The redesigned **Discover** phase will shift from product listings to **solution-oriented discovery**.  
+The focus is to help commercial clients identify use-cases quickly, build trust, and explore APIs through guided context.
+
+1. **Solutions Gallery (Public)**  
+   Curated business-oriented entry points (e.g., *Embedded Payments*, *Cash Visibility*, *ERP Connectors*, *Compliance*).  
+   Developers start with their *goal*, not the API name.  
+   🔗 Reference: [Stripe Developer Experience overview — Eleken](https://www.eleken.co/blog-posts/stripe-developer-experience?utm_source=chatgpt.com)
+
+2. **API Catalog (Public)**  
+   A unified catalog filterable by product, region, auth type, and maturity (GA / Pilot).  
+   Replaces legacy spreadsheet or static API list formats.  
+   🔗 Reference: [Plaid API Resources Catalog](https://plaid.com/docs/resources/?utm_source=chatgpt.com)
+
+3. **“Why BMO” / Commercial API Story**  
+   A trust-building section highlighting bank-grade security, compliance, reliability, and innovation tailored for commercial clients.  
+   🔗 Reference: [Stripe Docs Teardown — Moesif Blog](https://www.moesif.com/blog/best-practices/api-product-management/the-stripe-developer-experience-and-docs-teardown/?utm_source=chatgpt.com)
+
+4. **Smart Search / AI Discovery**  
+   Intent-based search enabling natural-language queries (e.g., *“automate payables”*, *“reconcile transactions”*).  
+   Helps developers find APIs by purpose instead of guessing endpoint names.  
+   🔗 Reference: [Stripe Natural-Language Search discussion — Eleken](https://www.eleken.co/blog-posts/stripe-developer-experience?utm_source=chatgpt.com)
+
+---
 
 ### Approved (Post-Workshop)
-This section will capture the items confirmed after stakeholder workshops.  
-Each approved enhancement will link to its workstream or design record once created.  
-Use a table like this:
+This section will be populated once FY 2026 discovery workshops confirm which enhancements move forward.  
+Each approved item will link to its Decision Record or design reference.  
 
 | Enhancement | Decision | Owner | Reference |
 |--------------|-----------|--------|------------|
-| Solutions Gallery | Approved | UX | [[DR-001: Discovery Navigation]] |
-| API Catalog Filters | In Review | Platform | [[Figma – Catalog Filters v1]] |
+| Solutions Gallery | TBD | UX | — |
+| API Catalog Filters | TBD | Platform | — |
+| Why BMO Section | TBD | Content | — |
+| AI Search Prototype | TBD | Platform | — |
