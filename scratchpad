@@ -1,7 +1,24 @@
-**Release Overview**
+**Vision Overview**
 
-| **Release** | **Timeline** | **Focus Area** | **Key Highlights** | **Status** |
-|--------------|--------------|----------------|--------------------|-------------|
-| **Previous Release (TBD – 2021)** | FY2021 | Commercial Banking APIs – Foundation | • Initial developer portal framework introduced.<br>• First version of account information APIs.<br>• Early documentation and registration experience launched.<br>• Basic sandbox available for limited partners. | 🕓 *Historical* |
-| **Current Release (FY2025)** | Oct–Nov 2025 | Commercial Banking APIs – Expansion | • Introduced **Payments APIs** and improved **Account Information APIs**.<br>• Delivered **Institutional API experience** hosted under [developer.bmo.com](https://developer.bmo.com).<br>• Established consent, registration, and sandbox workflows.<br>• Published initial journey documentation and developer onboarding flow. | ✅ *Delivered* |
-| **Planned Release (FY2026)** | Oct–Nov 2026 *(Target)* | Commercial Banking APIs – Redesign & Experience Alignment | • Redefine and redesign the entire Institutional API developer experience.<br>• No new APIs added – focus on **usability, simplification, and alignment**.<br>• Enhance existing payment and account information experiences.<br>• Align developer, sales, implementation, and support workflows.<br>• Link with the future **Integrated Developer Homepage** initiative (tracked separately). | 🔵 *In Planning* |
+The BMO Developer Experience (DevX) defines how developers across all lines of business engage with BMO’s APIs — unifying documentation, onboarding, and integration into a single, consistent platform experience.
+
+---
+
+/panel
+Title: Unified Developer Experience
+BG color: #f4f5f7
+The unified entry point at **developer.bmo.com** will connect Commercial Banking APIs and U.S. Open Banking APIs under one consistent experience. Developers can easily find the right domain, understand authentication, and onboard securely.
+  
+---
+
+/panel
+Title: Commercial Banking APIs
+BG color: #f4f5f7
+Focuses on institutional and enterprise clients. Redesigning and simplifying this journey is the primary goal for FY2026. It includes discovery, consent, registration, and sandbox experiences.
+  
+---
+
+/panel
+Title: Governance & Collaboration
+BG color: #f4f5f7
+Defines consistent terminology, design standards, and cross-functional collaboration between Product, Design, Engineering, and Support. This ensures every API and tool under BMO follows the same usability and compliance principles.
