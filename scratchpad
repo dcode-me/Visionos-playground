@@ -1,0 +1,148 @@
+# 🧭 BMO API Developer Portal — Redesign Hub (Live Doc)
+
+> **Goal:** Redesign the Commercial API Developer Portal for BMO’s Commercial / TPS APIs.  
+> **Vision:** Deliver an award-winning developer experience aligned with the 2025 DevPortal Awards.  
+> **Status:** 🔵 Planning & Requirements Phase  
+> **Owners:**  
+> • Design Lead — @mention  
+> • API Product Owner — @mention  
+> • Technical Lead — @mention  
+
+---
+
+## 🎯 Journey Overview
+Below is the current → future API Developer Portal journey from Figma.  
+*(Embed the live Figma frame here using “/Figma” or by pasting the frame link and choosing **Embed** display mode.)*
+
+---
+
+## 🚀 Combined Journey (Current → Future)
+
+{expand:title=Phase 1 — Discover}
+**Goal:** Identify if BMO’s API program fits commercial client needs.  
+**Current:**  
+- Clients or IT teams explore developer.bmo.com or Marketplace for API info.  
+- Sales shares documentation manually.  
+**Future Enhancements:**  
+- Public **Solutions Gallery** (business-first entry).  
+- **API Catalog** with filters (Product, Country, Maturity).  
+- **Why BMO** section with trust, security, and innovation story.  
+- **AI-powered discovery search** (“Show me APIs for ERP integration”).  
+{expand}
+
+{expand:title=Phase 2 — Evaluate}
+**Goal:** Determine feasibility and security alignment.  
+**Current:**  
+- Teams review PDFs, basic sandbox access, manual pre-prod request.  
+- PCA consent model unclear.  
+**Future Enhancements:**  
+- **3-panel interactive docs** (nav | content | code).  
+- **Auth & Environments Hub** (visual Sandbox → Pre-prod → Prod).  
+- **Download Center** (OpenAPI, Postman, SDKs).  
+- **Consent FAQ** explaining PCA model.  
+- **Pre-prod request flow** automated in portal.  
+{expand}
+
+{expand:title=Phase 3 — Learn}
+**Goal:** Learn how to integrate through guided content.  
+**Current:**  
+- Manual onboarding via sales & solution delivery.  
+- Credentials emailed manually.  
+**Future Enhancements:**  
+- **Guided Tutorials** (Make first payment, Get balances, Check status).  
+- **Unified Consent UX** (Modify/Revoke flow).  
+- **Error & Troubleshooting Library.**  
+- **Security & Compliance Cookbook.**  
+- **Automated credential delivery** inside dashboard.  
+{expand}
+
+{expand:title=Phase 4 — Build}
+**Goal:** Integrate and test production-like APIs.  
+**Current:**  
+- Integration and consent validation handled manually.  
+**Future Enhancements:**  
+- **API Explorer+** with live scenario data.  
+- **Test Data Library** (accounts, counterparties).  
+- **Starter Projects** (Node / .NET / Java).  
+- **Integration Checklist** (logging, retries, webhook readiness).  
+- **AI Smart Support Chat** for contextual help.  
+{expand}
+
+{expand:title=Phase 5 — Scale}
+**Goal:** Operate, monitor, and grow API integrations.  
+**Current:**  
+- Billing and usage handled manually.  
+- Limited visibility on consent and analytics.  
+**Future Enhancements:**  
+- **Org Workspace Dashboard** (apps, keys, accounts).  
+- **Usage & Analytics** (calls, latency, error ratios).  
+- **Partner / ERP Connector Hub** (FISPAN, SAP, QuickBooks).  
+- **Changelog & Announcements** with RSS/email.  
+- **Automated billing integration** with transparent usage tracking.  
+{expand}
+
+---
+
+## 🧩 Core Portal Modules by Phase
+
+| Phase | Key MFEs | Description |
+|-------|-----------|-------------|
+| Discover | Solutions Gallery, API Catalog | Public entry & use-case orientation |
+| Evaluate | Auth Hub, API Docs, Download Center | Deep dive & sandbox setup |
+| Learn | Tutorials, Consent UX, Error Library | Developer onboarding |
+| Build | Explorer+, Test Data, Starter Projects | Integration readiness |
+| Scale | Org Workspace, Analytics, Changelog | Operations & monitoring |
+
+---
+
+## 🧾 Decision Log
+
+| ID | Decision | Status | Owner | Date |
+|----|-----------|--------|--------|------|
+| DR-001 | Unify Modify/Revoke consent flows | ✅ Approved | API Product | 2025-06-04 |
+| DR-002 | Add “Auth & Env Hub” MFE | 🟡 In Discussion | Eng | 2025-11-01 |
+| DR-003 | Introduce AI Doc Assistant MVP | 🔵 Proposed | Design | TBD |
+
+---
+
+## 🗓 Workshop Notes & Actions
+
+| Date | Topic | Key Actions | Owner | Due |
+|------|--------|--------------|--------|------|
+| 2025-11-01 | Initial Requirements | Capture API pain points, align personas | UX | Nov 3 |
+| 2025-11-02 | Module Planning | Validate MVP MFEs | Eng | Nov 6 |
+
+---
+
+## ❓ Open Questions / Risks
+
+- [ ] How will API usage analytics be collected securely?  
+- [ ] Can Marketplace and Dev Portal share a common identity layer?  
+- [ ] Should PCA consent be reusable across APIs?  
+- [ ] Is the sandbox environment fully isolated for third-party developers?  
+
+---
+
+## 🏆 DevPortal Awards Target Mapping
+
+| Category | Feature | Status |
+|-----------|----------|---------|
+| Best Onboarding | Guided Tutorials + Consent UX | Planned |
+| Best Reference Docs | 3-panel API Docs | In Design |
+| Best Use of Analytics | Usage Dashboard | Planned |
+| Best DX Innovation | AI Doc Assistant | Proposed |
+| Best Governance | Changelog & Version Policy | Planned |
+
+---
+
+## 📚 References
+
+- [BMO Developer Portal (current)](https://developer.bmo.com/api/commercial/)  
+- [DevPortal Awards](https://devportalawards.org/)  
+- [Stripe Developer Portal](https://stripe.com/docs/api)  
+- [Plaid Developer Portal](https://plaid.com/docs/)  
+
+---
+
+✅ **Next Step:** Embed your live Figma Journey Map above and invite stakeholders to co-edit.  
+Use `/decision`, `/task`, and `/status` macros inline to capture ongoing updates.
