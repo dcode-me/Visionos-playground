@@ -1,21 +1,25 @@
-## User Journey Phases
+## Phase {n} — {Phase Name}
 
-The BMO Developer Experience is structured around five key user journey phases.  
-Each phase page captures the **current experience**, **proposed enhancements**, and eventually the **approved FY2026 scope**, including design references, mockups, and linked decisions.
+### Current Experience
+Describe the existing user flow as it stands today.  
+Include screenshots, process diagrams, or links to existing pages or assets.  
+Example:  
+– OLBB login → Marketplace → API card selection → email contact → manual registration  
 
-**Journey Phases**
+### Proposed Enhancements
+Summarize the future-state concepts envisioned for this phase.  
+Include reference links, Figma mockups, or prototypes.  
+Example:  
+– Solutions Gallery for business use cases  
+– AI search for “Find an API” intent  
+– Simplified onboarding navigation  
 
-1. [[Phase 1 — Discover]]  
-   Identify how clients and developers find BMO’s APIs and learn about available capabilities.
+### Approved (Post-Workshop)
+This section will capture the items confirmed after stakeholder workshops.  
+Each approved enhancement will link to its workstream or design record once created.  
+Use a table like this:
 
-2. [[Phase 2 — Evaluate]]  
-   Understand the process developers follow to assess APIs, environments, and authentication.
-
-3. [[Phase 3 — Learn (Onboarding & Integration Planning)]]  
-   Review onboarding flow, tutorials, and consent setup.
-
-4. [[Phase 4 — Build (Integration & Consent)]]  
-   Track how developers implement and integrate APIs with sandbox and production environments.
-
-5. [[Phase 5 — Operate & Scale]]  
-   Manage API usage, monitoring, and post-launch analytics for enterprise clients.
+| Enhancement | Decision | Owner | Reference |
+|--------------|-----------|--------|------------|
+| Solutions Gallery | Approved | UX | [[DR-001: Discovery Navigation]] |
+| API Catalog Filters | In Review | Platform | [[Figma – Catalog Filters v1]] |
