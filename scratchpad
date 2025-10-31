@@ -1,54 +1,20 @@
-## Phase 5 — Operate & Scale
+## Workstreams
 
-### Current Experience
-Once integration is complete and production access is granted, most client operations move outside the portal.  
-Monitoring, billing, and support processes are handled through separate systems, making visibility and control limited.
-
-1. PCAs authorize API access for selected accounts via OLBB.  
-2. Applications receive redirect URLs, configure authentication, and begin calling production APIs.  
-3. Billing details (setup and implementation fees) are handled manually through Sales and XAA billing system.  
-4. Support requests are logged through email or internal CRM rather than the Developer Portal.  
-5. There is limited visibility for clients into usage, performance, or consent management after go-live.
+The following potential workstreams have been identified based on cross-journey enhancements and recurring experience themes.  
+Each workstream will be validated and prioritized following stakeholder workshops.  
+Once approved, each will have its own subpage capturing scope, owners, design links, and dependencies.
 
 ---
 
-### Proposed Enhancements
-The redesigned **Operate & Scale** phase aims to transform the portal into a true operational dashboard — where clients can monitor usage, manage access, and receive updates without leaving the ecosystem.
-
-1. **Org Workspace Dashboard**  
-   Unified administrative view listing all apps, API keys, connected accounts, and environments.  
-   Supports role-based access and visual consent history.  
-   🔗 Reference: [Google Cloud Console – Project Overview](https://console.cloud.google.com/)  
-
-2. **Usage & Analytics Module**  
-   Real-time analytics showing API call volumes, latency, error rates, and user behavior patterns.  
-   Helps both clients and BMO teams identify issues proactively.  
-   🔗 Reference: [Azure API Management Analytics](https://learn.microsoft.com/en-us/azure/api-management/howto-use-analytics)  
-
-3. **Partner / ERP Connector Hub**  
-   Central hub for plug-and-play integrations (FISPAN, SAP, NetSuite, QuickBooks).  
-   Simplifies third-party connectivity without custom builds.  
-   🔗 Reference: [Salesforce AppExchange Connectors](https://appexchange.salesforce.com/)  
-
-4. **Changelog & Announcements Center**  
-   Dynamic feed of version updates, deprecations, and new feature launches.  
-   Clients can subscribe via RSS or email.  
-   🔗 Reference: [Stripe Changelog](https://stripe.com/docs/changelog)  
-
-5. **Billing & Support Integration**  
-   Automated billing view with usage-based cost tracking and SLA-linked support ticketing.  
-   Offers clear visibility into consumption and escalation paths.  
-   🔗 Reference: [AWS Billing Dashboard](https://aws.amazon.com/aws-cost-management/)  
-
----
-
-### Approved (Post-Workshop)
-This section will be updated once FY 2026 workshops confirm Operate-phase deliverables.
-
-| Enhancement | Decision | Owner | Reference |
-|--------------|-----------|--------|------------|
-| Org Workspace Dashboard | TBD | Platform / UX | — |
-| Usage & Analytics | TBD | DevOps / Analytics | — |
-| Partner Connector Hub | TBD | Partnerships / Engineering | — |
-| Changelog Center | TBD | Content / Platform | — |
-| Billing & Support Integration | TBD | Finance / Support | — |
+| **Workstream** | **Description** | **Linked Journey Phases** | **Status** |
+|----------------|-----------------|----------------------------|-------------|
+| **Self-Serve Enablement** | Expand developer self-service capabilities — from sandbox registration to production promotion — with minimal BMO intervention. Introduce automated environment provisioning and self-guided flows. | Evaluate · Learn · Build | TBD |
+| **Onboarding Experience** | Redefine the end-to-end onboarding flow for developers and PCAs. Replace manual forms and email processes with guided tutorials, credential automation, and unified consent UX. | Learn · Build | TBD |
+| **Consent Management Flow** | Simplify and centralize PCA consent management, including modify/revoke/extend capabilities directly within the Developer Portal. Integrate entitlement-based logic. | Learn · Build | TBD |
+| **Redesign Documentation Pages** | Transform static documentation into modular, interactive API Reference pages with “Try It” console, Auth Hub, SDKs, and changelog integration. | Evaluate | TBD |
+| **Redesign Workspace (Developer Portal)** | Modernize the logged-in workspace view: Apps, Keys, Accounts, Consents, Analytics, and Billing. Provide a cohesive “Org Workspace” experience for enterprise clients. | Operate & Scale | TBD |
+| **Redesign Catalog, Use Cases, Blogs & Customer Stories** | Curate solution-oriented discovery journeys highlighting business value and real customer integrations. Combine APIs, case studies, and content under unified storytelling. | Discover | TBD |
+| **Redesign Developer Portal Homepage** | Refresh the global entry point (developer.bmo.com) to connect all BMO API programs — Commercial and U.S. Open Banking — under one unified experience. | Cross-Phase | TBD |
+| **Redesign Support Channels** | Introduce contextual help, live chat, ticket tracking, and SLA visibility directly in the portal. Replace email-based support with integrated experiences. | Build · Operate & Scale | TBD |
+| **Application & User Management Enhancements** | Improve app registration, key rotation, and user-role management for multi-PCA organizations. Strengthen permissioning and visibility. | Operate & Scale | TBD |
+| **Auditing & Activity Visibility** | Enhance audit logs for key lifecycle events (consent changes, credential usage, error analytics). Provide exportable reports for clients and compliance teams. | Operate & Scale | TBD |
