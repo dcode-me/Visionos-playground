@@ -1,22 +1,7 @@
-**In Scope for FY2026**
+**Release Overview**
 
-- **Redefine and redesign the existing Commercial Banking Developer Experience**  
-  Review the current Institutional API experience (hosted under **developer.bmo.com**) to simplify and improve usability across all stages — discovery, evaluation, onboarding, and production access.
-
-- **Enhance existing API experiences (Payments and Account Information)**  
-  Focus on optimizing the overall user journey and interface design for the APIs already released in FY2025, including Payments and Account Information APIs.  
-  *No new APIs will be introduced as part of this redesign.*
-
-- **Unify the developer workflow end-to-end**  
-  Evaluate and refine how developers, Sales, Implementation, and Support teams interact across the onboarding and consent lifecycle.  
-  Align flows, terminology, and touchpoints to create a cohesive, predictable experience.
-
-- **Improve consent, registration, and sandbox interactions**  
-  These features already exist but will be enhanced for clarity and consistency across different personas (developer, tech lead, PCA, and internal support roles).
-
-- **Document and align with connected initiatives**  
-  The creation of a **new integrated homepage** (a unified developer entry point under developer.bmo.com) is a **related but separate initiative**.  
-  This program will reference that work where applicable and link to its Confluence page once available, but it is **not within this project’s delivery scope**.
-
-- **Establish the 2026 design foundation**  
-  Produce updated design specifications, component patterns, and journey documentation that will serve as the reference model for future API experience enhancements across Commercial Banking.
+| **Release** | **Timeline** | **Focus Area** | **Key Highlights** | **Status** |
+|--------------|--------------|----------------|--------------------|-------------|
+| **Previous Release (TBD – 2021)** | FY2021 | Commercial Banking APIs – Foundation | • Initial developer portal framework introduced.<br>• First version of account information APIs.<br>• Early documentation and registration experience launched.<br>• Basic sandbox available for limited partners. | 🕓 *Historical* |
+| **Current Release (FY2025)** | Oct–Nov 2025 | Commercial Banking APIs – Expansion | • Introduced **Payments APIs** and improved **Account Information APIs**.<br>• Delivered **Institutional API experience** hosted under [developer.bmo.com](https://developer.bmo.com).<br>• Established consent, registration, and sandbox workflows.<br>• Published initial journey documentation and developer onboarding flow. | ✅ *Delivered* |
+| **Planned Release (FY2026)** | Oct–Nov 2026 *(Target)* | Commercial Banking APIs – Redesign & Experience Alignment | • Redefine and redesign the entire Institutional API developer experience.<br>• No new APIs added – focus on **usability, simplification, and alignment**.<br>• Enhance existing payment and account information experiences.<br>• Align developer, sales, implementation, and support workflows.<br>• Link with the future **Integrated Developer Homepage** initiative (tracked separately). | 🔵 *In Planning* |
