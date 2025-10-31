@@ -1,20 +1,93 @@
-## Workstreams
+## Research Study — Developer Experience & Portal Usability
 
-The following potential workstreams have been identified based on cross-journey enhancements and recurring experience themes.  
-Each workstream will be validated and prioritized following stakeholder workshops.  
-Once approved, each will have its own subpage capturing scope, owners, design links, and dependencies.
+### Objective
+To understand how developers and business users currently interact with the **BMO Developer Portal**, uncover pain points, and identify unmet needs.  
+The goal is to establish evidence-based insights that guide redesign priorities across documentation, onboarding, consent, self-service, and operational workflows.
 
 ---
 
-| **Workstream** | **Description** | **Linked Journey Phases** | **Status** |
-|----------------|-----------------|----------------------------|-------------|
-| **Self-Serve Enablement** | Expand developer self-service capabilities — from sandbox registration to production promotion — with minimal BMO intervention. Introduce automated environment provisioning and self-guided flows. | Evaluate · Learn · Build | TBD |
-| **Onboarding Experience** | Redefine the end-to-end onboarding flow for developers and PCAs. Replace manual forms and email processes with guided tutorials, credential automation, and unified consent UX. | Learn · Build | TBD |
-| **Consent Management Flow** | Simplify and centralize PCA consent management, including modify/revoke/extend capabilities directly within the Developer Portal. Integrate entitlement-based logic. | Learn · Build | TBD |
-| **Redesign Documentation Pages** | Transform static documentation into modular, interactive API Reference pages with “Try It” console, Auth Hub, SDKs, and changelog integration. | Evaluate | TBD |
-| **Redesign Workspace (Developer Portal)** | Modernize the logged-in workspace view: Apps, Keys, Accounts, Consents, Analytics, and Billing. Provide a cohesive “Org Workspace” experience for enterprise clients. | Operate & Scale | TBD |
-| **Redesign Catalog, Use Cases, Blogs & Customer Stories** | Curate solution-oriented discovery journeys highlighting business value and real customer integrations. Combine APIs, case studies, and content under unified storytelling. | Discover | TBD |
-| **Redesign Developer Portal Homepage** | Refresh the global entry point (developer.bmo.com) to connect all BMO API programs — Commercial and U.S. Open Banking — under one unified experience. | Cross-Phase | TBD |
-| **Redesign Support Channels** | Introduce contextual help, live chat, ticket tracking, and SLA visibility directly in the portal. Replace email-based support with integrated experiences. | Build · Operate & Scale | TBD |
-| **Application & User Management Enhancements** | Improve app registration, key rotation, and user-role management for multi-PCA organizations. Strengthen permissioning and visibility. | Operate & Scale | TBD |
-| **Auditing & Activity Visibility** | Enhance audit logs for key lifecycle events (consent changes, credential usage, error analytics). Provide exportable reports for clients and compliance teams. | Operate & Scale | TBD |
+### Focus Areas
+
+1. **Documentation & Learning Experience**
+   - How do developers use our documentation today?  
+   - What pages or formats are most valuable (reference docs, guides, examples)?  
+   - Where do they encounter confusion or gaps (e.g., code samples, environment setup)?  
+   - Does the current content help both technical and business users understand the API’s value?  
+   - Are they able to go from reading docs to testing APIs without external support?
+
+2. **Use Case & Catalog Discovery**
+   - Do developers find the API catalog or use-case listings meaningful?  
+   - Does the catalog layout help business users identify relevant APIs for their workflows?  
+   - How often do users rely on the catalog versus contacting BMO for guidance?  
+   - Do users prefer solution-based discovery (e.g., *"Automate payments"*) or API-based browsing?
+
+3. **Developer Workflow & Environment Progression**
+   - How do developers currently move from **Sandbox → Pre-Production → Production**?  
+   - Do they **create one app** and promote it across environments, or maintain **multiple apps** per environment?  
+   - Is there a need for flexibility (e.g., multiple credentials, test users, or apps under one workspace)?  
+   - What are the friction points during environment promotions or key rotations?  
+   - How do developers perceive the separation of environments in terms of stability and data realism?
+
+4. **Consent Management Journey**
+   - What are users’ biggest frustrations with the current PCA consent process?  
+   - Are Modify / Revoke / Continue options clear and predictable?  
+   - Do PCAs understand entitlements and scope-based access?  
+   - How could we simplify or visualize this better?  
+   - Would an integrated “Consent Dashboard” improve transparency?
+
+5. **Self-Help & User Management**
+   - How effectively can users solve their own issues today?  
+   - Are onboarding instructions discoverable, and do they make sense for multi-user teams?  
+   - Does inviting technical team members or assigning roles add value to their experience?  
+   - How is user management handled today inside OLBB, and what feedback do we have on cross-account coordination?  
+
+6. **End-to-End Developer Journey (“Time-to-Hello-World” Metric)**
+   - Measure how long it takes a new developer to:
+     1. Access documentation  
+     2. Get sandbox credentials  
+     3. Make their first successful API call  
+     4. Move toward production readiness  
+   - Observe usability in real scenarios:  
+     *“Can a first-time developer go from signup to ‘Hello World’ without human intervention?”*  
+   - Capture both **quantitative metrics** (time taken, retries, errors) and **qualitative insights** (confusion, frustration, missing context).
+
+---
+
+### Methodology
+
+| **Method** | **Description** | **Participants** | **Output** |
+|-------------|----------------|------------------|-------------|
+| **In-Person Developer Testing** | Observe developers using the current portal end-to-end. Measure time to complete key tasks (registration, API call, consent). | 5–8 active developer partners | Usability metrics, qualitative notes |
+| **Stakeholder Interviews** | Discuss challenges with PCAs, Implementation Consultants, and Support Teams. | 4–6 internal SMEs | Pain point validation |
+| **Surveys & Feedback Forms** | Quick-response surveys embedded in the portal or sent post-onboarding. | Developers & Business Users | Quantitative insights |
+| **Comparative Benchmarking** | Compare workflows with leading portals (Stripe, Plaid, Adyen, Twilio). | Internal Research | UX Opportunity Map |
+| **Analytics & Heatmap Review** | Track drop-offs, session durations, and navigation patterns in key pages. | Current Portal Data | Behavior analysis |
+
+---
+
+### Expected Outcomes
+
+- Clear picture of developer workflow pain points and moments of friction.  
+- Quantified **Time-to-Hello-World (TTHW)** baseline metric.  
+- Insights into the effectiveness of catalog, documentation, and consent UX.  
+- Recommendations for self-serve and onboarding improvements.  
+- Evidence-based priorities for FY 2026 redesign workstreams.
+
+---
+
+### Next Steps
+
+1. Define participant groups (internal vs. external developers).  
+2. Create research scripts and task scenarios.  
+3. Schedule observation sessions (remote and in-person).  
+4. Document findings in structured insights and themes.  
+5. Translate insights into **Validated Workstreams** under the main hub.
+
+---
+
+### Reference Benchmarks
+- [Stripe Developer Experience — Eleken](https://www.eleken.co/blog-posts/stripe-developer-experience?utm_source=chatgpt.com)  
+- [Twilio Developer Experience Report](https://www.twilio.com/blog/generative-ai-developer-documentation)  
+- [Plaid API Docs](https://plaid.com/docs/)  
+- [Adyen API Explorer](https://docs.adyen.com/api-explorer/)  
+- [AWS Developer Center](https://aws.amazon.com/developer/)
