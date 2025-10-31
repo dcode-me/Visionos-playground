@@ -1,11 +1,48 @@
-**Key Workstreams**
+## 🧩 Core Portal Modules by Phase
 
-| **Workstream** | **Description** | **Primary Focus (Journey Phase)** | **Owner(s)** |
-|----------------|-----------------|----------------------------------|---------------|
-| **Solutions & Discovery Experience** | Redesign the public-facing experience on developer.bmo.com to make it easier for clients and developers to find APIs by use case. Introduce business-oriented solution cards, API catalog filters, and AI-powered search for commercial banking APIs. | Discover | UX / Platform / Product |
-| **API Reference & Evaluation Framework** | Replace static API listings and PDFs with an interactive 3-panel API reference. Include live “Try it” console, Auth & Environment hub, downloadable specs, and dynamic changelog metrics to improve evaluation workflows. | Evaluate | Engineering / API Product / Documentation |
-| **Onboarding & Consent Experience** | Redefine how developers and PCAs onboard to APIs. Introduce guided tutorials, unified consent UX (Modify / Revoke / Continue), and improved sandbox feedback loops. Replace email-based credential delivery with automated dashboard provisioning. | Learn | UX / Engineering / Security |
-| **Integration & Build Tooling** | Develop integrated tools to support live integration, testing, and consent validation. Includes API Explorer+, Diagnostics Panel, Smart Support Chat, and reusable starter app templates (Node, .NET, Java). | Build | Engineering / Platform / Support |
-| **Operational Dashboards & Analytics** | Create post-integration visibility through unified Org Workspace dashboards, usage metrics, latency/error tracking, and automated billing integration. Extend to changelog and announcements modules for continuous communication. | Operate & Scale | API Platform / DevOps / Support |
-| **Governance & Experience Standards** | Define unified design, terminology, and process standards across Commercial APIs. Document how user journeys, flows, and visual patterns evolve for future Retail and U.S. Open Banking alignment. | Cross-phase | Design System / UX / API Product |
-| **Integrated Homepage Alignment** | Coordinate with the parallel initiative responsible for the unified developer homepage (developer.bmo.com). Ensure navigation, content hierarchy, and branding remain consistent across both Commercial and Open Banking areas. | Cross-phase | Digital Strategy / Platform |
+| Phase | Key MFEs | Description |
+|-------|-----------|-------------|
+| Discover | Solutions Gallery, API Catalog | Public entry & use-case orientation |
+| Evaluate | Auth Hub, API Docs, Download Center | Deep dive & sandbox setup |
+| Learn | Tutorials, Consent UX, Error Library | Developer onboarding |
+| Build | Explorer+, Test Data, Starter Projects | Integration readiness |
+| Scale | Org Workspace, Analytics, Changelog | Operations & monitoring |
+
+---
+
+## 🧾 Decision Log
+
+| ID | Decision | Status | Owner | Date |
+|----|-----------|--------|--------|------|
+| DR-001 | Unify Modify/Revoke consent flows | ✅ Approved | API Product | 2025-06-04 |
+| DR-002 | Add “Auth & Env Hub” MFE | 🟡 In Discussion | Eng | 2025-11-01 |
+| DR-003 | Introduce AI Doc Assistant MVP | 🔵 Proposed | Design | TBD |
+
+---
+
+## 🗓 Workshop Notes & Actions
+
+| Date | Topic | Key Actions | Owner | Due |
+|------|--------|--------------|--------|------|
+| 2025-11-01 | Initial Requirements | Capture API pain points, align personas | UX | Nov 3 |
+| 2025-11-02 | Module Planning | Validate MVP MFEs | Eng | Nov 6 |
+
+---
+
+## ❓ Open Questions / Risks
+
+- [ ] How will API usage analytics be collected securely?  
+- [ ] Can Marketplace and Dev Portal share a common identity layer?  
+- [ ] Should PCA consent be reusable across APIs?  
+- [ ] Is the sandbox environment fully isolated for third-party developers?  
+
+---
+
+## 📚 References
+
+- [BMO Developer Portal (current)](https://developer.bmo.com/api/commercial/)  
+- [DevPortal Awards](https://devportalawards.org/)  
+- [Stripe Developer Portal](https://stripe.com/docs/api)  
+- [Plaid Developer Portal](https://plaid.com/docs/)  
+
+---
