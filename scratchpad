@@ -1,49 +1,22 @@
-**Scope Overview**
+**In Scope for FY2026**
 
-The current program focuses on defining, planning, and implementing the **Commercial Banking API experience** — specifically the developer journey, tooling, and processes associated with **Institutional APIs**.
+- **Redefine and redesign the existing Commercial Banking Developer Experience**  
+  Review the current Institutional API experience (hosted under **developer.bmo.com**) to simplify and improve usability across all stages — discovery, evaluation, onboarding, and production access.
 
----
+- **Enhance existing API experiences (Payments and Account Information)**  
+  Focus on optimizing the overall user journey and interface design for the APIs already released in FY2025, including Payments and Account Information APIs.  
+  *No new APIs will be introduced as part of this redesign.*
 
-### 1. Commercial Banking APIs
+- **Unify the developer workflow end-to-end**  
+  Evaluate and refine how developers, Sales, Implementation, and Support teams interact across the onboarding and consent lifecycle.  
+  Align flows, terminology, and touchpoints to create a cohesive, predictable experience.
 
-The Commercial Banking API ecosystem is divided into two main categories:
+- **Improve consent, registration, and sandbox interactions**  
+  These features already exist but will be enhanced for clarity and consistency across different personas (developer, tech lead, PCA, and internal support roles).
 
-**a. Institutional (Organizational) APIs — _In Scope_**  
-• Core focus of this program.  
-• Enables direct API connectivity for institutional clients and enterprise developers.  
-• Covers full API lifecycle: discovery, registration, consent, sandbox, production onboarding, and monitoring.  
-• Responsible teams: Commercial API Product, UX, Engineering, and Platform Delivery.
+- **Document and align with connected initiatives**  
+  The creation of a **new integrated homepage** (a unified developer entry point under developer.bmo.com) is a **related but separate initiative**.  
+  This program will reference that work where applicable and link to its Confluence page once available, but it is **not within this project’s delivery scope**.
 
-**b. Pre-Built Integrations — _Reference Only_**  
-• APIs and integrations exposed via third-party platforms such as **FISPAN**, **Xero**, **NetSuite**, **Oracle**, and **QuickBooks**.  
-• These integrations leverage BMO data and services but are managed through third-party partner ecosystems.  
-• Not part of current design or delivery scope; mentioned only for contextual completeness.
-
----
-
-{expand:title=Learn more about U.S. Open Banking APIs}
-{panel:bgColor=#f4f5f7}
-The **U.S. Open Banking API** ecosystem is managed independently by other BMO business lines. It will eventually connect to the unified developer homepage but is not part of the current design or implementation scope.
-
-**Structure:**
-- **BMO Digital Banking APIs** — Focused on retail digital banking and consumer banking integrations.  
-- **BMO Alto APIs** — Operated by the **BMO Alto** subsidiary, aligned with the U.S. Retail Banking organization.  
-
-These APIs will maintain their own landing pages and experiences, managed by their respective business units.  
-{panel}
-{expand}
-
----
-
-**In Scope for This Phase (FY2025–FY2026)**  
-- Define and deliver the **Commercial Banking Institutional API experience**  
-- Establish unified navigation, documentation, and onboarding flows under developer.bmo.com  
-- Integrate consent, registration, and sandbox experiences for institutional clients  
-- Align developer workflows across internal teams (Sales, Implementation, Support)  
-- Provide the foundation for eventual cross-line consistency across all API experiences  
-
-**Out of Scope (for this release)**  
-- Redesign or management of U.S. Open Banking API landing pages  
-- Pre-built partner integrations (FISPAN, Xero, NetSuite, Oracle, QuickBooks) beyond documentation reference  
-- Retail API experience definition or delivery  
-- Production operations and API performance management beyond design scope
+- **Establish the 2026 design foundation**  
+  Produce updated design specifications, component patterns, and journey documentation that will serve as the reference model for future API experience enhancements across Commercial Banking.
