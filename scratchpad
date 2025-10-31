@@ -1,50 +1,54 @@
-## Phase 1 — Discover
+## Phase 2 — Evaluate
 
 ### Current Experience
-The current discovery experience is largely information-driven and depends on sales-assisted navigation.  
-Clients or IT teams arrive at the BMO Developer Portal to understand whether APIs meet their business needs.  
-Today, the process looks like this:
+The current evaluation process focuses on technical feasibility but requires multiple hand-offs between client teams and BMO representatives.  
+The experience today is functional but fragmented, with limited interactivity inside the portal itself.
 
-1. Clients or IT leads land on the Developer Portal (often via referral or search) and browse general API information.  
-2. Developer or IT teams review existing documentation to assess feasibility and fit with internal systems.  
-3. Clients may also visit the OLBB Marketplace to explore API cards or contact Sales for further details.  
-4. Sales representatives respond manually with documentation links, API details, and follow-up calls.  
-5. The overall journey is product-centric rather than solution-centric — clients browse “what APIs exist” instead of “how can I automate this workflow.”
+1. The client’s IT team gains access to a secure Developer Portal environment to review API documentation and data models.  
+2. They manually download specifications or Postman collections to evaluate API fit.  
+3. Sandbox access and environment requests are handled via forms or direct emails.  
+4. Teams conduct internal feasibility analysis before submitting production upgrade requests through the Marketplace or Sales.  
+5. BMO Sales or Product teams manually coordinate follow-up sessions and pre-production enablement.
 
 ---
 
 ### Proposed Enhancements
-The redesigned **Discover** phase will shift from product listings to **solution-oriented discovery**.  
-The focus is to help commercial clients identify use-cases quickly, build trust, and explore APIs through guided context.
+The redesigned **Evaluate** phase aims to make evaluation faster, self-service, and developer-friendly — replacing manual steps with interactive documentation and a clearer sandbox path.
 
-1. **Solutions Gallery (Public)**  
-   Curated business-oriented entry points (e.g., *Embedded Payments*, *Cash Visibility*, *ERP Connectors*, *Compliance*).  
-   Developers start with their *goal*, not the API name.  
-   🔗 Reference: [Stripe Developer Experience overview — Eleken](https://www.eleken.co/blog-posts/stripe-developer-experience?utm_source=chatgpt.com)
+1. **API Reference MFE (Modular Frontend Experience)**  
+   Three-panel documentation layout: navigation, content, and interactive “Try It” console.  
+   Supports real-time code samples, curl commands, and live responses.  
+   🔗 Reference: [Stripe API Reference](https://stripe.com/docs/api) · [Twilio API Explorer](https://www.twilio.com/docs/usage/api)  
 
-2. **API Catalog (Public)**  
-   A unified catalog filterable by product, region, auth type, and maturity (GA / Pilot).  
-   Replaces legacy spreadsheet or static API list formats.  
-   🔗 Reference: [Plaid API Resources Catalog](https://plaid.com/docs/resources/?utm_source=chatgpt.com)
+2. **Auth & Environments Hub**  
+   Centralized visualization of Sandbox → Pre-Prod → Prod environments with scope and token details.  
+   Enables self-serve token generation and simplified environment switching.  
+   🔗 Reference: [Plaid API Environments](https://plaid.com/docs/api/#environments)  
 
-3. **“Why BMO” / Commercial API Story**  
-   A trust-building section highlighting bank-grade security, compliance, reliability, and innovation tailored for commercial clients.  
-   🔗 Reference: [Stripe Docs Teardown — Moesif Blog](https://www.moesif.com/blog/best-practices/api-product-management/the-stripe-developer-experience-and-docs-teardown/?utm_source=chatgpt.com)
+3. **Download Center**  
+   One location for all OpenAPI specs, Postman collections, SDKs, and sample apps.  
+   Encourages quick evaluation without file-hunting or version confusion.  
+   🔗 Reference: [Adyen Developer Docs – Downloads](https://docs.adyen.com/development-resources/api-libraries)  
 
-4. **Smart Search / AI Discovery**  
-   Intent-based search enabling natural-language queries (e.g., *“automate payables”*, *“reconcile transactions”*).  
-   Helps developers find APIs by purpose instead of guessing endpoint names.  
-   🔗 Reference: [Stripe Natural-Language Search discussion — Eleken](https://www.eleken.co/blog-posts/stripe-developer-experience?utm_source=chatgpt.com)
+4. **Commercial FAQ & Consent Guide**  
+   Dedicated section explaining PCA-level consent, entitlements, and common security questions.  
+   Reduces dependency on ad-hoc sales or support clarifications.  
+   🔗 Reference: [Plaid Security & Compliance](https://plaid.com/security/)  
+
+5. **Pre-Production Request Flow**  
+   Converts current manual email process into an automated portal request, enabling one-click upgrade when sandbox testing is complete.  
+   🔗 Reference: [AWS API Gateway – Promotion Workflow](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-rest-api-lifecycle.html)  
 
 ---
 
 ### Approved (Post-Workshop)
-This section will be populated once FY 2026 discovery workshops confirm which enhancements move forward.  
-Each approved item will link to its Decision Record or design reference.  
+This section will be populated once FY 2026 workshops finalize priorities for Evaluate-phase improvements.  
+Each approved item will link to its Decision Record or design reference.
 
 | Enhancement | Decision | Owner | Reference |
 |--------------|-----------|--------|------------|
-| Solutions Gallery | TBD | UX | — |
-| API Catalog Filters | TBD | Platform | — |
-| Why BMO Section | TBD | Content | — |
-| AI Search Prototype | TBD | Platform | — |
+| API Reference MFE | TBD | Engineering | — |
+| Auth & Environment Hub | TBD | Platform | — |
+| Download Center | TBD | API Product | — |
+| Consent Guide | TBD | Legal / UX | — |
+| Pre-Prod Request Flow | TBD | Platform | — |
